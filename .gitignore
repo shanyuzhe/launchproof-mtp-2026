@@ -1,8 +1,11 @@
 node_modules/
 dist/
 .next/
+.playwright-mcp/
+launchproof-devpost-gallery.png
 .env
 .env.*
 !.env.example
 .DS_Store
 *.log
+*.err

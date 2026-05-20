@@ -2,15 +2,22 @@
 
 import { useEffect, useMemo, useState } from 'react';
 import {
+  AlertTriangle,
   ArrowRight,
+  BadgeCheck,
+  BarChart3,
+  BookOpen,
   CheckCircle2,
   ClipboardCheck,
-  Download,
+  Copy,
   Gauge,
+  GitBranch,
   ListChecks,
+  MonitorCheck,
   Rocket,
   ShieldAlert,
   Sparkles,
+  Target,
 } from 'lucide-react';
 
 const sampleProject = {
@@ -21,7 +28,17 @@ const sampleProject = {
   solution:
     'An AI meeting follow-up assistant that turns notes into owners, due dates, and crisp next actions.',
   url: 'https://example.com/demo',
+  stage: 'Private beta',
+  metric: 'A user exports a complete launch packet in one session.',
 };
+
+const tabs = [
+  ['brief', ClipboardCheck, 'Brief'],
+  ['flows', ListChecks, 'Flows'],
+  ['risks', ShieldAlert, 'Risks'],
+  ['evidence', Gauge, 'Evidence'],
+  ['pitch', BookOpen, 'Pitch'],
+];
 
 const trackEvent = (eventName, metadata = {}) => {
   const payload = {
@@ -40,64 +57,164 @@ const trackEvent = (eventName, metadata = {}) => {
   window.dispatchEvent(new CustomEvent('launchproof:event', { detail: { eventName, payload } }));
 };
 
+const clean = (value, fallback) => value.trim() || fallback;
+
+const calculateScore = (project) => {
+  const fields = ['name', 'user', 'problem', 'solution', 'url', 'metric'];
+  const filled = fields.filter((field) => project[field]?.trim()).length;
+  const longEnough = [project.problem, project.solution, project.metric].filter(
+    (field) => field.trim().length > 42,
+  ).length;
+
+  return Math.min(94, 36 + filled * 8 + longEnough * 3);
+};
+
 const makePacket = (project) => {
-  const name = project.name.trim() || 'Untitled Product';
-  const user = project.user.trim() || 'busy builders';
-  const problem = project.problem.trim() || 'a painful workflow takes too much manual effort';
-  const solution = project.solution.trim() || 'a focused product that removes the repeated work';
+  const name = clean(project.name, 'Untitled Product');
+  const user = clean(project.user, 'busy AI builders');
+  const problem = clean(project.problem, 'a high-value workflow is still unclear before launch');
+  const solution = clean(project.solution, 'a focused product experience that turns ambiguity into action');
+  const url = clean(project.url, 'the product demo');
+  const metric = clean(project.metric, 'a user completes the primary workflow and exports a usable result');
+  const score = calculateScore(project);
 
   return {
+    score,
+    decision:
+      score >= 82
+        ? 'Ready for a public hackathon demo'
+        : score >= 68
+          ? 'Ready after one focused polish pass'
+          : 'Needs sharper proof before launch',
     brief: [
-      `${name} helps ${user} solve a concrete launch problem: ${problem}`,
-      `The product creates value by offering ${solution.toLowerCase()}.`,
-      `The first launch should prove one thing: a stranger can understand the product, complete the primary flow, and leave with a useful outcome.`,
+      {
+        label: 'User',
+        value: `${name} is for ${user}.`,
+      },
+      {
+        label: 'Pain',
+        value: problem,
+      },
+      {
+        label: 'Promise',
+        value: solution,
+      },
+      {
+        label: 'Launch hypothesis',
+        value: `If ${user} can reach "${metric}" from ${url}, the first release is credible enough to ship.`,
+      },
     ],
     flows: [
       {
-        title: 'First value in one session',
-        check: `A new user can land on ${name}, understand the promise, and reach one useful output without setup help.`,
+        title: 'Understand the promise',
+        event: 'brief_generated',
+        owner: 'Product',
+        check: `A new visitor can tell who ${name} is for, what pain it addresses, and what useful result it creates.`,
       },
       {
-        title: 'Critical action completed',
-        check: `The user can complete the core action that proves ${solution.toLowerCase()} works.`,
+        title: 'Complete first value',
+        event: 'flows_reviewed',
+        owner: 'Experience',
+        check: `The visitor can move from product context to a concrete launch packet without needing account setup or guidance.`,
       },
       {
-        title: 'Evidence captured',
-        check: 'The product records a meaningful completion event so launch readiness can be measured, not guessed.',
+        title: 'Inspect launch risk',
+        event: 'risks_reviewed',
+        owner: 'Quality',
+        check: 'The visitor sees the highest launch risks, each paired with a practical mitigation and measurable signal.',
       },
       {
-        title: 'Next step is obvious',
-        check: 'After the first useful result, the interface clearly points to the next action or export.',
+        title: 'Export a decision asset',
+        event: 'export_clicked',
+        owner: 'Go-to-market',
+        check: 'The visitor can copy a pitch-ready artifact that a team could paste into a launch review or Devpost submission.',
       },
     ],
     risks: [
       {
-        title: 'The promise is broader than the shipped workflow',
-        mitigation: 'Keep the first release focused on one repeatable path and remove unsupported claims.',
+        severity: 'High',
+        title: 'The demo looks useful but proves no behavior',
+        mitigation: 'Track the first-value, risk-review, and export events through Novus/Pendo.',
+        signal: 'At least three event types appear after a fresh visitor session.',
       },
       {
-        title: 'The app looks impressive but does not prove behavior',
-        mitigation: 'Track project creation, generation, review, and export events through Novus.',
+        severity: 'Medium',
+        title: 'The product promise is too broad for one launch',
+        mitigation: `Keep ${name} focused on the one workflow that gets ${user} to "${metric}".`,
+        signal: 'Demo script spends more time on workflow proof than feature inventory.',
       },
       {
-        title: 'Generated output is too long to act on',
-        mitigation: 'Use short sections, action labels, and an export that a team can reuse immediately.',
+        severity: 'Medium',
+        title: 'Generated launch advice becomes generic',
+        mitigation: 'Every output should mention the user, pain, evidence, and next action.',
+        signal: 'The exported packet contains no standalone generic checklist items.',
       },
     ],
-    pitch: `${name} is ready to pitch as a focused product for ${user}. The demo should show the painful before-state, one complete product flow, and the evidence that a real user can get value now.`,
+    evidence: [
+      {
+        label: 'Product thinking',
+        metric: 'User, pain, promise, and launch hypothesis are explicit.',
+      },
+      {
+        label: 'Craft',
+        metric: 'A stranger can finish the workspace flow from one public URL.',
+      },
+      {
+        label: 'Originality',
+        metric: 'The product treats launch readiness as proof, not vibes.',
+      },
+      {
+        label: 'Shippedness',
+        metric: 'Novus/Pendo receives production behavior events.',
+      },
+    ],
+    eventMap: [
+      ['brief_generated', 'Launch packet generated'],
+      ['flows_reviewed', 'Critical flow reviewed'],
+      ['risks_reviewed', 'Launch risks reviewed'],
+      ['evidence_reviewed', 'Evidence board opened'],
+      ['export_clicked', 'Pitch packet exported'],
+    ],
+    pitch: `${name} helps ${user} decide whether an AI-built product is truly ready to ship. It turns a rough idea into a launch brief, critical flows, risk mitigations, evidence signals, and an exportable pitch packet. The result is a public demo that is not only working, but measurable through Novus/Pendo events.`,
+    nextActions: [
+      'Record a 90-second demo around one user and one launch decision.',
+      'Capture the Novus/Pendo dashboard after events process.',
+      'Use the exported packet as the Devpost project story draft.',
+    ],
   };
 };
+
+const buildExport = (project, packet) =>
+  [
+    `# ${clean(project.name, 'Untitled Product')} Launch Packet`,
+    '',
+    `Readiness score: ${packet.score}/100`,
+    `Decision: ${packet.decision}`,
+    '',
+    '## Brief',
+    ...packet.brief.map((item) => `- ${item.label}: ${item.value}`),
+    '',
+    '## Critical flows',
+    ...packet.flows.map((flow) => `- ${flow.title} (${flow.event}): ${flow.check}`),
+    '',
+    '## Launch risks',
+    ...packet.risks.map((risk) => `- ${risk.severity}: ${risk.title}. ${risk.mitigation}`),
+    '',
+    '## Evidence',
+    ...packet.evidence.map((item) => `- ${item.label}: ${item.metric}`),
+    '',
+    '## Pitch',
+    packet.pitch,
+  ].join('\n');
 
 export default function App() {
   const [project, setProject] = useState(sampleProject);
   const [activeTab, setActiveTab] = useState('brief');
   const [analyticsStatus, setAnalyticsStatus] = useState('Waiting for SDK');
+  const [copied, setCopied] = useState(false);
   const [events, setEvents] = useState([
-    'sample_loaded',
-    'project_created',
-    'brief_generated',
-    'flows_reviewed',
-    'export_clicked',
+    { name: 'sample_loaded', time: 'Seed' },
+    { name: 'project_created', time: 'Seed' },
   ]);
 
   const packet = useMemo(() => makePacket(project), [project]);
@@ -113,36 +230,36 @@ export default function App() {
     return () => window.clearInterval(statusTimer);
   }, []);
 
+  const record = (eventName, metadata = {}) => {
+    const now = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    setEvents((current) => [{ name: eventName, time: now }, ...current].slice(0, 7));
+    trackEvent(eventName, {
+      projectName: project.name || 'Untitled Product',
+      activeTab,
+      readinessScore: packet.score,
+      ...metadata,
+    });
+  };
+
   const updateProject = (field, value) => {
     setProject((current) => ({ ...current, [field]: value }));
   };
 
-  const record = (eventName) => {
-    setEvents((current) => [eventName, ...current].slice(0, 8));
-    trackEvent(eventName, {
-      projectName: project.name || 'Untitled Product',
-      activeTab,
-    });
+  const generatePacket = () => {
+    setActiveTab('brief');
+    record('brief_generated', { section: 'brief' });
   };
 
-  const copyPitch = async () => {
-    const text = [
-      `Project: ${project.name}`,
-      '',
-      'Launch brief:',
-      ...packet.brief.map((line) => `- ${line}`),
-      '',
-      'Core flows:',
-      ...packet.flows.map((flow) => `- ${flow.title}: ${flow.check}`),
-      '',
-      'Launch risks:',
-      ...packet.risks.map((risk) => `- ${risk.title}: ${risk.mitigation}`),
-      '',
-      `Pitch: ${packet.pitch}`,
-    ].join('\n');
+  const switchTab = (key) => {
+    setActiveTab(key);
+    record(`${key}_reviewed`, { section: key });
+  };
 
-    await navigator.clipboard.writeText(text);
-    record('export_clicked');
+  const copyPacket = async () => {
+    await navigator.clipboard.writeText(buildExport(project, packet));
+    setCopied(true);
+    record('export_clicked', { exportType: 'markdown_packet' });
+    window.setTimeout(() => setCopied(false), 1800);
   };
 
   return (
@@ -157,6 +274,14 @@ export default function App() {
               <p className="eyebrow">World Product Day Hackathon</p>
               <h1>LaunchProof</h1>
             </div>
+          </div>
+
+          <div className="score-card compact-score">
+            <div>
+              <span className="score-label">Readiness</span>
+              <strong>{packet.score}</strong>
+            </div>
+            <p>{packet.decision}</p>
           </div>
 
           <label>
@@ -196,6 +321,15 @@ export default function App() {
           </label>
 
           <label>
+            Success metric
+            <textarea
+              value={project.metric}
+              onChange={(event) => updateProject('metric', event.target.value)}
+              onBlur={() => record('metric_edited')}
+            />
+          </label>
+
+          <label>
             Demo URL
             <input
               value={project.url}
@@ -204,7 +338,7 @@ export default function App() {
             />
           </label>
 
-          <button className="primary-action" onClick={() => record('brief_generated')}>
+          <button className="primary-action" onClick={generatePacket}>
             <Sparkles size={18} />
             Generate Launch Packet
           </button>
@@ -214,27 +348,44 @@ export default function App() {
           <div className="topbar">
             <div>
               <p className="eyebrow">Launch readiness packet</p>
-              <h2>{project.name || 'Untitled Product'}</h2>
+              <h2>{clean(project.name, 'Untitled Product')}</h2>
             </div>
-            <button className="icon-button" onClick={copyPitch} title="Copy pitch packet">
-              <Download size={20} />
+            <button className="copy-button" onClick={copyPacket}>
+              <Copy size={18} />
+              {copied ? 'Copied' : 'Copy packet'}
             </button>
           </div>
 
+          <div className="decision-strip">
+            <article>
+              <Target size={18} />
+              <div>
+                <span>Launch decision</span>
+                <strong>{packet.decision}</strong>
+              </div>
+            </article>
+            <article>
+              <BarChart3 size={18} />
+              <div>
+                <span>Tracked proof</span>
+                <strong>{analyticsStatus}</strong>
+              </div>
+            </article>
+            <article>
+              <MonitorCheck size={18} />
+              <div>
+                <span>Public demo</span>
+                <strong>Ready to test</strong>
+              </div>
+            </article>
+          </div>
+
           <nav className="tabs" aria-label="Packet sections">
-            {[
-              ['brief', ClipboardCheck, 'Brief'],
-              ['flows', ListChecks, 'Flows'],
-              ['risks', ShieldAlert, 'Risks'],
-              ['evidence', Gauge, 'Evidence'],
-            ].map(([key, Icon, label]) => (
+            {tabs.map(([key, Icon, label]) => (
               <button
                 key={key}
                 className={activeTab === key ? 'active' : ''}
-                onClick={() => {
-                  setActiveTab(key);
-                  record(`${key}_reviewed`);
-                }}
+                onClick={() => switchTab(key)}
               >
                 <Icon size={17} />
                 {label}
@@ -243,17 +394,13 @@ export default function App() {
           </nav>
 
           {activeTab === 'brief' && (
-            <div className="content-grid">
-              {packet.brief.map((line) => (
-                <article className="statement" key={line}>
-                  <CheckCircle2 size={19} />
-                  <p>{line}</p>
+            <div className="brief-grid">
+              {packet.brief.map((item) => (
+                <article className="brief-item" key={item.label}>
+                  <span>{item.label}</span>
+                  <p>{item.value}</p>
                 </article>
               ))}
-              <article className="pitch-block">
-                <h3>Demo close</h3>
-                <p>{packet.pitch}</p>
-              </article>
             </div>
           )}
 
@@ -263,8 +410,12 @@ export default function App() {
                 <article className="flow-row" key={flow.title}>
                   <span>{index + 1}</span>
                   <div>
-                    <h3>{flow.title}</h3>
+                    <div className="row-title">
+                      <h3>{flow.title}</h3>
+                      <code>{flow.event}</code>
+                    </div>
                     <p>{flow.check}</p>
+                    <small>{flow.owner}</small>
                   </div>
                 </article>
               ))}
@@ -275,8 +426,12 @@ export default function App() {
             <div className="list-stack">
               {packet.risks.map((risk) => (
                 <article className="risk-row" key={risk.title}>
-                  <h3>{risk.title}</h3>
+                  <div className="row-title">
+                    <h3>{risk.title}</h3>
+                    <span className={`severity ${risk.severity.toLowerCase()}`}>{risk.severity}</span>
+                  </div>
                   <p>{risk.mitigation}</p>
+                  <small>{risk.signal}</small>
                 </article>
               ))}
             </div>
@@ -284,30 +439,62 @@ export default function App() {
 
           {activeTab === 'evidence' && (
             <div className="evidence-layout">
-              <article className="metric">
-                <strong>{events.length}</strong>
-                <span>tracked interactions</span>
-              </article>
-              <article className="metric">
-                <strong>5</strong>
-                <span>Novus-ready events</span>
-              </article>
-              <article className="metric">
-                <strong>1</strong>
-                <span>exportable pitch packet</span>
-              </article>
-              <article className="metric metric-wide">
-                <strong>{analyticsStatus}</strong>
-                <span>runtime analytics status</span>
-              </article>
-              <div className="event-feed">
-                {events.map((eventName, index) => (
-                  <div key={`${eventName}-${index}`}>
-                    <ArrowRight size={15} />
-                    <span>{eventName}</span>
+              {packet.evidence.map((item) => (
+                <article className="metric" key={item.label}>
+                  <BadgeCheck size={20} />
+                  <strong>{item.label}</strong>
+                  <span>{item.metric}</span>
+                </article>
+              ))}
+              <article className="event-board">
+                <div className="row-title">
+                  <h3>Novus event map</h3>
+                  <GitBranch size={18} />
+                </div>
+                {packet.eventMap.map(([eventName, meaning]) => (
+                  <div key={eventName}>
+                    <code>{eventName}</code>
+                    <span>{meaning}</span>
                   </div>
                 ))}
-              </div>
+              </article>
+              <article className="event-feed">
+                <div className="row-title">
+                  <h3>Recent local events</h3>
+                  <Gauge size={18} />
+                </div>
+                {events.map((event) => (
+                  <div key={`${event.name}-${event.time}`}>
+                    <ArrowRight size={15} />
+                    <span>{event.name}</span>
+                    <small>{event.time}</small>
+                  </div>
+                ))}
+              </article>
+            </div>
+          )}
+
+          {activeTab === 'pitch' && (
+            <div className="pitch-layout">
+              <article className="pitch-block">
+                <div className="row-title">
+                  <h3>Judge-facing story</h3>
+                  <CheckCircle2 size={18} />
+                </div>
+                <p>{packet.pitch}</p>
+              </article>
+              <article className="next-actions">
+                <div className="row-title">
+                  <h3>Submission next steps</h3>
+                  <AlertTriangle size={18} />
+                </div>
+                {packet.nextActions.map((action) => (
+                  <div key={action}>
+                    <CheckCircle2 size={16} />
+                    <span>{action}</span>
+                  </div>
+                ))}
+              </article>
             </div>
           )}
         </section>
