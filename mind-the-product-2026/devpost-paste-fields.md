@@ -42,9 +42,9 @@ LaunchProof was built for that gap. In the AI-builder era, the bottleneck is no 
 
 ## What it does
 
-LaunchProof turns a rough product idea into a launch readiness packet. A builder enters their product concept, target user, problem, success metric, and demo URL. LaunchProof generates a crisp product brief, core user flows, acceptance checks, launch risks and mitigations, a Novus-measurable evidence board, a hackathon scorecard, testing instructions, and an exportable Devpost-ready pitch packet.
+LaunchProof turns a rough product idea into a launch readiness packet that a judge, teammate, or founder can actually use. A builder enters their product concept, target user, problem, success metric, and demo URL. LaunchProof generates a crisp product brief, core user flows, acceptance checks, launch risks and mitigations, a readiness rationale, a Novus-measurable proof loop, a hackathon scorecard, testing instructions, and an exportable Devpost-ready pitch packet.
 
-The result is a clearer launch decision and a stronger hackathon submission.
+The result is a concrete answer to the question every AI-built prototype faces: what must work, what evidence do we have, and what should we say when we ask someone to believe this is ready?
 
 ## How we built it
 
@@ -54,7 +54,7 @@ The app uses Next.js and React for the public web app, GitHub Pages for deployme
 
 ## Challenges we ran into
 
-The main challenge was avoiding "AI text soup". The product needed to produce artifacts that are short, structured, measurable, and useful under time pressure. We focused on the launch workflow: idea, flows, risks, evidence, pitch.
+The main challenge was avoiding "AI text soup". The product needed to produce artifacts that are short, structured, measurable, and useful under time pressure. We focused on the launch workflow: user, job, flows, risks, evidence, pitch.
 
 A second challenge was making Novus.ai feel like part of the product rather than a compliance checkbox. LaunchProof treats behavior tracking as launch evidence: did the builder generate a packet, review flows, inspect risks, review evidence, and export the pitch?
 
@@ -64,6 +64,7 @@ A second challenge was making Novus.ai feel like part of the product rather than
 - Designed outputs that directly support demo preparation and launch review.
 - Added behavior tracking so "ready to ship" can be tied to real usage signals.
 - Mapped the product evidence directly to Product Thinking, Craft and Execution, Originality and Ambition, and Shippedness.
+- Added a readiness rationale and launch proof loop so the score is explainable instead of decorative.
 - Added draft persistence so builders can return to a packet without losing work.
 - Built the project so it can be useful beyond one hackathon.
 
@@ -86,14 +87,23 @@ Judges can test LaunchProof without creating an account.
 
 1. Open the public app: https://shanyuzhe.github.io/launchproof-mtp-2026/
 2. Use the preloaded LaunchProof example, or edit the intake fields to describe another AI-built product.
-3. Click `Generate Launch Packet`.
-4. Click `Run Judge Demo` to step through the 90-second proof path.
-5. Open each tab: `Brief`, `Flows`, `Risks`, `Evidence`, and `Pitch`.
-6. In `Flows`, confirm that the app turns the idea into critical user paths and acceptance checks.
-7. In `Risks`, review the launch risks and mitigations.
-8. In `Evidence`, review the hackathon scorecard and the Novus/Pendo event map.
-9. Click `Copy packet` to copy the pitch-ready launch packet and confirm the `Copied` state appears.
-10. Compare the local event feed and tracked actions with the Novus.ai/Pendo dashboard screenshot included in the submission.
+3. Optionally change one field, such as the target user or success metric, so the generated packet reflects a real edit.
+4. Click `Generate Launch Packet`.
+5. Click `Run Judge Demo` to step through the 90-second proof path.
+6. Open each tab: `Brief`, `Flows`, `Risks`, `Evidence`, and `Pitch`.
+7. In `Brief`, confirm the packet identifies a target user, problem, solution, success metric, and launch decision.
+8. In `Flows`, confirm that the app turns the idea into critical user paths and acceptance checks.
+9. In `Risks`, review the launch risks and mitigations.
+10. In `Evidence`, review the hackathon scorecard, readiness rationale, launch proof loop, proof status, and Novus/Pendo event map.
+11. Click `Copy packet` to copy the pitch-ready launch packet and confirm the `Copied` state appears.
+12. Compare the local event feed and tracked actions with the Novus.ai/Pendo dashboard screenshot included in the submission.
 
 No login is required. The app stores draft changes in browser local storage. A successful test should show a local event feed update, a visible `Novus/Pendo connected` state, and the copied launch packet.
 
+## Final Judge Checklist
+
+- Product Thinking: clear user, pain, job-to-be-done, and launch-readiness outcome.
+- Craft and Execution: one end-to-end workflow from intake to packet export.
+- Originality and Ambition: product judgment, acceptance checks, analytics evidence, and pitch export are connected in one tool.
+- Shippedness: public app works without login, seeded example works immediately, demo video shows the live product, and Novus/Pendo evidence is included.
+- Honesty: LaunchProof is a launch readiness assistant, not a guarantee of product-market fit, QA completion, or user research.

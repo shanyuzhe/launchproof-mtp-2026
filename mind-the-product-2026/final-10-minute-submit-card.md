@@ -74,4 +74,7 @@ Only submit when it prints:
 - Source link opens publicly.
 - Novus/Pendo screenshot is uploaded.
 - Project story is in English.
+- About copy names the user, problem, workflow, evidence, and honest limits.
+- Testing instructions walk a judge through Brief, Flows, Risks, Evidence, Pitch, and Copy packet.
+- The submission visibly covers Product Thinking, Craft and Execution, Originality and Ambition, and Shippedness.
 - Submission is not still marked draft.

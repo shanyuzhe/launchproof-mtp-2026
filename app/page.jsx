@@ -22,6 +22,7 @@ import {
 } from 'lucide-react';
 
 const STORAGE_KEY = 'launchproof_project_draft';
+const PUBLIC_APP_URL = 'https://shanyuzhe.github.io/launchproof-mtp-2026/';
 
 const sampleProject = {
   name: 'LaunchProof',
@@ -30,7 +31,7 @@ const sampleProject = {
     'AI tools can produce a working demo quickly, but teams still struggle to prove it is valuable, coherent, measurable, and ready to ship.',
   solution:
     'A launch-readiness workspace that turns an idea into a product brief, critical flows, launch risks, Novus event evidence, and a pitch packet.',
-  url: process.env.NEXT_PUBLIC_APP_URL || 'https://launchproof-mtp.vercel.app',
+  url: process.env.NEXT_PUBLIC_APP_URL || PUBLIC_APP_URL,
   stage: 'Public hackathon demo',
   metric: 'A builder exports a complete launch packet and can point to Novus/Pendo events as proof.',
 };
@@ -95,14 +96,60 @@ const trackEvent = (eventName, metadata = {}) => {
 
 const clean = (value, fallback) => value.trim() || fallback;
 
+const makeReadinessFactors = (project) => {
+  const demoUrl = project.url.trim();
+
+  return [
+    {
+      label: 'Specific user',
+      ready: project.user.trim().length >= 28,
+      proof: 'Names who gets value instead of describing a generic audience.',
+      weight: 12,
+    },
+    {
+      label: 'Pain worth solving',
+      ready: project.problem.trim().length >= 60,
+      proof: 'Explains the launch risk or workflow pain clearly enough to judge.',
+      weight: 12,
+    },
+    {
+      label: 'First-value promise',
+      ready: project.solution.trim().length >= 60,
+      proof: 'Turns the solution into a concrete outcome, not only a feature list.',
+      weight: 10,
+    },
+    {
+      label: 'Measurable shipped behavior',
+      ready: project.metric.trim().length >= 55,
+      proof: 'Defines what behavior would prove the product is ready.',
+      weight: 10,
+    },
+    {
+      label: 'Public demo URL',
+      ready: /^https:\/\/\S+\.\S+/.test(demoUrl),
+      proof: 'Gives judges a live URL they can test without setup.',
+      weight: 8,
+    },
+  ];
+};
+
 const calculateScore = (project) => {
   const fields = ['name', 'user', 'problem', 'solution', 'url', 'metric'];
   const filled = fields.filter((field) => project[field]?.trim()).length;
   const longEnough = [project.problem, project.solution, project.metric].filter(
     (field) => field.trim().length > 42,
   ).length;
+  const factorScore = makeReadinessFactors(project).reduce(
+    (total, factor) => total + (factor.ready ? factor.weight : Math.floor(factor.weight * 0.3)),
+    0,
+  );
 
-  return Math.min(94, 36 + filled * 8 + longEnough * 3);
+  return Math.min(96, 24 + filled * 4 + longEnough * 2 + factorScore);
+};
+
+const projectMentions = (values, keywords) => {
+  const text = values.join(' ').toLowerCase();
+  return keywords.some((keyword) => text.includes(keyword));
 };
 
 const makePacket = (project) => {
@@ -113,6 +160,54 @@ const makePacket = (project) => {
   const url = clean(project.url, 'the product demo');
   const metric = clean(project.metric, 'a user completes the primary workflow and exports a usable result');
   const score = calculateScore(project);
+  const readinessFactors = makeReadinessFactors(project);
+  const projectSignals = [name, user, problem, solution, metric];
+  const mentionsTeam = projectMentions(projectSignals, ['team', 'teams', 'collaboration', 'remote', 'stakeholder']);
+  const mentionsExport = projectMentions(projectSignals, ['export', 'copy', 'packet', 'report', 'summary', 'submission']);
+  const mentionsAi = projectMentions(projectSignals, ['ai', 'agent', 'llm', 'builder', 'vibe']);
+  const hasPublicUrl = /^https:\/\/\S+\.\S+/.test(url);
+  const contextualFlow = mentionsTeam
+    ? {
+        title: 'Align the team on launch evidence',
+        event: 'evidence_reviewed',
+        owner: 'Product lead',
+        check: `Everyone reviewing ${name} can point to the same launch metric, risk list, and proof events before shipping.`,
+      }
+    : mentionsExport
+      ? {
+          title: 'Turn output into a reusable asset',
+          event: 'export_clicked',
+          owner: 'Builder',
+          check: `The visitor can export a ${name} packet that is specific enough to reuse in a launch review or Devpost submission.`,
+        }
+      : {
+          title: hasPublicUrl ? 'Validate the public demo promise' : 'Define the public demo promise',
+          event: 'evidence_reviewed',
+          owner: 'Launch',
+          check: hasPublicUrl
+            ? `The claims in the ${name} packet match what a judge can actually try at ${url}.`
+            : `The team can name the public proof path before asking users or judges to evaluate ${name}.`,
+        };
+  const contextualRisk = mentionsTeam
+    ? {
+        severity: 'Medium',
+        title: 'Launch ownership is spread across too many people',
+        mitigation: 'Use the packet as the shared launch review artifact before recording the demo.',
+        signal: 'Every critical flow has an owner and an acceptance check.',
+      }
+    : mentionsAi
+      ? {
+          severity: 'Medium',
+          title: 'AI-generated confidence hides weak product proof',
+          mitigation: 'Make the demo earn trust through user, flow, risk, metric, and tracked behavior evidence.',
+          signal: 'The exported packet contains a measurable launch hypothesis and at least one Novus/Pendo event.',
+        }
+      : {
+          severity: 'Medium',
+          title: 'The product story drifts away from the working demo',
+          mitigation: 'Keep the public URL, launch hypothesis, and pitch packet synchronized.',
+          signal: 'A fresh judge can follow the testing instructions without asking for context.',
+        };
 
   return {
     score,
@@ -165,6 +260,7 @@ const makePacket = (project) => {
         owner: 'Go-to-market',
         check: 'The visitor can copy a pitch-ready artifact that a team could paste into a launch review or Devpost submission.',
       },
+      contextualFlow,
     ],
     risks: [
       {
@@ -173,6 +269,7 @@ const makePacket = (project) => {
         mitigation: 'Track the first-value, risk-review, and export events through Novus/Pendo.',
         signal: 'At least three event types appear after a fresh visitor session.',
       },
+      contextualRisk,
       {
         severity: 'Medium',
         title: 'The product promise is too broad for one launch',
@@ -204,6 +301,7 @@ const makePacket = (project) => {
         metric: 'Novus/Pendo receives production behavior events.',
       },
     ],
+    readinessFactors,
     criteria: [
       {
         label: 'Product Thinking',
@@ -239,6 +337,32 @@ const makePacket = (project) => {
       ['evidence_reviewed', 'Evidence board opened'],
       ['export_clicked', 'Pitch packet exported'],
     ],
+    proofLoop: [
+      {
+        action: 'Frame the launch',
+        event: 'brief_generated',
+        evidence: 'User, pain, promise, and metric become one brief.',
+        decision: 'Is the problem understandable in 30 seconds?',
+      },
+      {
+        action: 'Review the critical path',
+        event: 'flows_reviewed',
+        evidence: 'Core flows include acceptance checks and owners.',
+        decision: 'Can a stranger reach first value from the public URL?',
+      },
+      {
+        action: 'Inspect launch risk',
+        event: 'risks_reviewed',
+        evidence: 'Risks are paired with mitigations and measurable signals.',
+        decision: 'What would make this launch unsafe or unconvincing?',
+      },
+      {
+        action: 'Export the packet',
+        event: 'export_clicked',
+        evidence: 'The pitch, testing plan, and scorecard are copy-ready.',
+        decision: 'Is the product ready to submit, demo, or polish?',
+      },
+    ],
     pitch: `${name} helps ${user} decide whether an AI-built product is truly ready to ship. It turns a rough idea into a launch brief, critical flows, risk mitigations, evidence signals, and an exportable pitch packet. The result is a public demo that is not only working, but measurable through Novus/Pendo events.`,
     nextActions: [
       'Record a 90-second demo around one user and one launch decision.',
@@ -271,6 +395,12 @@ const buildExport = (project, packet) =>
     '',
     '## Evidence',
     ...packet.evidence.map((item) => `- ${item.label}: ${item.metric}`),
+    '',
+    '## Readiness score rationale',
+    ...packet.readinessFactors.map((item) => `- ${item.ready ? 'Ready' : 'Needs work'}: ${item.label}. ${item.proof}`),
+    '',
+    '## Launch proof loop',
+    ...packet.proofLoop.map((item) => `- ${item.action} -> ${item.event}: ${item.evidence} Decision: ${item.decision}`),
     '',
     '## Hackathon scorecard',
     ...packet.criteria.map((item) => `- ${item.label} (${item.weight}): ${item.proof}`),
@@ -553,6 +683,12 @@ export default function App() {
             </button>
           </div>
 
+          <div className="positioning-strip">
+            <Sparkles size={18} />
+            <strong>For AI builders with a working prototype but not enough proof to ship.</strong>
+            <span>Brief - Flows - Risks - Evidence - Pitch</span>
+          </div>
+
           <div className="decision-strip">
             <article>
               <Target size={18} />
@@ -667,6 +803,33 @@ export default function App() {
                   ))}
                 </div>
               </article>
+              <article className="readiness-card">
+                <div className="row-title">
+                  <h3>Readiness rationale</h3>
+                  <Gauge size={18} />
+                </div>
+                {packet.readinessFactors.map((item) => (
+                  <div key={item.label} className={item.ready ? 'ready' : 'needs-work'}>
+                    <span>{item.ready ? 'Ready' : 'Needs work'}</span>
+                    <strong>{item.label}</strong>
+                    <p>{item.proof}</p>
+                  </div>
+                ))}
+              </article>
+              <article className="proof-loop-card">
+                <div className="row-title">
+                  <h3>Launch proof loop</h3>
+                  <GitBranch size={18} />
+                </div>
+                {packet.proofLoop.map((item) => (
+                  <div className="proof-loop-row" key={item.event}>
+                    <strong>{item.action}</strong>
+                    <code>{item.event}</code>
+                    <p>{item.evidence}</p>
+                    <small>{item.decision}</small>
+                  </div>
+                ))}
+              </article>
               <article className="event-board">
                 <div className="row-title">
                   <h3>Novus event map</h3>
@@ -691,6 +854,38 @@ export default function App() {
                     <small>{event.time}</small>
                   </div>
                 ))}
+              </article>
+              <article className="proof-status-card">
+                <div className="row-title">
+                  <h3>Proof status</h3>
+                  <MonitorCheck size={18} />
+                </div>
+                <div>
+                  <span className={analyticsStatus.includes('connected') ? 'ready' : 'pending'}>
+                    {analyticsStatus.includes('connected') ? 'Live' : 'Pending'}
+                  </span>
+                  <strong>SDK loaded</strong>
+                  <p>{analyticsStatus}</p>
+                </div>
+                <div>
+                  <span className={events.length > 2 ? 'ready' : 'pending'}>
+                    {events.length > 2 ? 'Live' : 'Seeded'}
+                  </span>
+                  <strong>Events emitted</strong>
+                  <p>{events.length} recent local events are visible in this session.</p>
+                </div>
+                <div>
+                  <span className={events.some((event) => event.name === 'export_clicked') ? 'ready' : 'pending'}>
+                    {events.some((event) => event.name === 'export_clicked') ? 'Done' : 'Try it'}
+                  </span>
+                  <strong>Packet copied</strong>
+                  <p>Click Copy packet to produce the judge-ready Markdown export.</p>
+                </div>
+                <div>
+                  <span className="pending">Required</span>
+                  <strong>Dashboard screenshot</strong>
+                  <p>Upload the matching Novus/Pendo dashboard image in Devpost.</p>
+                </div>
               </article>
               <article className="testing-card">
                 <div className="row-title">

@@ -28,6 +28,14 @@ Use this file as the final Devpost assembly checklist.
 - Pendo loads from `cdn.pendo.io`.
 - Pendo recording/event requests are sent to `data.pendo.io/data/rec/...` and return HTTP 200.
 
+## Final Judge Checklist
+
+- Product Thinking: the About copy quickly names the AI-builder user, launch-readiness pain, and job-to-be-done.
+- Craft and Execution: the app, video, and testing path all show one coherent workflow from intake to export.
+- Originality and Ambition: Novus/Pendo is presented as launch evidence, not just a required SDK install.
+- Shippedness: the live URL works without login, the seeded example works, the demo video is under 3 minutes, and the Novus/Pendo screenshot is uploaded.
+- Honesty: the submission says LaunchProof produces readiness evidence and pitch materials; it does not claim to replace user research, QA, or product-market fit validation.
+
 ## Final Gate Command
 
 Run this after the real Novus/Pendo dashboard screenshot and uploaded video URL exist:

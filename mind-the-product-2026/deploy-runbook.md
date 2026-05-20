@@ -4,45 +4,20 @@
 
 Get LaunchProof online, send at least a few behavior events to Novus/Pendo, and capture the dashboard screenshot required by the Mind the Product submission.
 
-## Recommended Path: Vercel
+## Deprecated Path: Vercel
 
-Current local winning branch: `codex-launchproof-prize-polish`.
+Do not use Vercel for the Devpost app URL unless it is manually re-verified. The Vercel project has previously served stale builds after `main` was pushed.
 
-Current production URL: `https://launchproof-mtp.vercel.app`.
+Stale production URL: `https://launchproof-mtp.vercel.app`.
 
-Important: the production URL has previously returned the older build even after `main` was pushed. Before using the URL in Devpost, verify that the page contains:
-
-- `Launch decision`
-- `Run Judge Demo`
-- `90-second judge path`
-- `Reset Demo`
-- `Hackathon scorecard`
-- `Testing instructions`
-
-If any of those are missing, the public site is not on the prize-polish build yet.
-
-1. Open `https://vercel.com/new`.
-2. Continue with GitHub.
-3. Import `shanyuzhe/launchproof-mtp-2026`.
-4. Keep the detected framework as Next.js.
-5. Deploy. The repo already includes the public Novus/Pendo install key generated during setup.
-6. Open the deployment URL.
-7. Click through the product:
-   - Generate Launch Packet
-   - Brief
-   - Flows
-   - Risks
-   - Evidence
-   - Copy pitch packet
-8. Open Novus/Pendo dashboard and confirm events arrive.
-9. Screenshot the dashboard for Devpost.
+Only revisit Vercel as a backup if GitHub Pages becomes unavailable, and rerun the same verifier against the Vercel URL before trusting it.
 
 ## Automated Final Gate
 
 After the final deployment, run the deploy verifier from the repo root:
 
 ```bash
-npm run verify:launchproof -- --url https://launchproof-mtp.vercel.app --dashboard-screenshot path/to/novus-dashboard.png --demo-video-url https://...
+npm run verify:launchproof -- --url https://shanyuzhe.github.io/launchproof-mtp-2026/ --dashboard-screenshot path/to/novus-dashboard.png --demo-video-url https://...
 ```
 
 The script fails loud if:
@@ -55,18 +30,9 @@ The script fails loud if:
 
 Do not paste the URL into Devpost until this command prints `[pass] LaunchProof deploy verification passed.`.
 
-## If Vercel Does Not Auto-Deploy
-
-1. Open `https://vercel.com/shanyuzhes-projects/launchproof-mtp`.
-2. Go to `Deployments`.
-3. Check whether the latest deployment uses the newest GitHub commit.
-4. If there is no new deployment after a GitHub push, go to `Settings` -> `Git` and confirm the connected repository is `shanyuzhe/launchproof-mtp-2026` and the production branch is `main`.
-5. If the repo is connected but stale, use `Redeploy` from the latest deployment after the newest commit is on `main`.
-6. Re-open `https://launchproof-mtp.vercel.app` and confirm the latest-build strings above are present before recording the demo video.
-
 ## Primary Path: GitHub Pages
 
-The current public fallback uses the `gh-pages` branch, which contains the static export plus `.nojekyll`.
+Use GitHub Pages as the Devpost app URL. The deployment uses the `gh-pages` branch, which contains the static export plus `.nojekyll`.
 
 Current public URL:
 
@@ -112,9 +78,9 @@ Required:
 
 1. Project name: `LaunchProof`.
 2. Tagline: `AI helps you build faster. LaunchProof helps you prove it is ready to ship.`
-3. App URL: `https://launchproof-mtp.vercel.app`.
+3. App URL: `https://shanyuzhe.github.io/launchproof-mtp-2026/`.
 4. Source URL: `https://github.com/shanyuzhe/launchproof-mtp-2026`.
-5. Built With: `Next.js, React, Vercel, Novus.ai, Pendo Web SDK, Browser Local Storage, lucide-react, GitHub`.
+5. Built With: `Next.js, React, GitHub Pages, Novus.ai, Pendo Web SDK, Browser Local Storage, lucide-react, GitHub`.
 6. Project Story: paste from `devpost-submission-draft.md`.
 7. Testing Instructions: paste from `devpost-submission-draft.md`.
 8. Video URL: paste the public or unlisted YouTube/Vimeo/Youku link.

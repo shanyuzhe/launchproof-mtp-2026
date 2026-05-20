@@ -62,7 +62,7 @@ Expected result: within a few minutes, a judge should see a complete launch read
 ## Public URLs
 
 - Primary submission URL: `https://shanyuzhe.github.io/launchproof-mtp-2026/`
-- Secondary Vercel URL, if it catches up to the latest commit: `https://launchproof-mtp.vercel.app`
+- Do not use the stale Vercel preview in the Devpost submission unless it is separately re-verified.
 
 ## Local Development
 

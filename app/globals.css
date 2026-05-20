@@ -67,6 +67,7 @@ button {
 
 .brand-row,
 .topbar,
+.positioning-strip,
 .tabs,
 .decision-strip,
 .flow-row,
@@ -297,6 +298,29 @@ textarea {
   margin-bottom: 18px;
 }
 
+.positioning-strip {
+  flex-wrap: wrap;
+  gap: 10px 12px;
+  margin: -4px 0 18px;
+  border: 1px solid rgba(49, 87, 173, 0.16);
+  border-radius: 8px;
+  padding: 12px 14px;
+  color: #243b64;
+  background: #f4f7ff;
+}
+
+.positioning-strip strong {
+  color: #182016;
+  line-height: 1.35;
+}
+
+.positioning-strip span {
+  margin-left: auto;
+  color: #3157ad;
+  font-size: 0.82rem;
+  font-weight: 900;
+}
+
 .decision-strip {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -374,9 +398,12 @@ textarea {
 .risk-row,
 .metric,
 .criteria-card,
+.readiness-card,
+.proof-loop-card,
 .event-board,
 .event-feed,
 .testing-card,
+.proof-status-card,
 .pitch-block,
 .demo-script,
 .next-actions {
@@ -491,6 +518,9 @@ small {
 
 .event-board,
 .event-feed,
+.readiness-card,
+.proof-loop-card,
+.proof-status-card,
 .demo-script,
 .pitch-block,
 .next-actions {
@@ -499,6 +529,9 @@ small {
 
 .event-board,
 .event-feed,
+.readiness-card,
+.proof-loop-card,
+.proof-status-card,
 .testing-card {
   grid-column: span 2;
 }
@@ -547,6 +580,95 @@ small {
   margin-bottom: 0;
   color: #4b554d;
   line-height: 1.45;
+}
+
+.readiness-card,
+.proof-status-card {
+  display: grid;
+  gap: 10px;
+}
+
+.readiness-card div:not(.row-title),
+.proof-status-card div:not(.row-title) {
+  display: grid;
+  grid-template-columns: 86px minmax(0, 1fr);
+  gap: 4px 11px;
+  border-top: 1px solid rgba(24, 32, 22, 0.08);
+  padding-top: 10px;
+}
+
+.readiness-card span,
+.proof-status-card span {
+  align-self: start;
+  border-radius: 999px;
+  padding: 4px 8px;
+  text-align: center;
+  font-size: 0.72rem;
+  font-weight: 900;
+}
+
+.readiness-card .ready span,
+.proof-status-card span.ready {
+  color: #245c42;
+  background: #e7f3ea;
+}
+
+.readiness-card .needs-work span,
+.proof-status-card span.pending {
+  color: #7a3517;
+  background: #fff0df;
+}
+
+.readiness-card strong,
+.proof-status-card strong {
+  color: #182016;
+}
+
+.readiness-card p,
+.proof-status-card p {
+  grid-column: 2;
+  margin-bottom: 0;
+  color: #4b554d;
+  line-height: 1.42;
+}
+
+.proof-loop-card {
+  display: grid;
+  gap: 11px;
+}
+
+.proof-loop-row {
+  display: grid;
+  grid-template-columns: minmax(118px, 0.8fr) minmax(0, 132px) minmax(0, 1.2fr);
+  gap: 5px 11px;
+  border-top: 1px solid rgba(24, 32, 22, 0.08);
+  padding-top: 10px;
+}
+
+.proof-loop-row strong {
+  color: #182016;
+}
+
+.proof-loop-row p {
+  margin-bottom: 0;
+  color: #4b554d;
+  line-height: 1.42;
+}
+
+.proof-loop-row code {
+  align-self: start;
+  justify-self: start;
+  max-width: 100%;
+  border-radius: 6px;
+  padding: 5px 7px;
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+  white-space: normal;
+}
+
+.proof-loop-row small {
+  grid-column: 3;
+  margin-top: 0;
 }
 
 .event-board div:not(.row-title),
@@ -661,7 +783,10 @@ small {
   }
 
   .event-board,
-  .event-feed {
+  .event-feed,
+  .readiness-card,
+  .proof-loop-card,
+  .proof-status-card {
     grid-column: span 1;
   }
 
@@ -676,5 +801,21 @@ small {
 
   .copy-button {
     min-width: 112px;
+  }
+
+  .positioning-strip span {
+    margin-left: 0;
+  }
+
+  .proof-loop-row,
+  .readiness-card div:not(.row-title),
+  .proof-status-card div:not(.row-title) {
+    grid-template-columns: 1fr;
+  }
+
+  .proof-loop-row small,
+  .readiness-card p,
+  .proof-status-card p {
+    grid-column: 1;
   }
 }

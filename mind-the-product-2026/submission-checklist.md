@@ -30,6 +30,8 @@ Purpose: final launch gate for Devpost. Public-facing submission assets stay in 
 - Tagline: `AI helps you build faster. LaunchProof helps you prove it is ready to ship.`
 - Project Story pasted from `devpost-submission-draft.md`.
 - Inspiration, What it does, How we built it, Challenges, Accomplishments, What we learned, and What's next are filled.
+- About the Project leads with the AI-builder launch-readiness gap, not generic productivity.
+- About the Project makes the user, job-to-be-done, workflow, evidence, and honest limitations clear.
 - Built With field uses: `Next.js, React, GitHub Pages, Novus.ai, Pendo Web SDK, Browser Local Storage, lucide-react, GitHub`.
 - Testing Instructions pasted from `devpost-submission-draft.md`.
 - Responsible AI note included if Devpost provides a suitable field.
@@ -54,9 +56,13 @@ Purpose: final launch gate for Devpost. Public-facing submission assets stay in 
 - Source repository URL is public.
 - Testing instructions mention no credentials are required.
 - Seeded example works immediately.
+- One edited intake field visibly changes the generated packet.
 - `Generate Launch Packet` works after changing an intake field.
 - `Run Judge Demo` walks through the 90-second proof path.
 - `Brief`, `Flows`, `Risks`, `Evidence`, and `Pitch` tabs are visible.
+- Brief tab shows target user, problem, solution, success metric, and launch decision.
+- Flows tab shows critical paths and acceptance checks.
+- Risks tab shows risks paired with mitigations.
 - `Copy packet` works.
 - Evidence tab includes hackathon scorecard and event map.
 - Novus/Pendo dashboard screenshot corresponds to the tracked events.
@@ -69,6 +75,15 @@ Purpose: final launch gate for Devpost. Public-facing submission assets stay in 
 - Explain Originality and Ambition: product analytics becomes launch evidence for AI-built products.
 - Explain Shippedness: public app, no login, persistent draft, tracked events, dashboard screenshot.
 - Avoid overclaiming. Say "launch readiness packet" and "evidence signals", not "guaranteed product-market fit".
+
+## Final Judge Checklist
+
+- Product Thinking: clear target user, problem, job-to-be-done, and launch-readiness outcome.
+- Craft and Execution: one coherent experience from intake to brief, flows, risks, evidence, and export.
+- Originality and Ambition: analytics is framed as readiness evidence, not a bolt-on tracker.
+- Shippedness: public URL works, no login is required, seeded example works, draft persistence works, and Novus/Pendo proof is included.
+- Submission Quality: About copy, screenshots, video, testing instructions, and final links tell the same story.
+- Honesty: do not claim user research, automated QA, product-market fit validation, or production launch guarantees.
 
 ## Prize Strategy
 
@@ -83,7 +98,7 @@ Purpose: final launch gate for Devpost. Public-facing submission assets stay in 
 ## Final Gate
 
 - App URL: `https://shanyuzhe.github.io/launchproof-mtp-2026/`
-- Secondary app URL if Vercel catches up to the latest commit: `https://launchproof-mtp.vercel.app`
+- Do not use the stale Vercel preview for Devpost unless it is separately re-verified.
 - Source URL: `https://github.com/shanyuzhe/launchproof-mtp-2026`
 - Confirm public deployment contains the latest copy and UI.
 - Confirm Devpost links do not point to localhost, private previews, or stale deployments.

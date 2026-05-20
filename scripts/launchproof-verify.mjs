@@ -25,6 +25,9 @@ const requiredPublicStrings = [
   '90-second judge path',
   'Reset Demo',
   'Hackathon scorecard',
+  'Readiness rationale',
+  'Launch proof loop',
+  'Proof status',
   'Testing instructions',
 ];
 
