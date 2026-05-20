@@ -64,21 +64,22 @@ Do not paste the URL into Devpost until this command prints `[pass] LaunchProof 
 5. If the repo is connected but stale, use `Redeploy` from the latest deployment after the newest commit is on `main`.
 6. Re-open `https://launchproof-mtp.vercel.app` and confirm the latest-build strings above are present before recording the demo video.
 
-## Backup Path: GitHub Pages
+## Primary Path: GitHub Pages
 
-This repo also includes `.github/workflows/pages.yml`, which builds a static export and deploys it to GitHub Pages.
+The current public fallback uses the `gh-pages` branch, which contains the static export plus `.nojekyll`.
 
-Expected backup URL after Pages is enabled:
+Current public URL:
 
 `https://shanyuzhe.github.io/launchproof-mtp-2026/`
 
-If Vercel remains stuck:
+If the Pages URL 404s:
 
 1. Open the GitHub repository settings.
 2. Go to `Pages`.
-3. Set `Build and deployment` source to `GitHub Actions`.
-4. Re-run the `Deploy LaunchProof to GitHub Pages` workflow from the `Actions` tab if it did not run automatically.
-5. Run the verifier against the Pages URL:
+3. Set `Build and deployment` source to `Deploy from a branch`.
+4. Choose branch `gh-pages` and folder `/root`, then save.
+5. Wait for the built-in `pages build and deployment` workflow to finish.
+6. Run the verifier against the Pages URL:
 
 ```bash
 npm run verify:launchproof -- --url https://shanyuzhe.github.io/launchproof-mtp-2026/ --dashboard-screenshot path/to/novus-dashboard.png --demo-video-url https://...
@@ -86,14 +87,11 @@ npm run verify:launchproof -- --url https://shanyuzhe.github.io/launchproof-mtp-
 
 Use the Pages URL in Devpost only after the verifier prints `[pass] LaunchProof deploy verification passed.`.
 
-If the workflow build succeeds but the deploy job fails with `Ensure GitHub Pages has been enabled`, this is a repository setting issue, not an app build issue. Enable Pages at:
+The repo also includes `.github/workflows/pages.yml` as a manual-only alternative for a future GitHub Actions source. If that workflow build succeeds but the deploy job fails with `Ensure GitHub Pages has been enabled`, this is a repository setting issue, not an app build issue. Enable Pages at:
 
 `https://github.com/shanyuzhe/launchproof-mtp-2026/settings/pages`
 
-Then choose either:
-
-- `GitHub Actions` as the source, then re-run the failed `Deploy LaunchProof to GitHub Pages` job.
-- `Deploy from a branch` with branch `gh-pages` and folder `/root`; the static export has also been pushed there as a fallback.
+Then either keep branch deployment on `gh-pages` / `/root`, or switch source to `GitHub Actions` and re-run the manual `Deploy LaunchProof to GitHub Pages` workflow.
 
 ## If The Key Is Stuck In The Old Novus PR
 
