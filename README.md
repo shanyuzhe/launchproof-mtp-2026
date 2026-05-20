@@ -30,7 +30,7 @@ Tracked event examples:
 - `evidence_reviewed`
 - `export_clicked`
 
-Add the official Novus/Pendo install snippet to `index.html` once the dashboard provides it.
+Add the official Novus/Pendo install snippet to `app/layout.jsx` once the dashboard provides it.
 
 ## Hackathon Notes
 

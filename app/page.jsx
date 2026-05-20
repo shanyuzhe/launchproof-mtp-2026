@@ -1,5 +1,6 @@
-import React, { useMemo, useState } from 'react';
-import { createRoot } from 'react-dom/client';
+'use client';
+
+import { useMemo, useState } from 'react';
 import {
   ArrowRight,
   CheckCircle2,
@@ -11,7 +12,6 @@ import {
   ShieldAlert,
   Sparkles,
 } from 'lucide-react';
-import './styles.css';
 
 const sampleProject = {
   name: 'FollowUpFlow',
@@ -89,7 +89,7 @@ const makePacket = (project) => {
   };
 };
 
-function App() {
+export default function App() {
   const [project, setProject] = useState(sampleProject);
   const [activeTab, setActiveTab] = useState('brief');
   const [events, setEvents] = useState([
@@ -286,8 +286,8 @@ function App() {
                 <span>exportable pitch packet</span>
               </article>
               <div className="event-feed">
-                {events.map((eventName) => (
-                  <div key={`${eventName}-${Math.random()}`}>
+                {events.map((eventName, index) => (
+                  <div key={`${eventName}-${index}`}>
                     <ArrowRight size={15} />
                     <span>{eventName}</span>
                   </div>
@@ -300,5 +300,3 @@ function App() {
     </main>
   );
 }
-
-createRoot(document.getElementById('root')).render(<App />);
