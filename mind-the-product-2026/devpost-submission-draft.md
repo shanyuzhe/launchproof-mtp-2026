@@ -33,7 +33,7 @@ LaunchProof turns a rough product idea into a launch readiness packet that a jud
 
 The result is a concrete answer to the question every AI-built prototype faces: what must work, what evidence do we have, and what should we say when we ask someone to believe this is ready?
 
-The app also includes multiple sample products, including MeetingBridge and IssuePilot, so judges can see the workflow generalize beyond LaunchProof's own submission story.
+The app also includes multiple sample products, including MeetingBridge and IssuePilot, so judges can see the workflow generalize beyond LaunchProof's own submission story. The MeetingBridge sample is directly linkable at `https://shanyuzhe.github.io/launchproof-mtp-2026/?sample=meetingbridge`.
 
 ## Project Story
 
@@ -112,7 +112,7 @@ We also learned that the best hackathon demos are not just feature tours. They a
 Judges can test LaunchProof without creating an account.
 
 1. Open the public app: `https://shanyuzhe.github.io/launchproof-mtp-2026/`.
-2. Use the preloaded LaunchProof example, or click a sample product such as `MeetingBridge` to test a different AI-built product.
+2. Use the preloaded LaunchProof example, click a sample product such as `MeetingBridge`, or open the direct sample URL: `https://shanyuzhe.github.io/launchproof-mtp-2026/?sample=meetingbridge`.
 3. Optionally change one field, such as the target user or success metric, so the generated packet reflects a real edit.
 4. Click `Generate Launch Packet`.
 5. Click `Run Judge Demo` to step through the 90-second proof path.
@@ -158,5 +158,6 @@ LaunchProof uses AI-assisted development and structured product reasoning, but i
 ## Try It Out
 
 - App: https://shanyuzhe.github.io/launchproof-mtp-2026/
+- MeetingBridge sample: https://shanyuzhe.github.io/launchproof-mtp-2026/?sample=meetingbridge
 - Do not use the stale Vercel preview for Devpost unless it is separately re-verified.
 - Source: https://github.com/shanyuzhe/launchproof-mtp-2026

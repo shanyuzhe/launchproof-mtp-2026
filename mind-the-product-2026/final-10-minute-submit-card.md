@@ -39,6 +39,7 @@ Paste each field into Devpost.
 Use these links:
 
 - App: https://shanyuzhe.github.io/launchproof-mtp-2026/
+- MeetingBridge sample: https://shanyuzhe.github.io/launchproof-mtp-2026/?sample=meetingbridge
 - Source: https://github.com/shanyuzhe/launchproof-mtp-2026
 - Video: paste the uploaded video URL
 
@@ -71,6 +72,7 @@ Only submit when it prints:
 ## 5. Final Pre-Submit Scan
 
 - App link opens without login.
+- MeetingBridge sample link opens without login and shows MeetingBridge immediately.
 - Video link opens without login.
 - Video link is YouTube, Vimeo, or Youku.
 - Source link opens publicly.

@@ -26,6 +26,7 @@ const requiredPublicStrings = [
   'Reset Demo',
   'Sample products',
   'MeetingBridge',
+  '?sample=meetingbridge',
   'Hackathon scorecard',
   'Readiness rationale',
   'Launch proof loop',
@@ -43,6 +44,7 @@ const requiredDevpostSections = [
   '## Video Outline',
   '## Try It Out',
   '- App:',
+  '- MeetingBridge sample:',
   '- Source:',
 ];
 

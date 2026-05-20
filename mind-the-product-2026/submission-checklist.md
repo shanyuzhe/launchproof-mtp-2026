@@ -57,6 +57,7 @@ Purpose: final launch gate for Devpost. Public-facing submission assets stay in 
 - Testing instructions mention no credentials are required.
 - Seeded example works immediately.
 - Sample products such as `MeetingBridge` load and visibly change the generated packet.
+- Direct sample URL `https://shanyuzhe.github.io/launchproof-mtp-2026/?sample=meetingbridge` opens MeetingBridge without manual setup.
 - One edited intake field visibly changes the generated packet.
 - `Generate Launch Packet` works after changing an intake field.
 - `Run Judge Demo` walks through the 90-second proof path.
@@ -99,6 +100,7 @@ Purpose: final launch gate for Devpost. Public-facing submission assets stay in 
 ## Final Gate
 
 - App URL: `https://shanyuzhe.github.io/launchproof-mtp-2026/`
+- MeetingBridge sample URL: `https://shanyuzhe.github.io/launchproof-mtp-2026/?sample=meetingbridge`
 - Do not use the stale Vercel preview for Devpost unless it is separately re-verified.
 - Source URL: `https://github.com/shanyuzhe/launchproof-mtp-2026`
 - Confirm public deployment contains the latest copy and UI.
@@ -110,7 +112,7 @@ Purpose: final launch gate for Devpost. Public-facing submission assets stay in 
 
 - Confirm the chosen public URL deploys the latest GitHub commit before final submission.
 - If GitHub Pages returns 404, enable Pages in repository settings and choose branch `gh-pages` / `/root`.
-- Run `npm run verify:launchproof -- --url https://shanyuzhe.github.io/launchproof-mtp-2026/ --dashboard-screenshot path/to/novus-dashboard.png --demo-video-url https://...` and require a `[pass]` result.
+- Run `node scripts/final-submit-check.mjs https://...` after saving `novus-pendo-dashboard.png` and require a `[pass]` result.
 - Capture a fresh Novus.ai/Pendo dashboard screenshot after the final deployed build receives events.
 - Record and upload the demo video to YouTube, Vimeo, or Youku.
 - Confirm whether we enter as solo or team.

@@ -5,6 +5,7 @@ Use this file as the final Devpost assembly checklist.
 ## Public Links
 
 - App: https://shanyuzhe.github.io/launchproof-mtp-2026/
+- MeetingBridge sample: https://shanyuzhe.github.io/launchproof-mtp-2026/?sample=meetingbridge
 - Source: https://github.com/shanyuzhe/launchproof-mtp-2026
 - Demo video: TODO after upload
 - Devpost paste fields: `mind-the-product-2026/devpost-paste-fields.md`
@@ -23,6 +24,7 @@ Use this file as the final Devpost assembly checklist.
 ## Evidence Already Verified
 
 - Public app opens without login.
+- Direct MeetingBridge sample URL opens without login and generates a project-specific evidence packet.
 - `Run Judge Demo` works on the deployed URL.
 - `Copy packet` works on the deployed URL.
 - Pendo loads from `cdn.pendo.io`.
