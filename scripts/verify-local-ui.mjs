@@ -37,8 +37,24 @@ async function main() {
   }
 
   const browser = await chromium.launch(launchOptions);
-  const context = await browser.newContext({ viewport: { width: 1440, height: 960 } });
   const origin = new URL(APP_URL).origin;
+
+  try {
+    await verifyDesktopFlow(browser, origin);
+    await verifyMobileFlow(browser, origin);
+  } finally {
+    await browser.close();
+
+    if (server) {
+      server.kill();
+    }
+  }
+
+  console.log(`[pass] Local UI verified and screenshots refreshed from ${APP_URL}`);
+}
+
+async function verifyDesktopFlow(browser, origin) {
+  const context = await browser.newContext({ viewport: { width: 1440, height: 960 } });
   await context.grantPermissions(['clipboard-write', 'clipboard-read'], { origin });
   const page = await context.newPage();
 
@@ -46,12 +62,14 @@ async function main() {
     await page.goto(APP_URL, { waitUntil: 'networkidle' });
     await expectText(page, 'MeetingBridge');
     await expectText(page, 'Resilience');
+    await assertNoDocumentHorizontalOverflow(page, 'desktop landing');
     await page.screenshot({ path: 'launchproof-main-workflow.png', fullPage: false });
 
     await page.getByRole('button', { name: 'Generate Launch Packet' }).click();
     await page.getByRole('button', { name: 'Resilience', exact: true }).click();
     await expectText(page, 'Resilience before shippedness');
     await expectText(page, 'Do not ship if');
+    await assertNoDocumentHorizontalOverflow(page, 'desktop resilience');
     await page.screenshot({ path: 'launchproof-resilience-review.png', fullPage: false });
 
     await page.getByRole('button', { name: 'Run Judge Demo' }).click();
@@ -65,6 +83,7 @@ async function main() {
     await expectText(page, 'Hackathon scorecard');
     await expectText(page, 'Behavior coverage');
     await expectText(page, '7/7 proof behaviors completed this session');
+    await assertNoDocumentHorizontalOverflow(page, 'desktop evidence');
     await page.screenshot({ path: 'launchproof-evidence-scorecard.png', fullPage: false });
 
     await page.getByText('Behavior coverage').scrollIntoViewIfNeeded();
@@ -72,14 +91,38 @@ async function main() {
     await page.screenshot({ path: 'launchproof-devpost-gallery.png', fullPage: true });
   } finally {
     await context.close();
-    await browser.close();
-
-    if (server) {
-      server.kill();
-    }
   }
+}
 
-  console.log(`[pass] Local UI verified and screenshots refreshed from ${APP_URL}`);
+async function verifyMobileFlow(browser, origin) {
+  const context = await browser.newContext({
+    viewport: { width: 390, height: 844 },
+    isMobile: true,
+    hasTouch: true,
+  });
+  await context.grantPermissions(['clipboard-write', 'clipboard-read'], { origin });
+  const page = await context.newPage();
+
+  try {
+    await page.goto(APP_URL, { waitUntil: 'networkidle' });
+    await expectText(page, 'MeetingBridge');
+    await expectText(page, '90-second judge path');
+    await assertNoDocumentHorizontalOverflow(page, 'mobile landing');
+
+    await page.getByRole('button', { name: 'Generate Launch Packet' }).click();
+    await page.getByRole('button', { name: 'Resilience', exact: true }).click();
+    await expectText(page, 'Resilience before shippedness');
+    await expectText(page, 'Do not ship if');
+    await assertNoDocumentHorizontalOverflow(page, 'mobile resilience');
+    await page.screenshot({ path: 'launchproof-mobile-resilience.png', fullPage: true });
+
+    await page.getByRole('button', { name: 'Evidence', exact: true }).click();
+    await expectText(page, 'Hackathon scorecard');
+    await expectText(page, 'Behavior coverage');
+    await assertNoDocumentHorizontalOverflow(page, 'mobile evidence');
+  } finally {
+    await context.close();
+  }
 }
 
 function startNextServer() {
@@ -131,4 +174,17 @@ async function waitForHttp(url) {
 async function expectText(page, text) {
   const locator = page.getByText(text).first();
   await locator.waitFor({ state: 'visible', timeout: 10000 });
+}
+
+async function assertNoDocumentHorizontalOverflow(page, label) {
+  const overflow = await page.evaluate(() => ({
+    scrollWidth: document.documentElement.scrollWidth,
+    viewportWidth: window.innerWidth,
+  }));
+
+  if (overflow.scrollWidth > overflow.viewportWidth + 2) {
+    throw new Error(
+      `${label} has page-level horizontal overflow: ${overflow.scrollWidth}px document vs ${overflow.viewportWidth}px viewport`,
+    );
+  }
 }

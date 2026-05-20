@@ -86,6 +86,6 @@ Required:
 7. Project Story: paste from `devpost-submission-draft.md`.
 8. Testing Instructions: paste from `devpost-submission-draft.md`.
 9. Video URL: paste the public or unlisted YouTube/Vimeo/Youku link.
-10. Screenshot uploads: `launchproof-main-workflow.png`, `launchproof-evidence-scorecard.png`, `launchproof-behavior-coverage.png`, and `novus-pendo-dashboard.png`.
+10. Screenshot uploads: `launchproof-main-workflow.png`, `launchproof-resilience-review.png`, `launchproof-mobile-resilience.png`, `launchproof-evidence-scorecard.png`, `launchproof-behavior-coverage.png`, and `novus-pendo-dashboard.png`.
 
 Before clicking submit, open the app URL in a fresh browser tab and follow the exact testing instructions once.

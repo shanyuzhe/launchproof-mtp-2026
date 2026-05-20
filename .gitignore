@@ -7,6 +7,7 @@ launchproof-*.png
 launchproof-*.webm
 !launchproof-main-workflow.png
 !launchproof-resilience-review.png
+!launchproof-mobile-resilience.png
 !launchproof-evidence-scorecard.png
 !launchproof-behavior-coverage.png
 !launchproof-devpost-gallery.png

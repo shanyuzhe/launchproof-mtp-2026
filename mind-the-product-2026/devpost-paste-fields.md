@@ -32,9 +32,10 @@ Upload in this order:
 
 1. `launchproof-main-workflow.png`
 2. `launchproof-resilience-review.png`
-3. `launchproof-evidence-scorecard.png`
-4. `launchproof-behavior-coverage.png`
-5. `novus-pendo-dashboard.png`
+3. `launchproof-mobile-resilience.png`
+4. `launchproof-evidence-scorecard.png`
+5. `launchproof-behavior-coverage.png`
+6. `novus-pendo-dashboard.png`
 
 ## About The Project
 

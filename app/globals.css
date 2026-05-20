@@ -112,6 +112,18 @@ p {
   margin-top: 0;
 }
 
+h1,
+h2,
+h3,
+p,
+strong,
+span,
+small,
+code,
+li {
+  overflow-wrap: anywhere;
+}
+
 h1 {
   margin-bottom: 0;
   font-size: 1.42rem;
@@ -1039,6 +1051,16 @@ small {
 
   .copy-button {
     min-width: 112px;
+  }
+
+  .topbar {
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .topbar .copy-button {
+    width: 100%;
+    min-width: 0;
   }
 
   .positioning-strip span {

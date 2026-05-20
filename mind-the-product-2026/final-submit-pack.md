@@ -18,8 +18,9 @@ Use this file as the final Devpost assembly checklist.
 
 - First gallery image: `launchproof-main-workflow.png`
 - Second gallery image: `launchproof-resilience-review.png`
-- Third gallery image: `launchproof-evidence-scorecard.png`
-- Fourth gallery image: `launchproof-behavior-coverage.png`
+- Third gallery image: `launchproof-mobile-resilience.png`
+- Fourth gallery image: `launchproof-evidence-scorecard.png`
+- Fifth gallery image: `launchproof-behavior-coverage.png`
 - Demo video file before upload: `launchproof-demo-video.webm` (94.4 seconds, captioned, under the 3-minute limit)
 - Uploaded demo video URL must be the real public/unlisted YouTube, Vimeo, or Youku watch/share URL, not a placeholder.
 - Required Novus/Pendo screenshot: save as `novus-pendo-dashboard.png`
@@ -30,6 +31,7 @@ Use this file as the final Devpost assembly checklist.
 - Direct MeetingBridge sample URL opens without login and generates a project-specific evidence packet.
 - `Run Judge Demo` works on the deployed URL.
 - `Copy packet` works on the deployed URL.
+- Mobile-width resilience review is verified by `launchproof-mobile-resilience.png`.
 - Pendo loads from `cdn.pendo.io`.
 - Pendo recording/event requests are sent to `data.pendo.io/data/rec/...` and return HTTP 200.
 

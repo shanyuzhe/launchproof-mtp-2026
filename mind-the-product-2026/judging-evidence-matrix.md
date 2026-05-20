@@ -7,7 +7,7 @@ Use this as the final internal audit before submitting on Devpost. The goal is t
 | Criterion | What judges are scoring | LaunchProof claim | Evidence to show |
 | --- | --- | --- | --- |
 | Product Thinking | Clear user, worthwhile problem, clear job-to-be-done, why it matters | AI builders can create prototypes faster than they can prove launch readiness | App opening copy, Devpost Inspiration, MeetingBridge sample, Product Thinking card in Evidence |
-| Craft and Execution | Coherent end-to-end experience, polished UI, intentional copy | One workflow moves from intake to brief, flows, risks, resilience, evidence, and export | Live app, `Run Judge Demo`, `launchproof-main-workflow.png`, `launchproof-resilience-review.png`, demo video |
+| Craft and Execution | Coherent end-to-end experience, polished UI, intentional copy | One workflow moves from intake to brief, flows, risks, resilience, evidence, and export | Live app, `Run Judge Demo`, `launchproof-main-workflow.png`, `launchproof-resilience-review.png`, `launchproof-mobile-resilience.png`, demo video |
 | Originality and Ambition | Specific and surprising product idea | LaunchProof treats analytics and resilience as product proof, not a bolt-on tracker | Resilience tab, Novus event map, launch proof loop, behavior coverage panel |
 | Shippedness | Stranger can land on URL and get value now, with measurable behavior | Public app works without login, sample URL loads, behavior coverage reaches 7/7, Novus/Pendo tracks events | GitHub Pages URL, MeetingBridge sample URL, `launchproof-behavior-coverage.png`, Novus/Pendo dashboard screenshot |
 
@@ -31,6 +31,7 @@ Use this as the final internal audit before submitting on Devpost. The goal is t
 - Gallery assets:
   - `launchproof-main-workflow.png`
   - `launchproof-resilience-review.png`
+  - `launchproof-mobile-resilience.png`
   - `launchproof-evidence-scorecard.png`
   - `launchproof-behavior-coverage.png`
   - `launchproof-devpost-gallery.png`

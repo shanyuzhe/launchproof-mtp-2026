@@ -43,6 +43,7 @@ Purpose: final launch gate for Devpost. Public-facing submission assets stay in 
 - App screenshot shows the main workflow, not a blank landing page.
 - Upload `launchproof-main-workflow.png` as the first Devpost gallery image.
 - Upload `launchproof-resilience-review.png` as an additional gallery image.
+- Upload `launchproof-mobile-resilience.png` as a mobile-width craft evidence image.
 - Upload `launchproof-evidence-scorecard.png` as an additional gallery image.
 - Upload `launchproof-behavior-coverage.png` as an additional gallery image.
 - Novus.ai/Pendo dashboard screenshot is included and clearly shows LaunchProof events.

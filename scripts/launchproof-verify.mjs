@@ -275,6 +275,7 @@ async function checkDevpostMaterials() {
   const videoScriptPath = resolve(repoRoot, 'mind-the-product-2026/video-script.md');
   const galleryImagePath = resolve(repoRoot, 'launchproof-devpost-gallery.png');
   const resilienceImagePath = resolve(repoRoot, 'launchproof-resilience-review.png');
+  const mobileResilienceImagePath = resolve(repoRoot, 'launchproof-mobile-resilience.png');
   const behaviorCoverageImagePath = resolve(repoRoot, 'launchproof-behavior-coverage.png');
 
   const draft = await readRequiredFile(draftPath);
@@ -310,6 +311,10 @@ async function checkDevpostMaterials() {
 
   if (!isNonEmptyFile(resilienceImagePath)) {
     failures.push(`Resilience gallery image is missing or empty: ${resilienceImagePath}`);
+  }
+
+  if (!isNonEmptyFile(mobileResilienceImagePath)) {
+    failures.push(`Mobile resilience evidence image is missing or empty: ${mobileResilienceImagePath}`);
   }
 
   if (!isNonEmptyFile(behaviorCoverageImagePath)) {
