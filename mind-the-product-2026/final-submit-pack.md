@@ -9,6 +9,7 @@ Use this file as the final Devpost assembly checklist.
 - Demo video: TODO after upload
 - Devpost paste fields: `mind-the-product-2026/devpost-paste-fields.md`
 - Novus evidence steps: `mind-the-product-2026/novus-evidence-runbook.md`
+- Video upload steps: `mind-the-product-2026/video-upload-runbook.md`
 
 ## Upload Assets
 
