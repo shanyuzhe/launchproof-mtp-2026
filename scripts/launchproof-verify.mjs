@@ -36,6 +36,8 @@ const requiredPublicStrings = [
   'Behavior coverage',
   'AI builder provenance',
   'Codex and GPT-5',
+  'Why this should win',
+  'Measurable shippedness',
   'Testing instructions',
 ];
 

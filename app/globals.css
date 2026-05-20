@@ -514,6 +514,7 @@ textarea {
 .testing-card,
 .proof-status-card,
 .behavior-coverage-card,
+.verdict-card,
 .pitch-block,
 .demo-script,
 .next-actions {
@@ -694,6 +695,7 @@ small {
 .proof-status-card,
 .behavior-coverage-card,
 .demo-script,
+.verdict-card,
 .pitch-block,
 .next-actions {
   padding: 17px;
@@ -997,6 +999,36 @@ small {
   gap: 14px;
 }
 
+.verdict-card {
+  grid-column: 1 / -1;
+  display: grid;
+  gap: 12px;
+}
+
+.verdict-card > div:not(.row-title) {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.verdict-card section {
+  border-radius: 7px;
+  padding: 13px;
+  background: #f8fbf5;
+}
+
+.verdict-card strong {
+  display: block;
+  margin-bottom: 7px;
+  color: #182016;
+}
+
+.verdict-card p {
+  margin-bottom: 0;
+  color: #4b554d;
+  line-height: 1.45;
+}
+
 .demo-script {
   display: grid;
   gap: 11px;
@@ -1085,6 +1117,10 @@ small {
   }
 
   .criteria-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .verdict-card > div:not(.row-title) {
     grid-template-columns: 1fr;
   }
 

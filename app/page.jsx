@@ -471,6 +471,24 @@ const makePacket = (project) => {
       },
     ],
     builderProof: aiBuilderProof,
+    judgeVerdict: [
+      {
+        label: 'Product clarity',
+        proof: 'One specific user, one launch decision, and one first-value metric are visible before the demo becomes a feature tour.',
+      },
+      {
+        label: 'Working product',
+        proof: 'A judge can open the public URL, load a seeded sample, run the proof path, and export a packet without login.',
+      },
+      {
+        label: 'Measurable shippedness',
+        proof: 'The app maps meaningful actions to Novus/Pendo events and shows behavior coverage before the external dashboard screenshot.',
+      },
+      {
+        label: 'Honest resilience',
+        proof: 'The product names pressure cases, recovery moves, evidence signals, and no-ship conditions instead of hiding uncertainty.',
+      },
+    ],
     testing: [
       'Open the public LaunchProof URL.',
       'Edit the product brief fields or use the default LaunchProof example.',
@@ -564,6 +582,9 @@ const buildExport = (project, packet) =>
     '',
     '## AI builder provenance',
     ...packet.builderProof.map((item) => `- ${item.label}: ${item.proof}`),
+    '',
+    '## Why this should win',
+    ...packet.judgeVerdict.map((item) => `- ${item.label}: ${item.proof}`),
     '',
     '## 90-second judge demo script',
     ...packet.demoScript.map((item) => `- ${item.timebox} ${item.beat}: ${item.proof}`),
@@ -1217,6 +1238,20 @@ export default function App() {
 
           {activeTab === 'pitch' && (
             <div className="pitch-layout">
+              <article className="verdict-card">
+                <div className="row-title">
+                  <h3>Why this should win</h3>
+                  <BadgeCheck size={18} />
+                </div>
+                <div>
+                  {packet.judgeVerdict.map((item) => (
+                    <section key={item.label}>
+                      <strong>{item.label}</strong>
+                      <p>{item.proof}</p>
+                    </section>
+                  ))}
+                </div>
+              </article>
               <article className="pitch-block">
                 <div className="row-title">
                   <h3>Judge-facing story</h3>

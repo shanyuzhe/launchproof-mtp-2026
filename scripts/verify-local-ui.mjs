@@ -90,6 +90,11 @@ async function verifyDesktopFlow(browser, origin) {
     await page.getByText('Behavior coverage').scrollIntoViewIfNeeded();
     await page.screenshot({ path: 'launchproof-behavior-coverage.png', fullPage: false });
     await page.screenshot({ path: 'launchproof-devpost-gallery.png', fullPage: true });
+
+    await page.getByRole('button', { name: 'Pitch', exact: true }).click();
+    await expectText(page, 'Why this should win');
+    await expectText(page, 'Measurable shippedness');
+    await assertNoDocumentHorizontalOverflow(page, 'desktop pitch');
   } finally {
     await context.close();
   }
@@ -122,6 +127,10 @@ async function verifyMobileFlow(browser, origin) {
     await expectText(page, 'AI builder provenance');
     await expectText(page, 'Behavior coverage');
     await assertNoDocumentHorizontalOverflow(page, 'mobile evidence');
+
+    await page.getByRole('button', { name: 'Pitch', exact: true }).click();
+    await expectText(page, 'Why this should win');
+    await assertNoDocumentHorizontalOverflow(page, 'mobile pitch');
   } finally {
     await context.close();
   }
