@@ -10,6 +10,7 @@ Use this file as the final Devpost assembly checklist.
 - Devpost paste fields: `mind-the-product-2026/devpost-paste-fields.md`
 - Novus evidence steps: `mind-the-product-2026/novus-evidence-runbook.md`
 - Video upload steps: `mind-the-product-2026/video-upload-runbook.md`
+- Final 10-minute submit card: `mind-the-product-2026/final-10-minute-submit-card.md`
 
 ## Upload Assets
 
@@ -32,6 +33,12 @@ Run this after the real Novus/Pendo dashboard screenshot and uploaded video URL 
 
 ```bash
 npm run verify:launchproof -- --url https://shanyuzhe.github.io/launchproof-mtp-2026/ --dashboard-screenshot novus-pendo-dashboard.png --demo-video-url https://...
+```
+
+Shortcut:
+
+```bash
+node scripts/final-submit-check.mjs https://...
 ```
 
 Do not click Devpost Submit until the command prints `[pass] LaunchProof deploy verification passed.`.
