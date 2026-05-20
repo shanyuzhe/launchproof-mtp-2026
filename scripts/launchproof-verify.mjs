@@ -39,6 +39,8 @@ const requiredPublicStrings = [
   'Codex and GPT-5',
   'Why this should win',
   'Measurable shippedness',
+  'Judge evidence trace',
+  'No hidden setup',
   'Testing instructions',
 ];
 

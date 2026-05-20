@@ -79,6 +79,7 @@ A second challenge was making Novus.ai feel like part of the product rather than
 - Made Codex/GPT-5 builder provenance visible in the app, export packet, and submission docs.
 - Mapped the product evidence directly to Product Thinking, Craft and Execution, Originality and Ambition, and Shippedness.
 - Added a readiness rationale and launch proof loop so the score is explainable instead of decorative.
+- Added a Judge evidence trace so every judging criterion maps to visible product evidence, a quick judge test, and an honest limit.
 - Added draft persistence so builders can return to a packet without losing work.
 - Built the project so it can be useful beyond one hackathon.
 
@@ -110,8 +111,9 @@ Judges can test LaunchProof without creating an account.
 9. In `Risks`, review the launch risks and mitigations.
 10. In `Resilience`, confirm the packet names the pressure case, recovery move, evidence signal, and no-ship condition.
 11. In `Evidence`, review the hackathon scorecard, readiness rationale, launch proof loop, proof status, behavior coverage, and Novus/Pendo event map.
-12. Click `Copy packet` to copy the pitch-ready launch packet and confirm the `Copied` state appears. If clipboard permission is blocked, use the fallback export text area.
-13. Compare the local event feed and tracked actions with the Novus.ai/Pendo dashboard screenshot included in the submission.
+12. In `Pitch`, review `Why this should win`, the Judge evidence trace, the 90-second demo script, and submission next steps.
+13. Click `Copy packet` to copy the pitch-ready launch packet and confirm the `Copied` state appears. If clipboard permission is blocked, use the fallback export text area.
+14. Compare the local event feed and tracked actions with the Novus.ai/Pendo dashboard screenshot included in the submission.
 
 No login is required. The app stores draft changes in browser local storage. A successful test should show a local event feed update, a visible Novus/Pendo SDK state, and the copied or fallback launch packet. The included Novus.ai/Pendo dashboard screenshot is the final confirmation that tracked events reached the external analytics system.
 

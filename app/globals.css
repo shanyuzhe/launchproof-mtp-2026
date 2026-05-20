@@ -515,6 +515,7 @@ textarea {
 .proof-status-card,
 .behavior-coverage-card,
 .verdict-card,
+.rubric-trace-card,
 .pitch-block,
 .demo-script,
 .next-actions {
@@ -695,6 +696,7 @@ small {
 .proof-status-card,
 .behavior-coverage-card,
 .demo-script,
+.rubric-trace-card,
 .verdict-card,
 .pitch-block,
 .next-actions {
@@ -1029,6 +1031,50 @@ small {
   line-height: 1.45;
 }
 
+.rubric-trace-card {
+  grid-column: span 2;
+  display: grid;
+  gap: 11px;
+}
+
+.rubric-trace-card section {
+  display: grid;
+  gap: 7px;
+  border-top: 1px solid rgba(24, 32, 22, 0.08);
+  padding-top: 10px;
+}
+
+.rubric-trace-card section:first-of-type {
+  border-top: 0;
+  padding-top: 0;
+}
+
+.rubric-trace-card section div {
+  display: grid;
+  grid-template-columns: minmax(132px, 0.42fr) minmax(0, 1fr);
+  gap: 10px;
+}
+
+.rubric-trace-card strong {
+  color: #182016;
+}
+
+.rubric-trace-card span {
+  color: #243b64;
+  font-weight: 900;
+  line-height: 1.35;
+}
+
+.rubric-trace-card p {
+  margin-bottom: 0;
+  color: #4b554d;
+  line-height: 1.42;
+}
+
+.rubric-trace-card small {
+  margin-top: 0;
+}
+
 .demo-script {
   display: grid;
   gap: 11px;
@@ -1101,6 +1147,7 @@ small {
   .builder-proof-card,
   .proof-loop-card,
   .behavior-coverage-card,
+  .rubric-trace-card,
   .proof-status-card {
     grid-column: span 1;
   }
@@ -1143,6 +1190,7 @@ small {
   }
 
   .proof-loop-row,
+  .rubric-trace-card section div,
   .builder-proof-card div:not(.row-title),
   .readiness-card div:not(.row-title),
   .proof-status-card div:not(.row-title) {

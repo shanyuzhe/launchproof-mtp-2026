@@ -489,6 +489,32 @@ const makePacket = (project) => {
         proof: 'The product names pressure cases, recovery moves, evidence signals, and no-ship conditions instead of hiding uncertainty.',
       },
     ],
+    rubricTrace: [
+      {
+        criterion: 'Product Thinking',
+        evidence: `${name} turns ${user} into a launch hypothesis, critical flows, risks, and a measurable first-value behavior.`,
+        judgeTest: 'A judge can say who it serves and what decision the product supports in under 30 seconds.',
+        limit: 'It does not claim product-market fit; it creates the evidence packet a team would need before that claim.',
+      },
+      {
+        criterion: 'Craft and Execution',
+        evidence: 'The core workflow runs from a public URL with seeded samples, editable inputs, tabbed review, and packet export.',
+        judgeTest: 'A stranger can complete Brief, Flows, Risks, Resilience, Evidence, Pitch, and Copy packet without setup.',
+        limit: 'The final external proof still depends on the submitted Novus/Pendo dashboard screenshot.',
+      },
+      {
+        criterion: 'Originality and Ambition',
+        evidence: 'LaunchProof uses AI-builder speed to produce product judgment artifacts instead of another generic chatbot.',
+        judgeTest: 'The demo connects resilience, analytics, and pitch readiness into one repeatable launch workflow.',
+        limit: 'The runtime app is intentionally structured guidance, not an autonomous research or QA replacement.',
+      },
+      {
+        criterion: 'Shippedness',
+        evidence: 'The app is deployed, instrumented, verified by scripts, and records meaningful product actions as events.',
+        judgeTest: 'A judge can open the URL, run the proof path, and compare local behavior coverage with analytics evidence.',
+        limit: 'No hidden setup is required for the app, but external video and dashboard artifacts must stay public in Devpost.',
+      },
+    ],
     testing: [
       'Open the public LaunchProof URL.',
       'Edit the product brief fields or use the default LaunchProof example.',
@@ -585,6 +611,11 @@ const buildExport = (project, packet) =>
     '',
     '## Why this should win',
     ...packet.judgeVerdict.map((item) => `- ${item.label}: ${item.proof}`),
+    '',
+    '## Judge evidence trace',
+    ...packet.rubricTrace.map(
+      (item) => `- ${item.criterion}: Evidence: ${item.evidence} Judge test: ${item.judgeTest} Limit: ${item.limit}`,
+    ),
     '',
     '## 90-second judge demo script',
     ...packet.demoScript.map((item) => `- ${item.timebox} ${item.beat}: ${item.proof}`),
@@ -1258,6 +1289,22 @@ export default function App() {
                   <CheckCircle2 size={18} />
                 </div>
                 <p>{packet.pitch}</p>
+              </article>
+              <article className="rubric-trace-card">
+                <div className="row-title">
+                  <h3>Judge evidence trace</h3>
+                  <GitBranch size={18} />
+                </div>
+                {packet.rubricTrace.map((item) => (
+                  <section key={item.criterion}>
+                    <div>
+                      <strong>{item.criterion}</strong>
+                      <span>{item.judgeTest}</span>
+                    </div>
+                    <p>{item.evidence}</p>
+                    <small>{item.limit}</small>
+                  </section>
+                ))}
               </article>
               <article className="demo-script">
                 <div className="row-title">

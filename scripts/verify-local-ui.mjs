@@ -94,6 +94,8 @@ async function verifyDesktopFlow(browser, origin) {
     await page.getByRole('button', { name: 'Pitch', exact: true }).click();
     await expectText(page, 'Why this should win');
     await expectText(page, 'Measurable shippedness');
+    await expectText(page, 'Judge evidence trace');
+    await expectText(page, 'No hidden setup');
     await assertNoDocumentHorizontalOverflow(page, 'desktop pitch');
   } finally {
     await context.close();
@@ -130,6 +132,7 @@ async function verifyMobileFlow(browser, origin) {
 
     await page.getByRole('button', { name: 'Pitch', exact: true }).click();
     await expectText(page, 'Why this should win');
+    await expectText(page, 'Judge evidence trace');
     await assertNoDocumentHorizontalOverflow(page, 'mobile pitch');
   } finally {
     await context.close();
