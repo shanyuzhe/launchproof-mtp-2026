@@ -9,13 +9,19 @@
     "build": "next build",
     "build:static": "next build",
     "verify:launchproof": "node scripts/launchproof-verify.mjs",
+    "verify:ui": "node scripts/verify-local-ui.mjs",
     "start": "next start"
   },
   "dependencies": {
+    "lucide-react": "^0.561.0",
     "next": "^16.2.2",
     "react": "^19.2.0",
-    "react-dom": "^19.2.0",
-    "lucide-react": "^0.561.0"
+    "react-dom": "^19.2.0"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "playwright": "^1.60.0"
+  },
+  "overrides": {
+    "postcss": "8.5.10"
+  }
 }

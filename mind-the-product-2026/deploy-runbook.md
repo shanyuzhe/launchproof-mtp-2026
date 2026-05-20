@@ -23,7 +23,7 @@ node scripts/final-submit-check.mjs https://...
 The script fails loud if:
 
 - the public URL does not return the latest-build strings listed above
-- the public bundle does not contain the Pendo CDN loader, `pendo.initialize`, the Novus/Pendo connected status, and the expected public install key
+- the public bundle does not contain the Pendo CDN loader, `pendo.initialize`, the Novus/Pendo SDK status text, and the expected public install key
 - Devpost draft/checklist/video-script materials are missing required sections
 - the Novus/Pendo dashboard screenshot path is missing or empty
 - the uploaded demo video URL is missing or malformed
@@ -82,7 +82,7 @@ Required:
 3. App URL: `https://shanyuzhe.github.io/launchproof-mtp-2026/`.
 4. MeetingBridge sample URL: `https://shanyuzhe.github.io/launchproof-mtp-2026/?sample=meetingbridge`.
 5. Source URL: `https://github.com/shanyuzhe/launchproof-mtp-2026`.
-6. Built With: `Next.js, React, GitHub Pages, Novus.ai, Pendo Web SDK, Browser Local Storage, lucide-react, GitHub`.
+6. Built With: `Next.js, React, Codex and GPT-5 AI Builder Workflow, GitHub Pages, Novus.ai, Pendo Web SDK, Browser Local Storage, lucide-react, GitHub`.
 7. Project Story: paste from `devpost-submission-draft.md`.
 8. Testing Instructions: paste from `devpost-submission-draft.md`.
 9. Video URL: paste the public or unlisted YouTube/Vimeo/Youku link.

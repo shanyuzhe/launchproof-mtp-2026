@@ -50,9 +50,10 @@ Use these links:
 Upload images:
 
 1. `launchproof-main-workflow.png`
-2. `launchproof-evidence-scorecard.png`
-3. `launchproof-behavior-coverage.png`
-4. `novus-pendo-dashboard.png`
+2. `launchproof-resilience-review.png`
+3. `launchproof-evidence-scorecard.png`
+4. `launchproof-behavior-coverage.png`
+5. `novus-pendo-dashboard.png`
 
 ## 4. Run Final Gate
 
@@ -85,6 +86,6 @@ Only submit when it prints:
 - Project story is in English.
 - About copy names the user, problem, workflow, evidence, and honest limits.
 - About copy mentions sample products such as MeetingBridge so the project does not read as only a self-demo.
-- Testing instructions walk a judge through Brief, Flows, Risks, Evidence, Pitch, and Copy packet.
+- Testing instructions walk a judge through Brief, Flows, Risks, Resilience, Evidence, Pitch, and Copy packet.
 - The submission visibly covers Product Thinking, Craft and Execution, Originality and Ambition, and Shippedness.
 - Submission is not still marked draft.

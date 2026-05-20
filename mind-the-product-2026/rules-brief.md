@@ -81,7 +81,7 @@ Tie-break order starts with the first listed criterion, so Product Thinking is e
 
 - Lead with the changed bottleneck: AI made building faster, but launch readiness is still scarce.
 - Make Novus.ai part of the story: LaunchProof maps meaningful product actions to measurable behavior evidence.
-- Keep the promise concrete: a launch readiness packet with brief, flows, risks, evidence, and pitch export.
+- Keep the promise concrete: a launch readiness packet with brief, flows, risks, resilience check, evidence, and pitch export.
 - Do not position the app as a full PM suite, analytics platform, or user research replacement.
 - Tie every major claim back to one judging category.
 - The fastest judge skim should reveal: clear user, clear workflow, public URL, Novus evidence, and useful output.

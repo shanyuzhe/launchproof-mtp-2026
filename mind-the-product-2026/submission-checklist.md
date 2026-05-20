@@ -32,7 +32,7 @@ Purpose: final launch gate for Devpost. Public-facing submission assets stay in 
 - Inspiration, What it does, How we built it, Challenges, Accomplishments, What we learned, and What's next are filled.
 - About the Project leads with the AI-builder launch-readiness gap, not generic productivity.
 - About the Project makes the user, job-to-be-done, workflow, evidence, and honest limitations clear.
-- Built With field uses: `Next.js, React, GitHub Pages, Novus.ai, Pendo Web SDK, Browser Local Storage, lucide-react, GitHub`.
+- Built With field uses: `Next.js, React, Codex and GPT-5 AI Builder Workflow, GitHub Pages, Novus.ai, Pendo Web SDK, Browser Local Storage, lucide-react, GitHub`.
 - Testing Instructions pasted from `devpost-submission-draft.md`.
 - Responsible AI note included if Devpost provides a suitable field.
 - English-only public submission materials.
@@ -41,6 +41,7 @@ Purpose: final launch gate for Devpost. Public-facing submission assets stay in 
 
 - App screenshot shows the main workflow, not a blank landing page.
 - Upload `launchproof-main-workflow.png` as the first Devpost gallery image.
+- Upload `launchproof-resilience-review.png` as an additional gallery image.
 - Upload `launchproof-evidence-scorecard.png` as an additional gallery image.
 - Upload `launchproof-behavior-coverage.png` as an additional gallery image.
 - Novus.ai/Pendo dashboard screenshot is included and clearly shows LaunchProof events.
@@ -63,11 +64,12 @@ Purpose: final launch gate for Devpost. Public-facing submission assets stay in 
 - One edited intake field visibly changes the generated packet.
 - `Generate Launch Packet` works after changing an intake field.
 - `Run Judge Demo` walks through the 90-second proof path.
-- `Brief`, `Flows`, `Risks`, `Evidence`, and `Pitch` tabs are visible.
+- `Brief`, `Flows`, `Risks`, `Resilience`, `Evidence`, and `Pitch` tabs are visible.
 - Brief tab shows target user, problem, solution, success metric, and launch decision.
 - Flows tab shows critical paths and acceptance checks.
 - Risks tab shows risks paired with mitigations.
-- `Copy packet` works.
+- Resilience tab shows a pressure case, recovery move, evidence signal, and no-ship condition.
+- `Copy packet` works or shows the fallback export text area if clipboard permission is blocked.
 - Evidence tab includes hackathon scorecard and event map.
 - Evidence tab includes behavior coverage for the current proof path.
 - Novus/Pendo dashboard screenshot corresponds to the tracked events.
@@ -84,7 +86,7 @@ Purpose: final launch gate for Devpost. Public-facing submission assets stay in 
 ## Final Judge Checklist
 
 - Product Thinking: clear target user, problem, job-to-be-done, and launch-readiness outcome.
-- Craft and Execution: one coherent experience from intake to brief, flows, risks, evidence, and export.
+- Craft and Execution: one coherent experience from intake to brief, flows, risks, resilience, evidence, and export.
 - Originality and Ambition: analytics is framed as readiness evidence, not a bolt-on tracker.
 - Shippedness: public URL works, no login is required, seeded example works, draft persistence works, and Novus/Pendo proof is included.
 - Submission Quality: About copy, screenshots, video, testing instructions, and final links tell the same story.

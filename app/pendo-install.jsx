@@ -26,6 +26,12 @@ export default function PendoInstall() {
         y = e.createElement(n);
         y.async = true;
         y.src = 'https://cdn.pendo.io/agent/static/' + apiKey + '/pendo.js';
+        y.onload = function() {
+          window.launchproofAnalyticsStatus = 'Novus/Pendo SDK loaded; dashboard confirms events separately';
+        };
+        y.onerror = function() {
+          window.launchproofAnalyticsStatus = 'Novus/Pendo SDK load failed; use local event feed as fallback evidence';
+        };
         z = e.getElementsByTagName(n)[0];
         z.parentNode.insertBefore(y, z);
       })(window, document, 'script', 'pendo');
@@ -51,7 +57,7 @@ export default function PendoInstall() {
       });
 
       window.novus = window.pendo;
-      window.launchproofAnalyticsStatus = 'Novus/Pendo connected';
+      window.launchproofAnalyticsStatus = 'Novus/Pendo SDK initialized; waiting for dashboard evidence';
     })(${JSON.stringify(pendoApiKey)});
   `;
 

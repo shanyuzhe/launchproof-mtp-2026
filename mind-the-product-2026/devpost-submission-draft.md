@@ -28,6 +28,7 @@ LaunchProof turns a rough product idea into a launch readiness packet that a jud
 - core user flows
 - acceptance checks
 - launch risks and mitigations
+- a resilience stress test with pressure, recovery, proof signal, and no-ship condition
 - a readiness rationale and Novus-measurable proof loop
 - a behavior coverage panel for the current session
 - a hackathon scorecard mapped to the judging criteria
@@ -46,7 +47,7 @@ The product guides a user through one focused workflow:
 
 1. Enter the product concept, target user, problem, solution, success metric, and demo URL.
 2. Generate a structured launch packet.
-3. Review the brief, flows, risks, evidence, and pitch.
+3. Review the brief, flows, risks, resilience check, evidence, and pitch.
 4. Use the evidence board to connect product actions with Novus/Pendo events.
 5. Copy a polished packet that can be pasted into Devpost, a launch review, or a team update.
 
@@ -57,17 +58,18 @@ The key design choice is that LaunchProof is not another open-ended AI chat box.
 LaunchProof should be judged as a product layer for the AI-builder era, where making a prototype is getting easier but proving readiness is still hard.
 
 - Product Thinking: the target user is specific: AI builders and PMs who can create prototypes faster than they can validate the launch story. The job is clear: turn a messy build into a concise readiness packet.
-- Craft and Execution: the app is one coherent workflow from intake to brief, flows, risks, evidence, and export. The UI is built for a judge or builder to scan under time pressure.
+- Craft and Execution: the app is one coherent workflow from intake to brief, flows, risks, resilience, evidence, and export. The UI is built for a judge or builder to scan under time pressure.
 - Originality and Ambition: LaunchProof treats analytics as product evidence. Novus/Pendo events are not just installed; they are mapped to the actions that show whether a builder used the launch workflow.
 - Shippedness: the public app is usable without login, includes a seeded example and direct sample URL, persists drafts locally, exposes behavior coverage and a local event feed, and tracks meaningful behavior through Novus.ai/Pendo.
 
 ## How We Built It
 
-We built LaunchProof during the hackathon submission window using an AI-assisted builder workflow to rapidly shape the product workflow, prototype the interface, and iterate on the submission story. The core product is designed around structured product reasoning rather than open-ended chat: every output maps to a launch artifact a real builder needs.
+We built LaunchProof during the hackathon submission window using Codex and GPT-5 as the AI builder workflow to rapidly shape the product workflow, prototype the interface, implement the Next.js app, write verification scripts, and iterate on the submission story. The core product is designed around structured product reasoning rather than open-ended chat: every output maps to a launch artifact a real builder needs. LaunchProof itself does not claim to be an autonomous AI agent at runtime; its value is the structured product reasoning layer created through the AI builder process.
 
 The app is built with:
 
 - Next.js and React for the public web app
+- Codex and GPT-5 as the AI builder workflow used during design, implementation, verification, and submission iteration
 - GitHub Pages for the public deployment
 - Novus.ai / Pendo Web SDK for product behavior tracking
 - local browser storage for draft persistence
@@ -78,18 +80,18 @@ The app is built with:
 
 Devpost field copy:
 
-Next.js, React, GitHub Pages, Novus.ai, Pendo Web SDK, Browser Local Storage, lucide-react, GitHub
+Next.js, React, Codex and GPT-5 AI Builder Workflow, GitHub Pages, Novus.ai, Pendo Web SDK, Browser Local Storage, lucide-react, GitHub
 
 ## Challenges
 
-The main challenge was avoiding "AI text soup". The product needed to produce artifacts that are short, structured, measurable, and useful under time pressure. We focused on the launch workflow: user, job, flows, risks, evidence, pitch.
+The main challenge was avoiding "AI text soup". The product needed to produce artifacts that are short, structured, measurable, and useful under time pressure. We focused on the launch workflow: user, job, flows, risks, resilience, evidence, pitch.
 
 A second challenge was making Novus.ai feel like part of the product rather than a compliance checkbox. LaunchProof treats behavior tracking as launch evidence: did the builder generate a packet, review flows, inspect risks, review evidence, and export the pitch?
 
 ## Accomplishments
 
 - Created a workflow that connects product thinking with AI-assisted shipping.
-- Designed outputs that directly support demo preparation and launch review.
+- Designed outputs that directly support demo preparation, launch review, and resilience stress-testing.
 - Added multiple sample products to show the workflow works beyond the LaunchProof self-demo.
 - Added behavior tracking so "ready to ship" can be tied to real usage signals.
 - Added a behavior coverage panel that makes the current session's proof path visible before the Novus/Pendo dashboard screenshot is reviewed.
@@ -120,15 +122,16 @@ Judges can test LaunchProof without creating an account.
 3. Optionally change one field, such as the target user or success metric, so the generated packet reflects a real edit.
 4. Click `Generate Launch Packet`.
 5. Click `Run Judge Demo` to step through the 90-second proof path.
-6. Open each tab: `Brief`, `Flows`, `Risks`, `Evidence`, and `Pitch`.
+6. Open each tab: `Brief`, `Flows`, `Risks`, `Resilience`, `Evidence`, and `Pitch`.
 7. In `Brief`, confirm the packet identifies a target user, problem, solution, success metric, and launch decision.
 8. In `Flows`, confirm that the app turns the idea into critical user paths and acceptance checks.
 9. In `Risks`, review the launch risks and mitigations.
-10. In `Evidence`, review the hackathon scorecard, readiness rationale, launch proof loop, proof status, behavior coverage, and Novus/Pendo event map.
-11. Click `Copy packet` to copy the pitch-ready launch packet and confirm the `Copied` state appears.
-12. Compare the local event feed and tracked actions with the Novus.ai/Pendo dashboard screenshot included in the submission.
+10. In `Resilience`, confirm the packet names the pressure case, recovery move, evidence signal, and no-ship condition.
+11. In `Evidence`, review the hackathon scorecard, readiness rationale, launch proof loop, proof status, behavior coverage, and Novus/Pendo event map.
+12. Click `Copy packet` to copy the pitch-ready launch packet and confirm the `Copied` state appears. If clipboard permission is blocked, use the fallback export text area.
+13. Compare the local event feed and tracked actions with the Novus.ai/Pendo dashboard screenshot included in the submission.
 
-No login is required. The app stores draft changes in browser local storage. A successful test should show a local event feed update, a visible `Novus/Pendo connected` state, and the copied launch packet. If the public deployment looks stale, refresh once and verify that the page includes `Launch decision`, `Hackathon scorecard`, and `Testing instructions`.
+No login is required. The app stores draft changes in browser local storage. A successful test should show a local event feed update, a visible Novus/Pendo SDK state, and the copied or fallback launch packet. The included Novus.ai/Pendo dashboard screenshot is the final confirmation that tracked events reached the external analytics system. If the public deployment looks stale, refresh once and verify that the page includes `Launch decision`, `Hackathon scorecard`, and `Testing instructions`.
 
 ## Final Judge Checklist
 
@@ -144,20 +147,20 @@ No login is required. The app stores draft changes in browser local storage. A s
 2. Edit one field to show the product reacts to real input.
 3. Click Generate Launch Packet.
 4. Click Run Judge Demo and advance through proof points.
-5. Review Brief, Flows, Risks, Evidence, and Pitch.
+5. Review Brief, Flows, Risks, Resilience, Evidence, and Pitch.
 6. Show the local event feed and Novus event map.
-7. Point to the hackathon scorecard inside Evidence.
-8. Copy the exportable packet.
+7. Point to the hackathon scorecard and behavior coverage inside Evidence.
+8. Copy the exportable packet, with the fallback export path available if clipboard permissions block copy.
 9. Cut to the Novus/Pendo dashboard screenshot.
 10. Close on the value: builders get from prototype to credible launch faster.
 
 ## Demo Video Description
 
-LaunchProof helps AI builders turn a rough prototype into a launch readiness packet. In the demo, we generate a product brief, critical flows, acceptance checks, risks, behavior coverage, evidence signals, and a Devpost-ready pitch export. We also show how key product actions are mapped to Novus.ai/Pendo events so launch readiness is measurable, not just narrated.
+LaunchProof helps AI builders turn a rough prototype into a launch readiness packet. In the demo, we generate a product brief, critical flows, acceptance checks, risks, resilience checks, behavior coverage, evidence signals, and a Devpost-ready pitch export. We also show how key product actions are mapped to Novus.ai/Pendo events so launch readiness is measurable, not just narrated.
 
 ## Responsible AI Note
 
-LaunchProof uses AI-assisted development and structured product reasoning, but it does not ask users to blindly trust generated output. The workflow makes launch assumptions visible: user, problem, flows, acceptance checks, risks, mitigations, and evidence signals. The intended use is to help builders review and improve a product before launch, not to replace user research or quality assurance.
+LaunchProof uses AI-assisted development and structured product reasoning, but it does not ask users to blindly trust generated output. The workflow makes launch assumptions visible: user, problem, flows, acceptance checks, risks, mitigations, resilience checks, and evidence signals. The intended use is to help builders review and improve a product before launch, not to replace user research or quality assurance.
 
 ## Try It Out
 

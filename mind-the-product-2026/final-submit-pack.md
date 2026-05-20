@@ -16,8 +16,9 @@ Use this file as the final Devpost assembly checklist.
 ## Upload Assets
 
 - First gallery image: `launchproof-main-workflow.png`
-- Second gallery image: `launchproof-evidence-scorecard.png`
-- Third gallery image: `launchproof-behavior-coverage.png`
+- Second gallery image: `launchproof-resilience-review.png`
+- Third gallery image: `launchproof-evidence-scorecard.png`
+- Fourth gallery image: `launchproof-behavior-coverage.png`
 - Demo video file before upload: `launchproof-demo-video.webm` (88.0 seconds, captioned, under the 3-minute limit)
 - Uploaded demo video URL must be the real public/unlisted YouTube, Vimeo, or Youku watch/share URL, not a placeholder.
 - Required Novus/Pendo screenshot: save as `novus-pendo-dashboard.png`
@@ -34,7 +35,7 @@ Use this file as the final Devpost assembly checklist.
 ## Final Judge Checklist
 
 - Product Thinking: the About copy quickly names the AI-builder user, launch-readiness pain, and job-to-be-done.
-- Craft and Execution: the app, video, and testing path all show one coherent workflow from intake to export.
+- Craft and Execution: the app, video, and testing path all show one coherent workflow from intake to resilience check to export.
 - Originality and Ambition: Novus/Pendo is presented as launch evidence, not just a required SDK install.
 - Shippedness: the live URL works without login, the seeded example works, the demo video is under 3 minutes, and the Novus/Pendo screenshot is uploaded.
 - Honesty: the submission says LaunchProof produces readiness evidence and pitch materials; it does not claim to replace user research, QA, or product-market fit validation.

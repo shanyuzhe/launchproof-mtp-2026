@@ -188,6 +188,21 @@ textarea {
   background: #eef3fb;
 }
 
+.inline-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: fit-content;
+  min-height: 40px;
+  border: 0;
+  border-radius: 7px;
+  padding: 0 13px;
+  color: #ffffff;
+  background: #3157ad;
+  font-weight: 900;
+}
+
 .copy-button {
   flex: 0 0 auto;
   min-width: 128px;
@@ -362,6 +377,31 @@ textarea {
   background: #f4f7ff;
 }
 
+.export-fallback {
+  display: grid;
+  gap: 8px;
+  margin: -6px 0 18px;
+  border: 1px solid rgba(122, 53, 23, 0.2);
+  border-radius: 8px;
+  padding: 13px;
+  background: #fff7ed;
+}
+
+.export-fallback strong {
+  color: #7a3517;
+}
+
+.export-fallback p {
+  margin-bottom: 0;
+  color: #4b554d;
+}
+
+.export-fallback textarea {
+  min-height: 156px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.82rem;
+}
+
 .positioning-strip strong {
   color: #182016;
   line-height: 1.35;
@@ -449,6 +489,9 @@ textarea {
 .brief-item,
 .flow-row,
 .risk-row,
+.resilience-hero,
+.resilience-card,
+.resilience-proof-card,
 .metric,
 .criteria-card,
 .readiness-card,
@@ -526,6 +569,66 @@ small {
 }
 
 .risk-row {
+  padding: 17px;
+}
+
+.resilience-layout {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.resilience-hero {
+  grid-column: span 2;
+  display: grid;
+  grid-template-columns: minmax(220px, 0.75fr) minmax(0, 1.25fr);
+  gap: 16px;
+  padding: 18px;
+  background: #f4f7ff;
+}
+
+.resilience-hero h3 {
+  font-size: 1.3rem;
+}
+
+.resilience-hero p,
+.resilience-card p,
+.resilience-proof-card p {
+  margin-bottom: 0;
+  color: #4b554d;
+  line-height: 1.5;
+}
+
+.resilience-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  min-height: 174px;
+  padding: 16px;
+}
+
+.resilience-card > span {
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  width: 30px;
+  height: 30px;
+  border-radius: 999px;
+  color: #ffffff;
+  background: #245c42;
+  font-weight: 900;
+}
+
+.resilience-card strong {
+  display: block;
+  margin-bottom: 7px;
+  color: #182016;
+}
+
+.resilience-proof-card {
+  grid-column: span 2;
+  display: grid;
+  gap: 13px;
   padding: 17px;
 }
 
@@ -901,6 +1004,7 @@ small {
   .decision-strip,
   .brief-grid,
   .evidence-layout,
+  .resilience-layout,
   .pitch-layout {
     grid-template-columns: 1fr;
   }
@@ -919,8 +1023,14 @@ small {
   }
 
   .criteria-card,
+  .resilience-hero,
+  .resilience-proof-card,
   .testing-card {
     grid-column: span 1;
+  }
+
+  .resilience-hero {
+    grid-template-columns: 1fr;
   }
 
   .criteria-grid {

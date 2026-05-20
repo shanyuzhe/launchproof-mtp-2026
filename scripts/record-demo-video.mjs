@@ -61,9 +61,9 @@ async function main() {
   await page.getByRole('button', { name: 'Run Judge Demo' }).click();
   await caption(page, 'Run Judge Demo walks through the proof path in one click.', 4000);
 
-  for (let step = 2; step <= 5; step += 1) {
+  for (let step = 2; step <= 6; step += 1) {
     await page.getByRole('button', { name: 'Next Proof Point' }).click();
-    await caption(page, `Proof point ${step}/5: the story stays tied to product readiness.`, 3000);
+    await caption(page, `Proof point ${step}/6: the story stays tied to product readiness.`, 3000);
   }
 
   await page.getByRole('button', { name: 'Flows', exact: true }).click();
@@ -71,6 +71,9 @@ async function main() {
 
   await page.getByRole('button', { name: 'Risks', exact: true }).click();
   await caption(page, 'Risks make launch uncertainty explicit before shipping.', 4500);
+
+  await page.getByRole('button', { name: 'Resilience', exact: true }).click();
+  await caption(page, 'Resilience stress-tests the launch with pressure, recovery, proof, and no-ship conditions.', 5500);
 
   await page.getByRole('button', { name: 'Evidence', exact: true }).click();
   await caption(page, 'Evidence shows the scorecard, behavior coverage, and Novus/Pendo event map.', 6500);

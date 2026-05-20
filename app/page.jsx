@@ -82,9 +82,12 @@ const tabs = [
   ['brief', ClipboardCheck, 'Brief'],
   ['flows', ListChecks, 'Flows'],
   ['risks', ShieldAlert, 'Risks'],
+  ['resilience', ShieldAlert, 'Resilience'],
   ['evidence', Gauge, 'Evidence'],
   ['pitch', BookOpen, 'Pitch'],
 ];
+
+const DEMO_SECONDS = 90;
 
 const judgeDemoPath = [
   {
@@ -106,14 +109,20 @@ const judgeDemoPath = [
     eventName: 'judge_demo_risks_viewed',
   },
   {
+    key: 'resilience',
+    label: '4. Stress-test resilience',
+    proof: 'Show the pressure case, recovery move, and signal that keeps the launch honest.',
+    eventName: 'judge_demo_resilience_viewed',
+  },
+  {
     key: 'evidence',
-    label: '4. Surface evidence',
+    label: '5. Surface evidence',
     proof: 'Show hackathon criteria, Novus/Pendo events, and the live local feed.',
     eventName: 'judge_demo_evidence_viewed',
   },
   {
     key: 'pitch',
-    label: '5. Export the story',
+    label: '6. Export the story',
     proof: 'Show the judge-facing story and copy-ready launch packet.',
     eventName: 'judge_demo_pitch_viewed',
   },
@@ -141,6 +150,11 @@ const behaviorCoverageChecks = [
     proof: 'Launch risks were surfaced before calling the product ready.',
   },
   {
+    label: 'Resilience stress-tested',
+    events: ['resilience_reviewed', 'judge_demo_resilience_viewed'],
+    proof: 'The launch was checked against pressure, recovery, and proof signals.',
+  },
+  {
     label: 'Evidence inspected',
     events: ['evidence_reviewed', 'judge_demo_evidence_viewed'],
     proof: 'The user checked the scorecard, proof loop, and event map.',
@@ -162,8 +176,12 @@ const trackEvent = (eventName, metadata = {}) => {
 
   if (window.pendo?.track) {
     window.pendo.track(eventName, payload);
+    window.launchproofAnalyticsStatus = 'Novus/Pendo SDK initialized; event sent to SDK queue';
   } else if (window.novus?.track) {
     window.novus.track(eventName, payload);
+    window.launchproofAnalyticsStatus = 'Novus/Pendo SDK initialized; event sent to SDK queue';
+  } else {
+    window.launchproofAnalyticsStatus = 'Local event recorded; Novus/Pendo SDK is still loading';
   }
 
   window.dispatchEvent(new CustomEvent('launchproof:event', { detail: { eventName, payload } }));
@@ -200,9 +218,9 @@ const makeReadinessFactors = (project) => {
       weight: 10,
     },
     {
-      label: 'Public demo URL',
+      label: 'Public demo URL provided',
       ready: /^https:\/\/\S+\.\S+/.test(demoUrl),
-      proof: 'Gives judges a live URL they can test without setup.',
+      proof: 'Gives judges a public URL to test without setup; the final gate separately verifies the deployed app.',
       weight: 8,
     },
   ];
@@ -225,6 +243,14 @@ const calculateScore = (project) => {
 const projectMentions = (values, keywords) => {
   const text = values.join(' ').toLowerCase();
   return keywords.some((keyword) => text.includes(keyword));
+};
+
+const makeDemoTimebox = (index) => {
+  const secondsPerStep = DEMO_SECONDS / judgeDemoPath.length;
+  const start = Math.round(secondsPerStep * index);
+  const end = Math.round(secondsPerStep * (index + 1));
+
+  return `${start}-${end}s`;
 };
 
 const makePacket = (project) => {
@@ -283,6 +309,28 @@ const makePacket = (project) => {
           mitigation: 'Keep the public URL, launch hypothesis, and pitch packet synchronized.',
           signal: 'A fresh judge can follow the testing instructions without asking for context.',
         };
+  const resilienceReview = [
+    {
+      label: 'Pressure case',
+      value: mentionsTeam
+        ? `When ${user} disagree after a fast meeting or launch review, ${name} must preserve decisions, owners, risks, and next actions.`
+        : mentionsAi
+          ? `When AI output makes ${name} feel more complete than it is, the launch still has to prove user, workflow, risk, and behavior.`
+          : `When the launch is judged under time pressure, ${name} must make the user, promise, and proof path obvious without extra explanation.`,
+    },
+    {
+      label: 'Recovery move',
+      value: `Narrow the first release to the workflow that proves "${metric}" and postpone anything that does not support that proof.`,
+    },
+    {
+      label: 'Evidence signal',
+      value: `A credible session should show brief_generated, resilience_reviewed, evidence_reviewed, and export_clicked before the team calls ${name} shipped.`,
+    },
+    {
+      label: 'Do not ship if',
+      value: `A stranger cannot reach first value from ${url}, or the exported packet omits the user, launch risk, success metric, or proof event.`,
+    },
+  ];
 
   return {
     score,
@@ -358,6 +406,7 @@ const makePacket = (project) => {
         signal: 'The exported packet contains no standalone generic checklist items.',
       },
     ],
+    resilience: resilienceReview,
     evidence: [
       {
         label: 'Product thinking',
@@ -374,6 +423,10 @@ const makePacket = (project) => {
       {
         label: 'Shippedness',
         metric: 'Novus/Pendo receives production behavior events.',
+      },
+      {
+        label: 'Resilience',
+        metric: 'The launch has a pressure case, recovery move, and signal before it is called ready.',
       },
     ],
     readinessFactors,
@@ -402,13 +455,14 @@ const makePacket = (project) => {
     testing: [
       'Open the public LaunchProof URL.',
       'Edit the product brief fields or use the default LaunchProof example.',
-      'Click Generate Launch Packet, then review Flows, Risks, Evidence, and Pitch.',
+      'Click Generate Launch Packet, then review Flows, Risks, Resilience, Evidence, and Pitch.',
       'Copy the packet and confirm the interaction appears in the local event feed and Novus/Pendo.',
     ],
     eventMap: [
       ['brief_generated', 'Launch packet generated'],
       ['flows_reviewed', 'Critical flow reviewed'],
       ['risks_reviewed', 'Launch risks reviewed'],
+      ['resilience_reviewed', 'Resilience stress test opened'],
       ['evidence_reviewed', 'Evidence board opened'],
       ['export_clicked', 'Pitch packet exported'],
     ],
@@ -432,20 +486,26 @@ const makePacket = (project) => {
         decision: 'What would make this launch unsafe or unconvincing?',
       },
       {
+        action: 'Stress-test resilience',
+        event: 'resilience_reviewed',
+        evidence: 'The product names pressure, recovery, proof signal, and a no-ship condition.',
+        decision: 'Can the launch hold up when the team is moving fast?',
+      },
+      {
         action: 'Export the packet',
         event: 'export_clicked',
         evidence: 'The pitch, testing plan, and scorecard are copy-ready.',
         decision: 'Is the product ready to submit, demo, or polish?',
       },
     ],
-    pitch: `${name} helps ${user} decide whether an AI-built product is truly ready to ship. It turns a rough idea into a launch brief, critical flows, risk mitigations, evidence signals, and an exportable pitch packet. The result is a public demo that is not only working, but measurable through Novus/Pendo events.`,
+    pitch: `${name} helps ${user} decide whether an AI-built product is truly ready to ship. It turns a rough idea into a launch brief, critical flows, risk mitigations, resilience checks, evidence signals, and an exportable pitch packet. The result is a public demo that is not only working, but measurable through Novus/Pendo events.`,
     nextActions: [
       'Record a 90-second demo around one user and one launch decision.',
       'Capture the Novus/Pendo dashboard after events process.',
       'Use the exported packet as the Devpost project story draft.',
     ],
     demoScript: judgeDemoPath.map((step, index) => ({
-      timebox: `${index * 18}-${(index + 1) * 18}s`,
+      timebox: makeDemoTimebox(index),
       beat: step.label.replace(/^\d+\.\s*/, ''),
       proof: step.proof,
     })),
@@ -467,6 +527,9 @@ const buildExport = (project, packet) =>
     '',
     '## Launch risks',
     ...packet.risks.map((risk) => `- ${risk.severity}: ${risk.title}. ${risk.mitigation}`),
+    '',
+    '## Resilience review',
+    ...packet.resilience.map((item) => `- ${item.label}: ${item.value}`),
     '',
     '## Evidence',
     ...packet.evidence.map((item) => `- ${item.label}: ${item.metric}`),
@@ -495,6 +558,7 @@ export default function App() {
   const [activeTab, setActiveTab] = useState('brief');
   const [analyticsStatus, setAnalyticsStatus] = useState('Waiting for SDK');
   const [copied, setCopied] = useState(false);
+  const [exportFallback, setExportFallback] = useState(false);
   const [draftReady, setDraftReady] = useState(false);
   const [judgeDemoActive, setJudgeDemoActive] = useState(false);
   const [judgeStepIndex, setJudgeStepIndex] = useState(0);
@@ -515,6 +579,10 @@ export default function App() {
   );
   const coverageCount = behaviorCoverage.filter((check) => check.ready).length;
   const coveragePercent = Math.round((coverageCount / behaviorCoverage.length) * 100);
+  const exportText = useMemo(() => buildExport(project, packet), [packet, project]);
+  const sdkInitialized = ['initialized', 'loaded', 'queue'].some((status) =>
+    analyticsStatus.toLowerCase().includes(status),
+  );
 
   useEffect(() => {
     try {
@@ -650,13 +718,15 @@ export default function App() {
 
   const copyPacket = async () => {
     try {
-      await navigator.clipboard.writeText(buildExport(project, packet));
+      await navigator.clipboard.writeText(exportText);
       setCopied(true);
+      setExportFallback(false);
       record('export_clicked', { exportType: 'markdown_packet' });
       window.setTimeout(() => setCopied(false), 1800);
     } catch (error) {
       console.error('[fail] Could not copy LaunchProof packet', error);
       setCopied(false);
+      setExportFallback(true);
       record('export_failed', { exportType: 'markdown_packet' });
     }
   };
@@ -818,10 +888,18 @@ export default function App() {
             </button>
           </div>
 
+          {exportFallback && (
+            <div className="export-fallback">
+              <strong>Clipboard blocked</strong>
+              <p>Select the packet below if browser permissions block one-click copy.</p>
+              <textarea readOnly value={exportText} aria-label="Launch packet fallback export" />
+            </div>
+          )}
+
           <div className="positioning-strip">
             <Sparkles size={18} />
             <strong>For AI builders with a working prototype but not enough proof to ship.</strong>
-            <span>Brief - Flows - Risks - Evidence - Pitch</span>
+            <span>Brief - Flows - Risks - Resilience - Evidence - Pitch</span>
           </div>
 
           <div className="decision-strip">
@@ -842,8 +920,8 @@ export default function App() {
             <article>
               <MonitorCheck size={18} />
               <div>
-                <span>Public demo</span>
-                <strong>Ready to test</strong>
+                <span>Public URL</span>
+                <strong>Provided for testing</strong>
               </div>
             </article>
             <article className={judgeDemoActive ? 'demo-live' : ''}>
@@ -909,6 +987,44 @@ export default function App() {
                   <small>{risk.signal}</small>
                 </article>
               ))}
+            </div>
+          )}
+
+          {activeTab === 'resilience' && (
+            <div className="resilience-layout">
+              <article className="resilience-hero">
+                <div>
+                  <p className="eyebrow">World Product Day 2026 lens</p>
+                  <h3>Resilience before shippedness</h3>
+                </div>
+                <p>
+                  LaunchProof asks whether {clean(project.name, 'this product')} can hold up when the team is moving
+                  fast: what pressure will hit it, how the launch recovers, and what behavior proves the recovery worked.
+                </p>
+              </article>
+              {packet.resilience.map((item, index) => (
+                <article className="resilience-card" key={item.label}>
+                  <span>{index + 1}</span>
+                  <div>
+                    <strong>{item.label}</strong>
+                    <p>{item.value}</p>
+                  </div>
+                </article>
+              ))}
+              <article className="resilience-proof-card">
+                <div className="row-title">
+                  <h3>Why this helps judges</h3>
+                  <ShieldAlert size={18} />
+                </div>
+                <p>
+                  It connects the hackathon theme to a concrete product behavior: a builder does not just generate
+                  outputs, they pressure-test the launch and leave with a no-ship condition.
+                </p>
+                <button className="inline-action" onClick={() => switchTab('evidence')}>
+                  <ArrowRight size={17} />
+                  View evidence
+                </button>
+              </article>
             </div>
           )}
 
@@ -996,10 +1112,10 @@ export default function App() {
                   <MonitorCheck size={18} />
                 </div>
                 <div>
-                  <span className={analyticsStatus.includes('connected') ? 'ready' : 'pending'}>
-                    {analyticsStatus.includes('connected') ? 'Live' : 'Pending'}
+                  <span className={sdkInitialized ? 'ready' : 'pending'}>
+                    {sdkInitialized ? 'Initialized' : 'Pending'}
                   </span>
-                  <strong>SDK loaded</strong>
+                  <strong>SDK state</strong>
                   <p>{analyticsStatus}</p>
                 </div>
                 <div>

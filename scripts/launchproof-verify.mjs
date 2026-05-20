@@ -27,6 +27,8 @@ const requiredPublicStrings = [
   'Sample products',
   'MeetingBridge',
   '?sample=meetingbridge',
+  'Resilience',
+  'Resilience before shippedness',
   'Hackathon scorecard',
   'Readiness rationale',
   'Launch proof loop',
@@ -255,7 +257,7 @@ function checkPendoInstall(source, expectedKey) {
   const checks = [
     ['Pendo CDN loader', 'cdn.pendo.io/agent/static'],
     ['Pendo initialize call', 'pendo.initialize'],
-    ['Novus/Pendo status text', 'Novus/Pendo connected'],
+    ['Novus/Pendo status text', 'Novus/Pendo SDK initialized'],
     ['Pendo install key', expectedKey],
   ];
 
@@ -271,6 +273,7 @@ async function checkDevpostMaterials() {
   const checklistPath = resolve(repoRoot, 'mind-the-product-2026/submission-checklist.md');
   const videoScriptPath = resolve(repoRoot, 'mind-the-product-2026/video-script.md');
   const galleryImagePath = resolve(repoRoot, 'launchproof-devpost-gallery.png');
+  const resilienceImagePath = resolve(repoRoot, 'launchproof-resilience-review.png');
   const behaviorCoverageImagePath = resolve(repoRoot, 'launchproof-behavior-coverage.png');
 
   const draft = await readRequiredFile(draftPath);
@@ -295,6 +298,10 @@ async function checkDevpostMaterials() {
 
   if (!isNonEmptyFile(galleryImagePath)) {
     failures.push(`Devpost gallery image is missing or empty: ${galleryImagePath}`);
+  }
+
+  if (!isNonEmptyFile(resilienceImagePath)) {
+    failures.push(`Resilience gallery image is missing or empty: ${resilienceImagePath}`);
   }
 
   if (!isNonEmptyFile(behaviorCoverageImagePath)) {

@@ -10,6 +10,7 @@ The product turns a rough idea or demo URL into a judge-ready launch packet:
 - critical user flows
 - acceptance checks
 - launch risks and mitigations
+- a resilience stress test for the launch
 - Novus-ready behavior events
 - behavior coverage for the current proof path
 - an exportable Devpost and pitch packet
@@ -24,7 +25,7 @@ AI coding tools have changed the bottleneck. A solo builder can now create a wor
 - What can break at launch?
 - What evidence proves users can get value?
 
-LaunchProof is built for that gap. It gives AI builders a structured product review before they submit, demo, or launch. Instead of generating more open-ended text, it creates the artifacts a real launch review needs: brief, flows, checks, risks, behavior evidence, and a pitch-ready export.
+LaunchProof is built for that gap. It gives AI builders a structured product review before they submit, demo, or launch. Instead of generating more open-ended text, it creates the artifacts a real launch review needs: brief, flows, checks, resilience stress test, risks, behavior evidence, and a pitch-ready export.
 
 ## Judge-Facing Positioning
 
@@ -45,17 +46,20 @@ Judges can test the app without login.
 3. Change one or more intake fields, such as target user, product problem, success metric, or demo URL.
 4. Click `Generate Launch Packet`.
 5. Click `Run Judge Demo` to step through the 90-second proof path.
-6. Review the `Brief`, `Flows`, `Risks`, `Evidence`, and `Pitch` tabs.
-7. In `Evidence`, check the hackathon scorecard, behavior coverage, and the Novus/Pendo event map.
+6. Review the `Brief`, `Flows`, `Risks`, `Resilience`, `Evidence`, and `Pitch` tabs.
+7. In `Resilience`, confirm the packet names a pressure case, recovery move, evidence signal, and no-ship condition.
+8. In `Evidence`, check the hackathon scorecard, behavior coverage, and the Novus/Pendo event map.
 8. Click `Copy packet` to copy the Devpost-ready launch packet and see the `Copied` confirmation.
-9. Confirm the interaction events in the included Novus.ai/Pendo dashboard screenshot.
+9. If clipboard permission is blocked, use the fallback export text area that appears below the top bar.
+10. Confirm the interaction events in the included Novus.ai/Pendo dashboard screenshot.
 
-Expected result: within a few minutes, a judge should see a complete launch readiness packet, a local event feed update, a visible `Novus/Pendo connected` state, and a clear explanation of how the product converts a rough AI-built prototype into a testable, measurable shipping story.
+Expected result: within a few minutes, a judge should see a complete launch readiness packet, a local event feed update, a visible Novus/Pendo SDK state, and a clear explanation of how the product converts a rough AI-built prototype into a testable, measurable shipping story. The external Novus/Pendo dashboard screenshot is the final confirmation that the tracked events reached the hackathon analytics system.
 
 ## Built With
 
 - Next.js
 - React
+- Codex and GPT-5 AI builder workflow
 - GitHub Pages
 - Novus.ai / Pendo Web SDK
 - Browser local storage
@@ -91,6 +95,7 @@ Tracked event examples:
 - `brief_generated`
 - `flows_reviewed`
 - `risks_reviewed`
+- `resilience_reviewed`
 - `evidence_reviewed`
 - `export_clicked`
 
