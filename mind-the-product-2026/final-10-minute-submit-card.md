@@ -78,14 +78,24 @@ npm run verify:launchproof -- --url https://shanyuzhe.github.io/launchproof-mtp-
 Short version:
 
 ```bash
-node scripts/final-submit-check.mjs <video-url>
+npm run final:check -- <video-url>
 ```
 
 The short checker also verifies the local `launchproof-demo-video.webm` exists and is under 3 minutes before it runs the full public deploy gate. If `novus-pendo-dashboard.png` is missing, it first tries to import the newest likely Novus/Pendo dashboard screenshot from common folders.
 
+If the screenshot is still under a normal browser screenshot filename, pass it directly and sync the real video URL into the local docs:
+
+```bash
+npm run final:check -- <video-url> --screenshot "C:/Users/22684/Downloads/novus-dashboard.png" --sync-docs
+```
+
 Only submit when it prints:
 
 `[pass] LaunchProof deploy verification passed.`
+
+and:
+
+`[pass] Final submit check passed.`
 
 ## 5. Final Pre-Submit Scan
 

@@ -65,9 +65,19 @@ If Novus still says signals may take 24 hours, screenshot the dashboard state an
 After `novus-pendo-dashboard.png` exists and the demo video is uploaded, run:
 
 ```bash
-node scripts/final-submit-check.mjs https://...
+npm run final:check -- https://...
+```
+
+If the screenshot is still in Downloads/Desktop under another filename, pass it directly:
+
+```bash
+npm run final:check -- https://youtu.be/REAL_ID --screenshot "C:/Users/22684/Downloads/novus-dashboard.png" --sync-docs
 ```
 
 The verifier should print:
 
 `[pass] LaunchProof deploy verification passed.`
+
+and:
+
+`[pass] Final submit check passed.`

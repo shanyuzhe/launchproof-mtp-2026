@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import { spawn, spawnSync } from 'node:child_process';
-import { existsSync, readFileSync, statSync } from 'node:fs';
+import { existsSync, readFileSync, statSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 
 const APP_URL = 'https://shanyuzhe.github.io/launchproof-mtp-2026/';
@@ -21,10 +21,12 @@ const ALLOWED_VIDEO_HOSTS = [
 main();
 
 function main() {
-  const videoUrl = process.argv[2] || process.env.DEMO_VIDEO_URL;
+  const options = parseArgs(process.argv.slice(2));
+  const videoUrl = options.videoUrl || process.env.DEMO_VIDEO_URL;
+  const screenshotSource = options.screenshot || process.env.NOVUS_SCREENSHOT;
 
   if (!videoUrl) {
-    fail('Missing demo video URL. Usage: node scripts/final-submit-check.mjs https://...');
+    fail(`Missing demo video URL. ${usage()}`);
   }
 
   if (!/^https?:\/\/\S+\.\S+/.test(videoUrl)) {
@@ -42,6 +44,10 @@ function main() {
   }
 
   assertLocalDemoVideo();
+
+  if (screenshotSource) {
+    importExplicitScreenshot(screenshotSource);
+  }
 
   importScreenshotIfMissing();
 
@@ -66,8 +72,67 @@ function main() {
   });
 
   child.on('exit', (code) => {
-    process.exit(code ?? 1);
+    if (code !== 0) {
+      process.exit(code ?? 1);
+    }
+
+    if (options.syncDocs) {
+      syncVideoUrlDocs(videoUrl);
+    }
+
+    console.log('[pass] Final submit check passed.');
+    process.exit(0);
   });
+}
+
+function parseArgs(args) {
+  const options = {
+    screenshot: '',
+    syncDocs: false,
+    videoUrl: '',
+  };
+
+  for (let index = 0; index < args.length; index += 1) {
+    const arg = args[index];
+
+    if (arg === '--sync-docs') {
+      options.syncDocs = true;
+      continue;
+    }
+
+    if (arg === '--screenshot') {
+      const next = args[index + 1];
+
+      if (!next) {
+        fail(`Missing value for --screenshot. ${usage()}`);
+      }
+
+      options.screenshot = next;
+      index += 1;
+      continue;
+    }
+
+    if (arg.startsWith('--screenshot=')) {
+      options.screenshot = arg.slice('--screenshot='.length);
+      continue;
+    }
+
+    if (arg.startsWith('--')) {
+      fail(`Unknown option: ${arg}. ${usage()}`);
+    }
+
+    if (options.videoUrl) {
+      fail(`Unexpected extra argument: ${arg}. ${usage()}`);
+    }
+
+    options.videoUrl = arg;
+  }
+
+  return options;
+}
+
+function usage() {
+  return 'Usage: node scripts/final-submit-check.mjs <youtube|vimeo|youku-url> [--screenshot <path>] [--sync-docs]';
 }
 
 function fail(message) {
@@ -188,6 +253,59 @@ function importScreenshotIfMissing() {
   if (result.status !== 0) {
     console.warn(`[warn] Could not auto-import ${SCREENSHOT}. Save the Novus/Pendo dashboard image, then rerun.`);
   }
+}
+
+function importExplicitScreenshot(source) {
+  const resolvedSource = resolve(source);
+  const screenshotPath = resolve(process.cwd(), SCREENSHOT);
+
+  if (resolvedSource === screenshotPath) {
+    return;
+  }
+
+  console.log(`[check] Importing explicit Novus/Pendo screenshot: ${resolvedSource}`);
+  const result = spawnSync(process.execPath, ['scripts/import-novus-screenshot.mjs', resolvedSource], {
+    cwd: process.cwd(),
+    stdio: 'inherit',
+    shell: false,
+  });
+
+  if (result.status !== 0) {
+    fail(`Could not import explicit Novus/Pendo screenshot: ${resolvedSource}`);
+  }
+}
+
+function syncVideoUrlDocs(videoUrl) {
+  updateTextFile('mind-the-product-2026/final-submit-pack.md', (source) =>
+    source.replace(/- Demo video: .*/u, `- Demo video: ${videoUrl}`),
+  );
+
+  updateTextFile('mind-the-product-2026/devpost-paste-fields.md', (source) =>
+    source.replace(
+      /## Video Demo Link\r?\n\r?\n.*(?:\r?\n)/u,
+      `## Video Demo Link\n\n${videoUrl}\n`,
+    ),
+  );
+
+  console.log('[check] Synced demo video URL into final-submit-pack.md and devpost-paste-fields.md');
+}
+
+function updateTextFile(relativePath, transform) {
+  const absolutePath = resolve(process.cwd(), relativePath);
+
+  if (!existsSync(absolutePath)) {
+    fail(`Cannot sync docs because file is missing: ${relativePath}`);
+  }
+
+  const before = readFileSync(absolutePath, 'utf8');
+  const after = transform(before);
+
+  if (after === before) {
+    console.log(`[check] No doc sync change needed: ${relativePath}`);
+    return;
+  }
+
+  writeFileSync(absolutePath, after);
 }
 
 function readImageDimensions(imagePath) {

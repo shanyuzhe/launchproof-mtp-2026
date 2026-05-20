@@ -31,9 +31,8 @@ Source: https://github.com/shanyuzhe/launchproof-mtp-2026
 
 1. Copy the public or unlisted video URL.
 2. Paste it into Devpost's `Video demo link` field.
-3. Replace the `TODO` video URL in `mind-the-product-2026/final-submit-pack.md` if you want the local docs fully synced.
-4. Run the final verifier:
+3. Run the final verifier. Add `--sync-docs` to replace the local `TODO` video URL in the final pack and Devpost paste fields:
 
 ```bash
-node scripts/final-submit-check.mjs https://...
+npm run final:check -- https://... --screenshot "C:/path/to/novus-dashboard.png" --sync-docs
 ```

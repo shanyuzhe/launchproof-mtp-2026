@@ -58,4 +58,10 @@ Shortcut:
 node scripts/final-submit-check.mjs https://...
 ```
 
-Do not click Devpost Submit until the command prints `[pass] LaunchProof deploy verification passed.`.
+Final helper with explicit screenshot import and doc sync:
+
+```bash
+npm run final:check -- https://youtu.be/REAL_ID --screenshot "C:/Users/22684/Downloads/novus-dashboard.png" --sync-docs
+```
+
+Do not click Devpost Submit until the command prints `[pass] LaunchProof deploy verification passed.` and `[pass] Final submit check passed.`.

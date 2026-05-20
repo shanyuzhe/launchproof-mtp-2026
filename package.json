@@ -9,6 +9,7 @@
     "build": "next build",
     "build:static": "next build",
     "build:pages": "node scripts/build-pages.mjs",
+    "final:check": "node scripts/final-submit-check.mjs",
     "import:novus-screenshot": "node scripts/import-novus-screenshot.mjs",
     "verify:launchproof": "node scripts/launchproof-verify.mjs",
     "verify:ui": "node scripts/verify-local-ui.mjs",
