@@ -9,6 +9,7 @@ Duration: 74.9 seconds.
 ## Recommended Upload Settings
 
 - Platform: YouTube, Vimeo, or Youku.
+- The final checker rejects other video hosts because Devpost rules require YouTube, Vimeo, or Youku.
 - Visibility: `Unlisted` is okay if the link is accessible without login.
 - Title: `LaunchProof Demo - Mind the Product World Product Day Hackathon`
 - Audience: Not made for kids.
@@ -35,4 +36,3 @@ Source: https://github.com/shanyuzhe/launchproof-mtp-2026
 ```bash
 npm run verify:launchproof -- --url https://shanyuzhe.github.io/launchproof-mtp-2026/ --dashboard-screenshot novus-pendo-dashboard.png --demo-video-url https://...
 ```
-

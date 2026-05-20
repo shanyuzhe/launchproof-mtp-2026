@@ -4,7 +4,7 @@ Use this when Devpost is open and you are ready to finish.
 
 ## 1. Upload The Demo Video
 
-Upload this file to YouTube, Vimeo, or Youku:
+Upload this file to YouTube, Vimeo, or Youku. The final checker intentionally rejects other hosts because the rules require one of these platforms:
 
 `C:/Users/22684/Documents/vibe_coding/launchproof-demo-video.webm`
 
@@ -70,6 +70,7 @@ Only submit when it prints:
 
 - App link opens without login.
 - Video link opens without login.
+- Video link is YouTube, Vimeo, or Youku.
 - Source link opens publicly.
 - Novus/Pendo screenshot is uploaded.
 - Project story is in English.

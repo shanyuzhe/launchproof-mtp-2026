@@ -9,6 +9,15 @@ const DEFAULT_URL = 'https://shanyuzhe.github.io/launchproof-mtp-2026/';
 const DEFAULT_PENDO_KEY = 'e8d019ac-2123-45c3-80b7-a171a94a8fb0';
 const FETCH_ATTEMPTS = 3;
 const FETCH_TIMEOUT_MS = 20000;
+const allowedVideoHosts = [
+  'youtube.com',
+  'www.youtube.com',
+  'youtu.be',
+  'vimeo.com',
+  'www.vimeo.com',
+  'youku.com',
+  'www.youku.com',
+];
 
 const requiredPublicStrings = [
   'Launch decision',
@@ -313,6 +322,19 @@ function checkExternalSubmissionEvidence() {
     failures.push('Missing --demo-video-url for the uploaded under-3-minute demo video.');
   } else if (!/^https?:\/\/\S+\.\S+/.test(demoVideoUrl)) {
     failures.push(`Demo video URL is not a valid http(s) URL: ${demoVideoUrl}`);
+  } else if (!isAllowedDemoVideoHost(demoVideoUrl)) {
+    failures.push(`Demo video URL must be hosted on YouTube, Vimeo, or Youku: ${demoVideoUrl}`);
+  }
+}
+
+function isAllowedDemoVideoHost(value) {
+  try {
+    const hostname = new URL(value).hostname.toLowerCase();
+    return allowedVideoHosts.includes(hostname);
+  } catch (error) {
+    console.error(`[fail] Could not parse demo video URL: ${value}`);
+    console.error(error);
+    return false;
   }
 }
 

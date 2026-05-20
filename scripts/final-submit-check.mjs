@@ -6,6 +6,15 @@ import { resolve } from 'node:path';
 
 const APP_URL = 'https://shanyuzhe.github.io/launchproof-mtp-2026/';
 const SCREENSHOT = 'novus-pendo-dashboard.png';
+const ALLOWED_VIDEO_HOSTS = [
+  'youtube.com',
+  'www.youtube.com',
+  'youtu.be',
+  'vimeo.com',
+  'www.vimeo.com',
+  'youku.com',
+  'www.youku.com',
+];
 
 main();
 
@@ -18,6 +27,10 @@ function main() {
 
   if (!/^https?:\/\/\S+\.\S+/.test(videoUrl)) {
     fail(`Demo video URL must be a public http(s) URL: ${videoUrl}`);
+  }
+
+  if (!isAllowedDemoVideoHost(videoUrl)) {
+    fail(`Demo video URL must be hosted on YouTube, Vimeo, or Youku: ${videoUrl}`);
   }
 
   if (!existsSync(resolve(process.cwd(), SCREENSHOT))) {
@@ -50,4 +63,14 @@ function main() {
 function fail(message) {
   console.error(`[fail] ${message}`);
   process.exit(1);
+}
+
+function isAllowedDemoVideoHost(value) {
+  try {
+    const hostname = new URL(value).hostname.toLowerCase();
+    return ALLOWED_VIDEO_HOSTS.includes(hostname);
+  } catch (error) {
+    console.error(error);
+    return false;
+  }
 }
