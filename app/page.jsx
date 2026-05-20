@@ -33,9 +33,7 @@ const trackEvent = (eventName, metadata = {}) => {
 
   if (window.pendo?.track) {
     window.pendo.track(eventName, payload);
-  }
-
-  if (window.novus?.track) {
+  } else if (window.novus?.track) {
     window.novus.track(eventName, payload);
   }
 
@@ -106,7 +104,7 @@ export default function App() {
 
   useEffect(() => {
     const updateStatus = () => {
-      setAnalyticsStatus(window.pendo ? 'Novus/Pendo connected' : 'Waiting for SDK');
+      setAnalyticsStatus(window.launchproofAnalyticsStatus || 'Waiting for SDK');
     };
 
     updateStatus();

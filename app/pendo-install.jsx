@@ -1,14 +1,16 @@
 import Script from 'next/script';
 
-const pendoApiKey = process.env.NEXT_PUBLIC_PENDO_API_KEY;
+const defaultPendoApiKey = 'e8d019ac-2123-45c3-80b7-a171a94a8fb0';
+const pendoApiKey = process.env.NEXT_PUBLIC_PENDO_API_KEY || defaultPendoApiKey;
 
 export default function PendoInstall() {
-  if (!pendoApiKey) {
-    return null;
-  }
-
   const installScript = `
     (function(apiKey) {
+      if (!apiKey) {
+        window.launchproofAnalyticsStatus = 'Missing Novus/Pendo key';
+        return;
+      }
+
       (function(p, e, n, d, o) {
         var v, w, x, y, z;
         o = p[d] = p[d] || {};
@@ -49,6 +51,7 @@ export default function PendoInstall() {
       });
 
       window.novus = window.pendo;
+      window.launchproofAnalyticsStatus = 'Novus/Pendo connected';
     })(${JSON.stringify(pendoApiKey)});
   `;
 
