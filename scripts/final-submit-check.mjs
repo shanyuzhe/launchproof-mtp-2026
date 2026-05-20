@@ -8,6 +8,7 @@ const APP_URL = 'https://shanyuzhe.github.io/launchproof-mtp-2026/';
 const SCREENSHOT = 'novus-pendo-dashboard.png';
 const DEMO_VIDEO = 'launchproof-demo-video.webm';
 const MAX_DEMO_SECONDS = 180;
+const VIDEO_FETCH_TIMEOUT_MS = 20000;
 const ALLOWED_VIDEO_HOSTS = [
   'youtube.com',
   'www.youtube.com',
@@ -18,9 +19,13 @@ const ALLOWED_VIDEO_HOSTS = [
   'www.youku.com',
 ];
 
-main();
+main().catch((error) => {
+  console.error('[fail] Final submit check crashed.');
+  console.error(error);
+  process.exit(1);
+});
 
-function main() {
+async function main() {
   const options = parseArgs(process.argv.slice(2));
   const videoUrl = options.videoUrl || process.env.DEMO_VIDEO_URL;
   const screenshotSource = options.screenshot || process.env.NOVUS_SCREENSHOT;
@@ -43,6 +48,7 @@ function main() {
     fail(`Demo video URL still looks like a placeholder: ${placeholderReason}`);
   }
 
+  await assertDemoVideoUrlReachable(videoUrl);
   assertLocalDemoVideo();
 
   if (screenshotSource) {
@@ -147,6 +153,131 @@ function isAllowedDemoVideoHost(value) {
   } catch (error) {
     console.error(error);
     return false;
+  }
+}
+
+async function assertDemoVideoUrlReachable(value) {
+  const result = await inspectDemoVideoUrl(value);
+
+  if (!result.ok) {
+    fail(result.message);
+  }
+
+  console.log(`[check] Demo video URL resolves publicly: ${result.label}`);
+}
+
+async function inspectDemoVideoUrl(value) {
+  let url;
+
+  try {
+    url = new URL(value);
+  } catch (error) {
+    return {
+      ok: false,
+      message: `Could not parse demo video URL: ${error.message}`,
+    };
+  }
+
+  const hostname = url.hostname.toLowerCase();
+
+  if (hostname === 'youtu.be' || hostname === 'youtube.com' || hostname === 'www.youtube.com') {
+    return checkOEmbedUrl(
+      'YouTube',
+      `https://www.youtube.com/oembed?url=${encodeURIComponent(value)}&format=json`,
+    );
+  }
+
+  if (hostname === 'vimeo.com' || hostname === 'www.vimeo.com') {
+    return checkOEmbedUrl('Vimeo', `https://vimeo.com/api/oembed.json?url=${encodeURIComponent(value)}`);
+  }
+
+  return checkPublicVideoPage('Youku', value);
+}
+
+async function checkOEmbedUrl(label, endpoint) {
+  const response = await fetchWithTimeout(endpoint);
+
+  if (!response.ok) {
+    return {
+      ok: false,
+      message: `${label} could not resolve the demo video via oEmbed (HTTP ${response.status}). Confirm the URL is real and public or unlisted.`,
+    };
+  }
+
+  const text = await response.text();
+  let payload;
+
+  try {
+    payload = JSON.parse(text);
+  } catch (error) {
+    return {
+      ok: false,
+      message: `${label} oEmbed returned invalid JSON: ${error.message}`,
+    };
+  }
+
+  if (!payload.title || !payload.html) {
+    return {
+      ok: false,
+      message: `${label} oEmbed response is missing title/html metadata.`,
+    };
+  }
+
+  return {
+    ok: true,
+    label: `${label} - ${payload.title}`,
+  };
+}
+
+async function checkPublicVideoPage(label, value) {
+  const response = await fetchWithTimeout(value);
+
+  if (!response.ok) {
+    return {
+      ok: false,
+      message: `${label} demo video page returned HTTP ${response.status}. Confirm the URL is real and public.`,
+    };
+  }
+
+  const source = (await response.text()).toLowerCase();
+  const unavailableMarkers = [
+    'video unavailable',
+    'video not found',
+    'page not found',
+    'private video',
+    'this video is unavailable',
+  ];
+  const marker = unavailableMarkers.find((candidate) => source.includes(candidate));
+
+  if (marker) {
+    return {
+      ok: false,
+      message: `${label} demo video page appears unavailable: ${marker}`,
+    };
+  }
+
+  return {
+    ok: true,
+    label,
+  };
+}
+
+async function fetchWithTimeout(url) {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), VIDEO_FETCH_TIMEOUT_MS);
+
+  try {
+    return await fetch(url, {
+      redirect: 'follow',
+      signal: controller.signal,
+      headers: {
+        'user-agent': 'Mozilla/5.0 LaunchProof final checker',
+      },
+    });
+  } catch (error) {
+    fail(`Could not fetch demo video evidence URL: ${url}. ${error.message}`);
+  } finally {
+    clearTimeout(timeout);
   }
 }
 

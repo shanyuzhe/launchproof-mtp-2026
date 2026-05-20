@@ -9,6 +9,7 @@ const DEFAULT_URL = 'https://shanyuzhe.github.io/launchproof-mtp-2026/';
 const DEFAULT_PENDO_KEY = 'e8d019ac-2123-45c3-80b7-a171a94a8fb0';
 const FETCH_ATTEMPTS = 3;
 const FETCH_TIMEOUT_MS = 20000;
+const VIDEO_FETCH_TIMEOUT_MS = 20000;
 const allowedVideoHosts = [
   'youtube.com',
   'www.youtube.com',
@@ -90,7 +91,7 @@ async function main() {
 
   console.log('[check] Devpost material files');
   await checkDevpostMaterials();
-  checkExternalSubmissionEvidence();
+  await checkExternalSubmissionEvidence();
 
   if (warnings.length) {
     console.warn('\n[warn] Review before final submission:');
@@ -396,7 +397,7 @@ async function readRequiredFile(path) {
   return readFile(path, 'utf8');
 }
 
-function checkExternalSubmissionEvidence() {
+async function checkExternalSubmissionEvidence() {
   if (!dashboardScreenshot) {
     failures.push('Missing --dashboard-screenshot path for the Novus/Pendo dashboard evidence.');
     return;
@@ -435,6 +436,8 @@ function checkExternalSubmissionEvidence() {
 
     if (placeholderReason) {
       failures.push(`Demo video URL still looks like a placeholder: ${placeholderReason}`);
+    } else {
+      await checkDemoVideoUrlReachable(demoVideoUrl);
     }
   }
 }
@@ -447,6 +450,135 @@ function isAllowedDemoVideoHost(value) {
     console.error(`[fail] Could not parse demo video URL: ${value}`);
     console.error(error);
     return false;
+  }
+}
+
+async function checkDemoVideoUrlReachable(value) {
+  const result = await inspectDemoVideoUrl(value);
+
+  if (!result.ok) {
+    failures.push(result.message);
+    return;
+  }
+
+  console.log(`[check] Demo video URL resolves publicly: ${result.label}`);
+}
+
+async function inspectDemoVideoUrl(value) {
+  let url;
+
+  try {
+    url = new URL(value);
+  } catch (error) {
+    return {
+      ok: false,
+      message: `Could not parse demo video URL: ${error.message}`,
+    };
+  }
+
+  const hostname = url.hostname.toLowerCase();
+
+  if (hostname === 'youtu.be' || hostname === 'youtube.com' || hostname === 'www.youtube.com') {
+    return checkOEmbedUrl(
+      'YouTube',
+      `https://www.youtube.com/oembed?url=${encodeURIComponent(value)}&format=json`,
+    );
+  }
+
+  if (hostname === 'vimeo.com' || hostname === 'www.vimeo.com') {
+    return checkOEmbedUrl('Vimeo', `https://vimeo.com/api/oembed.json?url=${encodeURIComponent(value)}`);
+  }
+
+  return checkPublicVideoPage('Youku', value);
+}
+
+async function checkOEmbedUrl(label, endpoint) {
+  const response = await fetchVideoEvidence(endpoint);
+
+  if (!response.ok) {
+    return {
+      ok: false,
+      message: `${label} could not resolve the demo video via oEmbed (HTTP ${response.status}). Confirm the URL is real and public or unlisted.`,
+    };
+  }
+
+  const text = await response.text();
+  let payload;
+
+  try {
+    payload = JSON.parse(text);
+  } catch (error) {
+    return {
+      ok: false,
+      message: `${label} oEmbed returned invalid JSON: ${error.message}`,
+    };
+  }
+
+  if (!payload.title || !payload.html) {
+    return {
+      ok: false,
+      message: `${label} oEmbed response is missing title/html metadata.`,
+    };
+  }
+
+  return {
+    ok: true,
+    label: `${label} - ${payload.title}`,
+  };
+}
+
+async function checkPublicVideoPage(label, value) {
+  const response = await fetchVideoEvidence(value);
+
+  if (!response.ok) {
+    return {
+      ok: false,
+      message: `${label} demo video page returned HTTP ${response.status}. Confirm the URL is real and public.`,
+    };
+  }
+
+  const source = (await response.text()).toLowerCase();
+  const unavailableMarkers = [
+    'video unavailable',
+    'video not found',
+    'page not found',
+    'private video',
+    'this video is unavailable',
+  ];
+  const marker = unavailableMarkers.find((candidate) => source.includes(candidate));
+
+  if (marker) {
+    return {
+      ok: false,
+      message: `${label} demo video page appears unavailable: ${marker}`,
+    };
+  }
+
+  return {
+    ok: true,
+    label,
+  };
+}
+
+async function fetchVideoEvidence(url) {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), VIDEO_FETCH_TIMEOUT_MS);
+
+  try {
+    return await fetch(url, {
+      redirect: 'follow',
+      signal: controller.signal,
+      headers: {
+        'user-agent': 'Mozilla/5.0 LaunchProof final checker',
+      },
+    });
+  } catch (error) {
+    return {
+      ok: false,
+      status: `fetch failed: ${error.message}`,
+    };
+  } finally {
+    clearTimeout(timeout);
   }
 }
 

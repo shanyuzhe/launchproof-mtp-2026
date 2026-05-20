@@ -17,6 +17,7 @@ Use:
 Copy the uploaded video URL.
 
 The final checker rejects placeholder links such as `example`, `TODO`, `video-id`, or `https://...`; use the real uploaded watch/share URL.
+It also resolves the video page publicly, so a mistyped or unavailable YouTube/Vimeo link will fail before submission.
 
 ## 2. Capture Novus/Pendo Screenshot
 

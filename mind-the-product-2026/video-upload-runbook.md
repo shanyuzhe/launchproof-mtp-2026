@@ -11,6 +11,7 @@ Duration: 94.4 seconds.
 - Platform: YouTube, Vimeo, or Youku.
 - The final checker rejects other video hosts because Devpost rules require YouTube, Vimeo, or Youku.
 - The final checker also rejects placeholder links such as `example`, `TODO`, `video-id`, or `https://...`.
+- The final checker resolves the uploaded URL publicly. For YouTube and Vimeo it checks oEmbed metadata, so a mistyped or unavailable watch link will fail before Devpost.
 - Visibility: `Unlisted` is okay if the link is accessible without login.
 - Title: `LaunchProof Demo - Mind the Product World Product Day Hackathon`
 - Audience: Not made for kids.
