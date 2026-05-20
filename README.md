@@ -20,7 +20,13 @@ npm run dev
 
 ## Novus.ai
 
-The hackathon requires Novus.ai installation and a dashboard screenshot. This app already emits product events through `window.pendo.track(...)` or `window.novus.track(...)` when either SDK is available.
+The hackathon requires Novus.ai installation and a dashboard screenshot. LaunchProof loads the Pendo/Novus Web SDK when `NEXT_PUBLIC_PENDO_API_KEY` is present, initializes a stable anonymous visitor, and emits product events through `window.pendo.track(...)`.
+
+Create a local `.env.local` file or set the same environment variable in your deploy host:
+
+```bash
+NEXT_PUBLIC_PENDO_API_KEY=your-novus-or-pendo-install-key
+```
 
 Tracked event examples:
 
@@ -30,7 +36,7 @@ Tracked event examples:
 - `evidence_reviewed`
 - `export_clicked`
 
-Add the official Novus/Pendo install snippet to `app/layout.jsx` once the dashboard provides it.
+The SDK loader lives in `app/pendo-install.jsx`, and the event calls live in `app/page.jsx`.
 
 ## Hackathon Notes
 

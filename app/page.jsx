@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import {
   ArrowRight,
   CheckCircle2,
@@ -27,6 +27,7 @@ const trackEvent = (eventName, metadata = {}) => {
   const payload = {
     app: 'LaunchProof',
     hackathon: 'Mind the Product World Product Day 2026',
+    source: 'launchproof_app',
     ...metadata,
   };
 
@@ -92,6 +93,7 @@ const makePacket = (project) => {
 export default function App() {
   const [project, setProject] = useState(sampleProject);
   const [activeTab, setActiveTab] = useState('brief');
+  const [analyticsStatus, setAnalyticsStatus] = useState('Waiting for SDK');
   const [events, setEvents] = useState([
     'sample_loaded',
     'project_created',
@@ -101,6 +103,17 @@ export default function App() {
   ]);
 
   const packet = useMemo(() => makePacket(project), [project]);
+
+  useEffect(() => {
+    const updateStatus = () => {
+      setAnalyticsStatus(window.pendo ? 'Novus/Pendo connected' : 'Waiting for SDK');
+    };
+
+    updateStatus();
+    const statusTimer = window.setInterval(updateStatus, 1000);
+
+    return () => window.clearInterval(statusTimer);
+  }, []);
 
   const updateProject = (field, value) => {
     setProject((current) => ({ ...current, [field]: value }));
@@ -284,6 +297,10 @@ export default function App() {
               <article className="metric">
                 <strong>1</strong>
                 <span>exportable pitch packet</span>
+              </article>
+              <article className="metric metric-wide">
+                <strong>{analyticsStatus}</strong>
+                <span>runtime analytics status</span>
               </article>
               <div className="event-feed">
                 {events.map((eventName, index) => (

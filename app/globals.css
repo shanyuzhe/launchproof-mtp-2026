@@ -300,6 +300,15 @@ textarea {
   font-size: 2rem;
 }
 
+.metric-wide {
+  grid-column: 1 / -1;
+}
+
+.metric-wide strong {
+  color: #243b64;
+  font-size: 1.15rem;
+}
+
 .metric span {
   color: #4b554d;
   font-weight: 700;

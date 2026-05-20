@@ -19,6 +19,7 @@
 - Novus.ai installed.
 - Novus.ai receives real user events.
 - Novus.ai dashboard screenshot captured.
+- Deploy environment includes `NEXT_PUBLIC_PENDO_API_KEY`.
 
 ## Story
 
