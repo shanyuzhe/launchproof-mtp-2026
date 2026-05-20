@@ -9,7 +9,7 @@ Use this as the final internal audit before submitting on Devpost. The goal is t
 | Product Thinking | Clear user, worthwhile problem, clear job-to-be-done, why it matters | AI builders can create prototypes faster than they can prove launch readiness | App opening copy, Devpost Inspiration, MeetingBridge sample, Product Thinking card in Evidence |
 | Craft and Execution | Coherent end-to-end experience, polished UI, intentional copy | One workflow moves from intake to brief, flows, risks, resilience, evidence, and export | Live app, `Run Judge Demo`, `launchproof-main-workflow.png`, `launchproof-resilience-review.png`, `launchproof-mobile-resilience.png`, AI builder provenance panel, demo video |
 | Originality and Ambition | Specific and surprising product idea | LaunchProof treats analytics, resilience, and AI-builder provenance as product proof, not bolt-on story points | Resilience tab, Novus event map, launch proof loop, behavior coverage panel, `ai-builder-provenance.md` |
-| Shippedness | Stranger can land on URL and get value now, with measurable behavior | Public app works without login, sample URL loads, behavior coverage reaches 7/7, Novus/Pendo tracks events | GitHub Pages URL, MeetingBridge sample URL, `launchproof-behavior-coverage.png`, Novus/Pendo dashboard screenshot |
+| Shippedness | Stranger can land on URL and get value now, with measurable behavior | Public app works without login, sample URL loads, behavior coverage reaches 7/7, Novus/Pendo tracks events | GitHub Pages URL, MeetingBridge sample URL, `launchproof-behavior-coverage.png`, `latest-public-event-refresh.json`, Novus/Pendo dashboard screenshot |
 
 ## Submission Proof Chain
 
@@ -28,6 +28,7 @@ Use this as the final internal audit before submitting on Devpost. The goal is t
 - Direct sample URL: `https://shanyuzhe.github.io/launchproof-mtp-2026/?sample=meetingbridge`
 - Source repository: `https://github.com/shanyuzhe/launchproof-mtp-2026`
 - Demo video file: `launchproof-demo-video.webm`, 94.4 seconds
+- Public event refresh evidence: `mind-the-product-2026/latest-public-event-refresh.json`
 - Gallery assets:
   - `launchproof-main-workflow.png`
   - `launchproof-resilience-review.png`
@@ -40,4 +41,4 @@ Use this as the final internal audit before submitting on Devpost. The goal is t
 
 - Upload `launchproof-demo-video.webm` to YouTube, Vimeo, or Youku and use the real public/unlisted URL.
 - Save a real Novus/Pendo dashboard screenshot as `novus-pendo-dashboard.png`.
-- Run `node scripts/final-submit-check.mjs <video-url>` and require `[pass] LaunchProof deploy verification passed.`
+- Run `npm run final:check -- <video-url>` and require `[pass] LaunchProof deploy verification passed.` and `[pass] Final submit check passed.`

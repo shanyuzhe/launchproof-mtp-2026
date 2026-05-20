@@ -11,6 +11,7 @@
     "build:pages": "node scripts/build-pages.mjs",
     "final:check": "node scripts/final-submit-check.mjs",
     "import:novus-screenshot": "node scripts/import-novus-screenshot.mjs",
+    "refresh:novus-events": "node scripts/refresh-public-events.mjs",
     "verify:launchproof": "node scripts/launchproof-verify.mjs",
     "verify:ui": "node scripts/verify-local-ui.mjs",
     "start": "next start"

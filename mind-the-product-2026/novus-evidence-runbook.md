@@ -24,6 +24,14 @@ In one browser session:
 8. Return to `Evidence` and confirm behavior coverage reaches `100%`.
 9. Leave the tab open for 30 seconds so Pendo can flush events.
 
+Shortcut from the repo root:
+
+```bash
+npm run refresh:novus-events
+```
+
+This opens the deployed GitHub Pages app, completes the judge path, clicks `Copy packet`, waits for Pendo/Novus flush, and writes `mind-the-product-2026/latest-public-event-refresh.json`. The script does not replace the required dashboard screenshot; it refreshes the external event stream before the screenshot is captured.
+
 Browser network evidence already observed on the deployed app:
 
 - `cdn.pendo.io/agent/static/e8d019ac-2123-45c3-80b7-a171a94a8fb0/pendo.js` returned HTTP 304/200.

@@ -77,6 +77,7 @@ Purpose: final launch gate for Devpost. Public-facing submission assets stay in 
 - Evidence tab includes behavior coverage for the current proof path.
 - Novus/Pendo dashboard screenshot corresponds to the tracked events.
 - Browser network evidence confirms the deployed app loads `cdn.pendo.io` and sends `data.pendo.io/data/rec/...` requests with HTTP 200 responses.
+- Latest public event refresh evidence is saved at `mind-the-product-2026/latest-public-event-refresh.json`.
 
 ## Judge-Facing Positioning
 
@@ -120,7 +121,8 @@ Purpose: final launch gate for Devpost. Public-facing submission assets stay in 
 
 - Confirm the chosen public URL deploys the latest GitHub commit before final submission.
 - If GitHub Pages returns 404, enable Pages in repository settings and choose branch `gh-pages` / `/root`.
-- Run `node scripts/final-submit-check.mjs https://...` after saving `novus-pendo-dashboard.png` and require a `[pass]` result.
+- Run `npm run refresh:novus-events` before capturing the final Novus/Pendo screenshot.
+- Run `npm run final:check -- https://...` after saving `novus-pendo-dashboard.png` and require a `[pass]` result.
 - Capture a fresh Novus.ai/Pendo dashboard screenshot after the final deployed build receives events.
 - Record and upload the demo video to YouTube, Vimeo, or Youku.
 - Confirm whether we enter as solo or team.

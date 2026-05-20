@@ -35,6 +35,7 @@ Use this file as the final Devpost assembly checklist.
 - Mobile-width resilience review is verified by `launchproof-mobile-resilience.png`.
 - Pendo loads from `cdn.pendo.io`.
 - Pendo recording/event requests are sent to `data.pendo.io/data/rec/...` and return HTTP 200.
+- Latest public event refresh evidence is saved in `mind-the-product-2026/latest-public-event-refresh.json`.
 
 ## Final Judge Checklist
 

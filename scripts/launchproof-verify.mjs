@@ -276,6 +276,7 @@ async function checkDevpostMaterials() {
   const checklistPath = resolve(repoRoot, 'mind-the-product-2026/submission-checklist.md');
   const judgingMatrixPath = resolve(repoRoot, 'mind-the-product-2026/judging-evidence-matrix.md');
   const provenancePath = resolve(repoRoot, 'mind-the-product-2026/ai-builder-provenance.md');
+  const eventRefreshPath = resolve(repoRoot, 'mind-the-product-2026/latest-public-event-refresh.json');
   const videoScriptPath = resolve(repoRoot, 'mind-the-product-2026/video-script.md');
   const galleryImagePath = resolve(repoRoot, 'launchproof-devpost-gallery.png');
   const resilienceImagePath = resolve(repoRoot, 'launchproof-resilience-review.png');
@@ -286,6 +287,7 @@ async function checkDevpostMaterials() {
   const checklist = await readRequiredFile(checklistPath);
   const judgingMatrix = await readRequiredFile(judgingMatrixPath);
   const provenance = await readRequiredFile(provenancePath);
+  const eventRefresh = await readRequiredFile(eventRefreshPath);
   const videoScript = await readRequiredFile(videoScriptPath);
 
   for (const section of requiredDevpostSections) {
@@ -309,6 +311,8 @@ async function checkDevpostMaterials() {
       failures.push(`AI builder provenance doc is missing required proof text: ${expected}`);
     }
   }
+
+  checkEventRefreshEvidence(eventRefreshPath, eventRefresh);
 
   for (const criterion of ['Product Thinking', 'Craft and Execution', 'Originality and Ambition', 'Shippedness']) {
     if (!judgingMatrix.includes(criterion)) {
@@ -334,6 +338,50 @@ async function checkDevpostMaterials() {
 
   if (!draft.includes(publicUrl)) {
     warnings.push(`Devpost draft App URL does not exactly match checked URL: ${publicUrl}`);
+  }
+}
+
+function checkEventRefreshEvidence(path, source) {
+  let evidence;
+
+  try {
+    evidence = JSON.parse(source);
+  } catch (error) {
+    failures.push(`Latest public event refresh evidence is not valid JSON: ${path}`);
+    console.error(error);
+    return;
+  }
+
+  if (evidence.passed !== true) {
+    failures.push('Latest public event refresh evidence did not pass.');
+  }
+
+  if (!evidence.pageEvidence?.coverageText?.includes('7/7')) {
+    failures.push('Latest public event refresh evidence does not show 7/7 behavior coverage.');
+  }
+
+  if (evidence.pendo?.scriptLoaded !== true) {
+    failures.push('Latest public event refresh evidence did not observe a successful Pendo script load.');
+  }
+
+  if (evidence.pendo?.dataAccepted !== true) {
+    failures.push('Latest public event refresh evidence did not observe successful Pendo data acceptance.');
+  }
+
+  const dataResponse = evidence.pendo?.responses?.some(
+    (response) => response.url?.includes('data.pendo.io/data/rec') && response.status >= 200 && response.status < 400,
+  );
+
+  if (!dataResponse) {
+    failures.push('Latest public event refresh evidence is missing a successful data.pendo.io/data/rec response.');
+  }
+
+  if (evidence.checkedAt) {
+    const ageMs = Date.now() - Date.parse(evidence.checkedAt);
+
+    if (Number.isFinite(ageMs) && ageMs > 7 * 24 * 60 * 60 * 1000) {
+      warnings.push(`Latest public event refresh evidence is older than 7 days: ${evidence.checkedAt}`);
+    }
   }
 }
 
