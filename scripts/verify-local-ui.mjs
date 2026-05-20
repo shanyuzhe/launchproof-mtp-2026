@@ -81,6 +81,7 @@ async function verifyDesktopFlow(browser, origin) {
     await page.getByRole('button', { name: 'Copy packet' }).click();
     await page.getByRole('button', { name: 'Evidence', exact: true }).click();
     await expectText(page, 'Hackathon scorecard');
+    await expectText(page, 'AI builder provenance');
     await expectText(page, 'Behavior coverage');
     await expectText(page, '7/7 proof behaviors completed this session');
     await assertNoDocumentHorizontalOverflow(page, 'desktop evidence');
@@ -118,6 +119,7 @@ async function verifyMobileFlow(browser, origin) {
 
     await page.getByRole('button', { name: 'Evidence', exact: true }).click();
     await expectText(page, 'Hackathon scorecard');
+    await expectText(page, 'AI builder provenance');
     await expectText(page, 'Behavior coverage');
     await assertNoDocumentHorizontalOverflow(page, 'mobile evidence');
   } finally {

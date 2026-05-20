@@ -61,6 +61,8 @@ We built LaunchProof during the hackathon submission window using Codex and GPT-
 
 The app uses Next.js and React for the public web app, Codex and GPT-5 as the AI builder workflow, GitHub Pages for deployment, Novus.ai / Pendo Web SDK for product behavior tracking, local browser storage for draft persistence, lucide-react for interface icons, and GitHub for source control.
 
+We also keep the AI-builder provenance inspectable in the live Evidence tab, the packet export, the repository, and `mind-the-product-2026/ai-builder-provenance.md`, so the submission can show how the AI builder requirement was satisfied without overstating runtime AI capabilities.
+
 ## Challenges we ran into
 
 The main challenge was avoiding "AI text soup". The product needed to produce artifacts that are short, structured, measurable, and useful under time pressure. We focused on the launch workflow: user, job, flows, risks, resilience, evidence, pitch.
@@ -74,6 +76,7 @@ A second challenge was making Novus.ai feel like part of the product rather than
 - Added multiple sample products to show the workflow works beyond the LaunchProof self-demo.
 - Added behavior tracking so "ready to ship" can be tied to real usage signals.
 - Added a behavior coverage panel that shows which proof actions have happened in the current session.
+- Made Codex/GPT-5 builder provenance visible in the app, export packet, and submission docs.
 - Mapped the product evidence directly to Product Thinking, Craft and Execution, Originality and Ambition, and Shippedness.
 - Added a readiness rationale and launch proof loop so the score is explainable instead of decorative.
 - Added draft persistence so builders can return to a packet without losing work.

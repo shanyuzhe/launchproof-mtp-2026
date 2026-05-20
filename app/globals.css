@@ -506,6 +506,7 @@ textarea {
 .resilience-proof-card,
 .metric,
 .criteria-card,
+.builder-proof-card,
 .readiness-card,
 .proof-loop-card,
 .event-board,
@@ -688,6 +689,7 @@ small {
 .event-board,
 .event-feed,
 .readiness-card,
+.builder-proof-card,
 .proof-loop-card,
 .proof-status-card,
 .behavior-coverage-card,
@@ -710,6 +712,42 @@ small {
 .criteria-card {
   grid-column: span 4;
   padding: 17px;
+}
+
+.builder-proof-card {
+  grid-column: span 4;
+  display: grid;
+  gap: 12px;
+}
+
+.builder-proof-card > p {
+  margin-bottom: 0;
+  color: #4b554d;
+  line-height: 1.5;
+}
+
+.builder-proof-card div:not(.row-title) {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.builder-proof-card section {
+  border-radius: 7px;
+  padding: 13px;
+  background: #f8fbf5;
+}
+
+.builder-proof-card strong {
+  display: block;
+  margin-bottom: 7px;
+  color: #182016;
+}
+
+.builder-proof-card section p {
+  margin-bottom: 0;
+  color: #4b554d;
+  line-height: 1.45;
 }
 
 .criteria-grid {
@@ -1028,6 +1066,7 @@ small {
   .event-board,
   .event-feed,
   .readiness-card,
+  .builder-proof-card,
   .proof-loop-card,
   .behavior-coverage-card,
   .proof-status-card {
@@ -1068,6 +1107,7 @@ small {
   }
 
   .proof-loop-row,
+  .builder-proof-card div:not(.row-title),
   .readiness-card div:not(.row-title),
   .proof-status-card div:not(.row-title) {
     grid-template-columns: 1fr;

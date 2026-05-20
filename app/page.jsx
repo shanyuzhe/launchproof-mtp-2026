@@ -166,6 +166,24 @@ const behaviorCoverageChecks = [
   },
 ];
 
+const aiBuilderProof = [
+  {
+    label: 'AI builder workflow',
+    proof:
+      'Codex and GPT-5 were used during the hackathon window to turn the rules into a product concept, UI, implementation, verification scripts, and Devpost materials.',
+  },
+  {
+    label: 'Structured product reasoning',
+    proof:
+      'The runtime app intentionally outputs launch artifacts instead of claiming to be an autonomous AI agent: brief, flows, risks, resilience, evidence, and pitch.',
+  },
+  {
+    label: 'Inspectable shipping evidence',
+    proof:
+      'The repository includes the public app, Pages-aware build script, local UI verification, deploy verifier, final submit checker, screenshots, and video artifact.',
+  },
+];
+
 const trackEvent = (eventName, metadata = {}) => {
   const payload = {
     app: 'LaunchProof',
@@ -452,6 +470,7 @@ const makePacket = (project) => {
         proof: 'The app is deployed, testable by a stranger, and emits Novus/Pendo behavior events from real interactions.',
       },
     ],
+    builderProof: aiBuilderProof,
     testing: [
       'Open the public LaunchProof URL.',
       'Edit the product brief fields or use the default LaunchProof example.',
@@ -542,6 +561,9 @@ const buildExport = (project, packet) =>
     '',
     '## Hackathon scorecard',
     ...packet.criteria.map((item) => `- ${item.label} (${item.weight}): ${item.proof}`),
+    '',
+    '## AI builder provenance',
+    ...packet.builderProof.map((item) => `- ${item.label}: ${item.proof}`),
     '',
     '## 90-second judge demo script',
     ...packet.demoScript.map((item) => `- ${item.timebox} ${item.beat}: ${item.proof}`),
@@ -1049,6 +1071,24 @@ export default function App() {
                         <strong>{item.label}</strong>
                         <span>{item.weight}</span>
                       </div>
+                      <p>{item.proof}</p>
+                    </section>
+                  ))}
+                </div>
+              </article>
+              <article className="builder-proof-card">
+                <div className="row-title">
+                  <h3>AI builder provenance</h3>
+                  <Sparkles size={18} />
+                </div>
+                <p>
+                  Built during the hackathon with Codex and GPT-5 as the AI builder workflow,
+                  then verified with reproducible scripts instead of only a polished story.
+                </p>
+                <div>
+                  {packet.builderProof.map((item) => (
+                    <section key={item.label}>
+                      <strong>{item.label}</strong>
                       <p>{item.proof}</p>
                     </section>
                   ))}

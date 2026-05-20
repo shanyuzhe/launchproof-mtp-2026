@@ -66,6 +66,8 @@ LaunchProof should be judged as a product layer for the AI-builder era, where ma
 
 We built LaunchProof during the hackathon submission window using Codex and GPT-5 as the AI builder workflow to rapidly shape the product workflow, prototype the interface, implement the Next.js app, write verification scripts, and iterate on the submission story. The core product is designed around structured product reasoning rather than open-ended chat: every output maps to a launch artifact a real builder needs. LaunchProof itself does not claim to be an autonomous AI agent at runtime; its value is the structured product reasoning layer created through the AI builder process.
 
+The AI-builder provenance is intentionally inspectable in the live Evidence tab, the packet export, the repository, and `mind-the-product-2026/ai-builder-provenance.md`, so the submission can show the AI Builder workflow without overstating runtime AI capabilities.
+
 The app is built with:
 
 - Next.js and React for the public web app
@@ -95,6 +97,7 @@ A second challenge was making Novus.ai feel like part of the product rather than
 - Added multiple sample products to show the workflow works beyond the LaunchProof self-demo.
 - Added behavior tracking so "ready to ship" can be tied to real usage signals.
 - Added a behavior coverage panel that makes the current session's proof path visible before the Novus/Pendo dashboard screenshot is reviewed.
+- Made Codex/GPT-5 builder provenance visible in the app, export packet, and submission docs.
 - Mapped the product evidence directly to Product Thinking, Craft and Execution, Originality and Ambition, and Shippedness.
 - Added a readiness rationale and launch proof loop so the score is explainable instead of decorative.
 - Added draft persistence so builders can return to a packet without losing work.

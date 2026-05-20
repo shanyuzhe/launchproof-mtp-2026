@@ -10,6 +10,7 @@ Use this file as the final Devpost assembly checklist.
 - Demo video: TODO after upload
 - Devpost paste fields: `mind-the-product-2026/devpost-paste-fields.md`
 - Judging evidence matrix: `mind-the-product-2026/judging-evidence-matrix.md`
+- AI builder provenance: `mind-the-product-2026/ai-builder-provenance.md`
 - Novus evidence steps: `mind-the-product-2026/novus-evidence-runbook.md`
 - Video upload steps: `mind-the-product-2026/video-upload-runbook.md`
 - Final 10-minute submit card: `mind-the-product-2026/final-10-minute-submit-card.md`

@@ -34,6 +34,8 @@ const requiredPublicStrings = [
   'Launch proof loop',
   'Proof status',
   'Behavior coverage',
+  'AI builder provenance',
+  'Codex and GPT-5',
   'Testing instructions',
 ];
 
@@ -57,6 +59,7 @@ const requiredChecklistItems = [
   'Novus.ai installed through the Pendo Web SDK',
   'Novus.ai/Pendo receives real user events on the currently deployed build',
   'Novus.ai dashboard screenshot captured',
+  'AI Builder provenance doc reviewed',
   'Demo video is under 3 minutes',
   'Testing instructions',
 ];
@@ -272,6 +275,7 @@ async function checkDevpostMaterials() {
   const draftPath = resolve(repoRoot, 'mind-the-product-2026/devpost-submission-draft.md');
   const checklistPath = resolve(repoRoot, 'mind-the-product-2026/submission-checklist.md');
   const judgingMatrixPath = resolve(repoRoot, 'mind-the-product-2026/judging-evidence-matrix.md');
+  const provenancePath = resolve(repoRoot, 'mind-the-product-2026/ai-builder-provenance.md');
   const videoScriptPath = resolve(repoRoot, 'mind-the-product-2026/video-script.md');
   const galleryImagePath = resolve(repoRoot, 'launchproof-devpost-gallery.png');
   const resilienceImagePath = resolve(repoRoot, 'launchproof-resilience-review.png');
@@ -281,6 +285,7 @@ async function checkDevpostMaterials() {
   const draft = await readRequiredFile(draftPath);
   const checklist = await readRequiredFile(checklistPath);
   const judgingMatrix = await readRequiredFile(judgingMatrixPath);
+  const provenance = await readRequiredFile(provenancePath);
   const videoScript = await readRequiredFile(videoScriptPath);
 
   for (const section of requiredDevpostSections) {
@@ -297,6 +302,12 @@ async function checkDevpostMaterials() {
 
   if (!videoScript.includes('Novus/Pendo dashboard screenshot')) {
     failures.push('Video script does not mention the Novus/Pendo dashboard screenshot.');
+  }
+
+  for (const expected of ['Codex and GPT-5', 'not presented as an autonomous runtime AI agent', 'Reproducible artifacts']) {
+    if (!provenance.includes(expected)) {
+      failures.push(`AI builder provenance doc is missing required proof text: ${expected}`);
+    }
   }
 
   for (const criterion of ['Product Thinking', 'Craft and Execution', 'Originality and Ambition', 'Shippedness']) {

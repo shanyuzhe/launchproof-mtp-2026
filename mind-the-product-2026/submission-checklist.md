@@ -30,6 +30,7 @@ Purpose: final launch gate for Devpost. Public-facing submission assets stay in 
 - Tagline: `AI helps you build faster. LaunchProof helps you prove it is ready to ship.`
 - Project Story pasted from `devpost-submission-draft.md`.
 - Judging evidence matrix reviewed before final submit.
+- AI Builder provenance doc reviewed and available as proof: `mind-the-product-2026/ai-builder-provenance.md`.
 - Inspiration, What it does, How we built it, Challenges, Accomplishments, What we learned, and What's next are filled.
 - About the Project leads with the AI-builder launch-readiness gap, not generic productivity.
 - About the Project makes the user, job-to-be-done, workflow, evidence, and honest limitations clear.
