@@ -27,7 +27,7 @@ AI helps builders create software faster. LaunchProof helps them prove the produ
 
 0:35-0:55 - Move through `Brief`, `Flows`, and `Risks`. Emphasize specific flows, acceptance checks, and mitigations.
 
-0:55-1:10 - Open `Evidence`. Show the hackathon scorecard and Novus/Pendo event map.
+0:55-1:10 - Open `Evidence`. Show the hackathon scorecard, behavior coverage, and Novus/Pendo event map.
 
 1:10-1:20 - Click `Copy packet`. Explain that the result can be pasted into Devpost, a launch review, or a team update.
 
@@ -41,7 +41,7 @@ On the left, I enter the product, target user, problem, solution, success metric
 
 When I generate a launch packet, LaunchProof creates a concise brief, critical user flows, acceptance checks, launch risks, evidence signals, and a pitch-ready export. The Evidence tab also includes a hackathon scorecard mapped directly to the judging criteria: product thinking, craft, originality, and shippedness.
 
-The Evidence tab maps user actions to Novus/Pendo events, including packet generation, flow review, risk review, evidence review, and export. That means LaunchProof is not only a demo; it is measurable as a shipped product.
+The Evidence tab maps user actions to Novus/Pendo events, including packet generation, flow review, risk review, evidence review, and export. It also shows behavior coverage for the current session. That means LaunchProof is not only a demo; it is measurable as a shipped product.
 
 Finally, I copy the packet. A builder can paste it into a launch review or Devpost submission, and a judge can test the public URL directly.
 
@@ -55,6 +55,6 @@ LaunchProof helps teams move from "we built something with AI" to "we can explai
 - Keep browser zoom at 100 percent unless text is hard to read.
 - Start with the seeded LaunchProof example so the first screen is already meaningful.
 - Make one visible edit before generating the packet.
-- Show the `Evidence` tab long enough for judges to see the scorecard and event map.
+- Show the `Evidence` tab long enough for judges to see the scorecard, behavior coverage, and event map.
 - Show the Novus/Pendo screenshot as evidence, not as an afterthought.
 - End with the one-liner: "AI helps you build faster. LaunchProof helps you prove it is ready to ship."

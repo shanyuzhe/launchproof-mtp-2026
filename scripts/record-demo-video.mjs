@@ -73,7 +73,7 @@ async function main() {
   await caption(page, 'Risks make launch uncertainty explicit before shipping.', 4500);
 
   await page.getByRole('button', { name: 'Evidence', exact: true }).click();
-  await caption(page, 'Evidence maps the product to the hackathon scorecard and Novus/Pendo events.', 6500);
+  await caption(page, 'Evidence shows the scorecard, behavior coverage, and Novus/Pendo event map.', 6500);
 
   await page.getByRole('button', { name: 'Pitch', exact: true }).click();
   await caption(page, 'Pitch gives the builder a concise submission-ready story.', 4500);
@@ -82,6 +82,8 @@ async function main() {
   await caption(page, 'Copy packet exports the launch story for Devpost or a real launch review.', 4500);
 
   await page.getByRole('button', { name: 'Evidence', exact: true }).click();
+  await page.getByText('Behavior coverage').scrollIntoViewIfNeeded();
+  await caption(page, 'Behavior coverage reaches 100 percent when the proof path has actually happened.', 6000);
   await caption(page, 'Shippedness is measurable: the public app emits Novus/Pendo behavior events.', 6000);
   await caption(page, 'AI helps you build faster. LaunchProof helps you prove it is ready to ship.', 6000);
 

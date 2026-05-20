@@ -119,6 +119,39 @@ const judgeDemoPath = [
   },
 ];
 
+const behaviorCoverageChecks = [
+  {
+    label: 'Context loaded',
+    events: ['sample_loaded', 'project_created', 'sample_project_loaded'],
+    proof: 'A judge or builder started from a real product context.',
+  },
+  {
+    label: 'Packet generated',
+    events: ['brief_generated', 'judge_demo_brief_viewed'],
+    proof: 'The core launch packet was created from the current inputs.',
+  },
+  {
+    label: 'Flows reviewed',
+    events: ['flows_reviewed', 'judge_demo_flows_viewed'],
+    proof: 'Critical paths and acceptance checks were inspected.',
+  },
+  {
+    label: 'Risks reviewed',
+    events: ['risks_reviewed', 'judge_demo_risks_viewed'],
+    proof: 'Launch risks were surfaced before calling the product ready.',
+  },
+  {
+    label: 'Evidence inspected',
+    events: ['evidence_reviewed', 'judge_demo_evidence_viewed'],
+    proof: 'The user checked the scorecard, proof loop, and event map.',
+  },
+  {
+    label: 'Packet exported',
+    events: ['export_clicked'],
+    proof: 'The judge-ready Markdown packet was copied for reuse.',
+  },
+];
+
 const trackEvent = (eventName, metadata = {}) => {
   const payload = {
     app: 'LaunchProof',
@@ -465,12 +498,23 @@ export default function App() {
   const [draftReady, setDraftReady] = useState(false);
   const [judgeDemoActive, setJudgeDemoActive] = useState(false);
   const [judgeStepIndex, setJudgeStepIndex] = useState(0);
+  const [coveredEvents, setCoveredEvents] = useState(() => new Set(['sample_loaded', 'project_created']));
   const [events, setEvents] = useState([
     { id: 'seed-sample-loaded', name: 'sample_loaded', time: 'Seed' },
     { id: 'seed-project-created', name: 'project_created', time: 'Seed' },
   ]);
 
   const packet = useMemo(() => makePacket(project), [project]);
+  const behaviorCoverage = useMemo(
+    () =>
+      behaviorCoverageChecks.map((check) => ({
+        ...check,
+        ready: check.events.some((eventName) => coveredEvents.has(eventName)),
+      })),
+    [coveredEvents],
+  );
+  const coverageCount = behaviorCoverage.filter((check) => check.ready).length;
+  const coveragePercent = Math.round((coverageCount / behaviorCoverage.length) * 100);
 
   useEffect(() => {
     try {
@@ -480,6 +524,11 @@ export default function App() {
 
       if (requestedSample) {
         setProject(requestedSample.project);
+        setCoveredEvents((current) => {
+          const next = new Set(current);
+          next.add('sample_project_loaded');
+          return next;
+        });
         return;
       }
 
@@ -521,6 +570,11 @@ export default function App() {
     const id = `${eventName}-${Date.now()}-${Math.random().toString(16).slice(2)}`;
 
     setEvents((current) => [{ id, name: eventName, time: now }, ...current].slice(0, 7));
+    setCoveredEvents((current) => {
+      const next = new Set(current);
+      next.add(eventName);
+      return next;
+    });
     trackEvent(eventName, {
       projectName: project.name || 'Untitled Product',
       activeTab,
@@ -967,6 +1021,28 @@ export default function App() {
                   <strong>Dashboard screenshot</strong>
                   <p>Upload the matching Novus/Pendo dashboard image in Devpost.</p>
                 </div>
+              </article>
+              <article className="behavior-coverage-card">
+                <div className="row-title">
+                  <h3>Behavior coverage</h3>
+                  <BarChart3 size={18} />
+                </div>
+                <div className="coverage-meter" aria-label={`Behavior coverage ${coveragePercent}%`}>
+                  <strong>{coveragePercent}%</strong>
+                  <span>{coverageCount}/{behaviorCoverage.length} proof behaviors completed this session</span>
+                  <div>
+                    <i style={{ width: `${coveragePercent}%` }} />
+                  </div>
+                </div>
+                {behaviorCoverage.map((check) => (
+                  <section key={check.label} className={check.ready ? 'ready' : 'pending'}>
+                    <CheckCircle2 size={16} />
+                    <div>
+                      <strong>{check.label}</strong>
+                      <p>{check.proof}</p>
+                    </div>
+                  </section>
+                ))}
               </article>
               <article className="testing-card">
                 <div className="row-title">

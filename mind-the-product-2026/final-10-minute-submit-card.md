@@ -47,7 +47,8 @@ Upload images:
 
 1. `launchproof-main-workflow.png`
 2. `launchproof-evidence-scorecard.png`
-3. `novus-pendo-dashboard.png`
+3. `launchproof-behavior-coverage.png`
+4. `novus-pendo-dashboard.png`
 
 ## 4. Run Final Gate
 

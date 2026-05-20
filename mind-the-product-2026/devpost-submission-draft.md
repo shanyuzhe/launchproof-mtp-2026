@@ -27,6 +27,7 @@ LaunchProof turns a rough product idea into a launch readiness packet that a jud
 - acceptance checks
 - launch risks and mitigations
 - a readiness rationale and Novus-measurable proof loop
+- a behavior coverage panel for the current session
 - a hackathon scorecard mapped to the judging criteria
 - testing instructions
 - an exportable Devpost-ready pitch packet
@@ -89,6 +90,7 @@ A second challenge was making Novus.ai feel like part of the product rather than
 - Designed outputs that directly support demo preparation and launch review.
 - Added multiple sample products to show the workflow works beyond the LaunchProof self-demo.
 - Added behavior tracking so "ready to ship" can be tied to real usage signals.
+- Added a behavior coverage panel that makes the current session's proof path visible before the Novus/Pendo dashboard screenshot is reviewed.
 - Mapped the product evidence directly to Product Thinking, Craft and Execution, Originality and Ambition, and Shippedness.
 - Added a readiness rationale and launch proof loop so the score is explainable instead of decorative.
 - Added draft persistence so builders can return to a packet without losing work.
@@ -120,7 +122,7 @@ Judges can test LaunchProof without creating an account.
 7. In `Brief`, confirm the packet identifies a target user, problem, solution, success metric, and launch decision.
 8. In `Flows`, confirm that the app turns the idea into critical user paths and acceptance checks.
 9. In `Risks`, review the launch risks and mitigations.
-10. In `Evidence`, review the hackathon scorecard, readiness rationale, launch proof loop, proof status, and Novus/Pendo event map.
+10. In `Evidence`, review the hackathon scorecard, readiness rationale, launch proof loop, proof status, behavior coverage, and Novus/Pendo event map.
 11. Click `Copy packet` to copy the pitch-ready launch packet and confirm the `Copied` state appears.
 12. Compare the local event feed and tracked actions with the Novus.ai/Pendo dashboard screenshot included in the submission.
 
@@ -149,7 +151,7 @@ No login is required. The app stores draft changes in browser local storage. A s
 
 ## Demo Video Description
 
-LaunchProof helps AI builders turn a rough prototype into a launch readiness packet. In the demo, we generate a product brief, critical flows, acceptance checks, risks, evidence signals, and a Devpost-ready pitch export. We also show how key product actions are mapped to Novus.ai/Pendo events so launch readiness is measurable, not just narrated.
+LaunchProof helps AI builders turn a rough prototype into a launch readiness packet. In the demo, we generate a product brief, critical flows, acceptance checks, risks, behavior coverage, evidence signals, and a Devpost-ready pitch export. We also show how key product actions are mapped to Novus.ai/Pendo events so launch readiness is measurable, not just narrated.
 
 ## Responsible AI Note
 

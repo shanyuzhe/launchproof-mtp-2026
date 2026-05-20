@@ -20,7 +20,7 @@ Duration: 80.6 seconds.
 
 Paste this:
 
-LaunchProof helps AI builders turn a rough prototype into a launch readiness packet. In this demo, we generate a product brief, critical flows, acceptance checks, risks, evidence signals, and a Devpost-ready pitch export. The Evidence tab maps key product actions to Novus.ai/Pendo events so shippedness is measurable, not just narrated.
+LaunchProof helps AI builders turn a rough prototype into a launch readiness packet. In this demo, we generate a product brief, critical flows, acceptance checks, risks, behavior coverage, evidence signals, and a Devpost-ready pitch export. The Evidence tab maps key product actions to Novus.ai/Pendo events so shippedness is measurable, not just narrated.
 
 Public app: https://shanyuzhe.github.io/launchproof-mtp-2026/
 

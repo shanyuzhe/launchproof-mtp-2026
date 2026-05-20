@@ -31,6 +31,7 @@ const requiredPublicStrings = [
   'Readiness rationale',
   'Launch proof loop',
   'Proof status',
+  'Behavior coverage',
   'Testing instructions',
 ];
 
@@ -270,6 +271,7 @@ async function checkDevpostMaterials() {
   const checklistPath = resolve(repoRoot, 'mind-the-product-2026/submission-checklist.md');
   const videoScriptPath = resolve(repoRoot, 'mind-the-product-2026/video-script.md');
   const galleryImagePath = resolve(repoRoot, 'launchproof-devpost-gallery.png');
+  const behaviorCoverageImagePath = resolve(repoRoot, 'launchproof-behavior-coverage.png');
 
   const draft = await readRequiredFile(draftPath);
   const checklist = await readRequiredFile(checklistPath);
@@ -293,6 +295,10 @@ async function checkDevpostMaterials() {
 
   if (!isNonEmptyFile(galleryImagePath)) {
     failures.push(`Devpost gallery image is missing or empty: ${galleryImagePath}`);
+  }
+
+  if (!isNonEmptyFile(behaviorCoverageImagePath)) {
+    failures.push(`Behavior coverage gallery image is missing or empty: ${behaviorCoverageImagePath}`);
   }
 
   if (!draft.includes(publicUrl)) {
