@@ -29,6 +29,7 @@ Purpose: final launch gate for Devpost. Public-facing submission assets stay in 
 - Project name: `LaunchProof`.
 - Tagline: `AI helps you build faster. LaunchProof helps you prove it is ready to ship.`
 - Project Story pasted from `devpost-submission-draft.md`.
+- Judging evidence matrix reviewed before final submit.
 - Inspiration, What it does, How we built it, Challenges, Accomplishments, What we learned, and What's next are filled.
 - About the Project leads with the AI-builder launch-readiness gap, not generic productivity.
 - About the Project makes the user, job-to-be-done, workflow, evidence, and honest limitations clear.

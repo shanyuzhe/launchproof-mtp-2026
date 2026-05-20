@@ -86,7 +86,7 @@ Next.js, React, Codex and GPT-5 AI Builder Workflow, GitHub Pages, Novus.ai, Pen
 
 The main challenge was avoiding "AI text soup". The product needed to produce artifacts that are short, structured, measurable, and useful under time pressure. We focused on the launch workflow: user, job, flows, risks, resilience, evidence, pitch.
 
-A second challenge was making Novus.ai feel like part of the product rather than a compliance checkbox. LaunchProof treats behavior tracking as launch evidence: did the builder generate a packet, review flows, inspect risks, review evidence, and export the pitch?
+A second challenge was making Novus.ai feel like part of the product rather than a compliance checkbox. LaunchProof treats behavior tracking as launch evidence: did the builder generate a packet, review flows, inspect risks, stress-test resilience, review evidence, and export the pitch?
 
 ## Accomplishments
 

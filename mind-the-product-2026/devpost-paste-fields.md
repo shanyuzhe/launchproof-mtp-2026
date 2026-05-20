@@ -31,9 +31,10 @@ TODO: paste public or unlisted YouTube, Vimeo, or Youku URL after upload.
 Upload in this order:
 
 1. `launchproof-main-workflow.png`
-2. `launchproof-evidence-scorecard.png`
-3. `launchproof-behavior-coverage.png`
-4. `novus-pendo-dashboard.png`
+2. `launchproof-resilience-review.png`
+3. `launchproof-evidence-scorecard.png`
+4. `launchproof-behavior-coverage.png`
+5. `novus-pendo-dashboard.png`
 
 ## About The Project
 
@@ -63,7 +64,7 @@ The app uses Next.js and React for the public web app, Codex and GPT-5 as the AI
 
 The main challenge was avoiding "AI text soup". The product needed to produce artifacts that are short, structured, measurable, and useful under time pressure. We focused on the launch workflow: user, job, flows, risks, resilience, evidence, pitch.
 
-A second challenge was making Novus.ai feel like part of the product rather than a compliance checkbox. LaunchProof treats behavior tracking as launch evidence: did the builder generate a packet, review flows, inspect risks, review evidence, and export the pitch?
+A second challenge was making Novus.ai feel like part of the product rather than a compliance checkbox. LaunchProof treats behavior tracking as launch evidence: did the builder generate a packet, review flows, inspect risks, stress-test resilience, review evidence, and export the pitch?
 
 ## Accomplishments that we're proud of
 
@@ -113,7 +114,7 @@ No login is required. The app stores draft changes in browser local storage. A s
 ## Final Judge Checklist
 
 - Product Thinking: clear user, pain, job-to-be-done, and launch-readiness outcome.
-- Craft and Execution: one end-to-end workflow from intake to packet export.
+- Craft and Execution: one end-to-end workflow from intake to resilience check to packet export.
 - Originality and Ambition: product judgment, acceptance checks, analytics evidence, and pitch export are connected in one tool.
 - Shippedness: public app works without login, seeded example works immediately, demo video shows the live product, and Novus/Pendo evidence is included.
 - Honesty: LaunchProof is a launch readiness assistant, not a guarantee of product-market fit, QA completion, or user research.

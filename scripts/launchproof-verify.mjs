@@ -271,6 +271,7 @@ function checkPendoInstall(source, expectedKey) {
 async function checkDevpostMaterials() {
   const draftPath = resolve(repoRoot, 'mind-the-product-2026/devpost-submission-draft.md');
   const checklistPath = resolve(repoRoot, 'mind-the-product-2026/submission-checklist.md');
+  const judgingMatrixPath = resolve(repoRoot, 'mind-the-product-2026/judging-evidence-matrix.md');
   const videoScriptPath = resolve(repoRoot, 'mind-the-product-2026/video-script.md');
   const galleryImagePath = resolve(repoRoot, 'launchproof-devpost-gallery.png');
   const resilienceImagePath = resolve(repoRoot, 'launchproof-resilience-review.png');
@@ -278,6 +279,7 @@ async function checkDevpostMaterials() {
 
   const draft = await readRequiredFile(draftPath);
   const checklist = await readRequiredFile(checklistPath);
+  const judgingMatrix = await readRequiredFile(judgingMatrixPath);
   const videoScript = await readRequiredFile(videoScriptPath);
 
   for (const section of requiredDevpostSections) {
@@ -294,6 +296,12 @@ async function checkDevpostMaterials() {
 
   if (!videoScript.includes('Novus/Pendo dashboard screenshot')) {
     failures.push('Video script does not mention the Novus/Pendo dashboard screenshot.');
+  }
+
+  for (const criterion of ['Product Thinking', 'Craft and Execution', 'Originality and Ambition', 'Shippedness']) {
+    if (!judgingMatrix.includes(criterion)) {
+      failures.push(`Judging evidence matrix is missing criterion: ${criterion}`);
+    }
   }
 
   if (!isNonEmptyFile(galleryImagePath)) {
