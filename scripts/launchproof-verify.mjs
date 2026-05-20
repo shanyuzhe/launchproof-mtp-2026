@@ -5,7 +5,7 @@ import { readFile } from 'node:fs/promises';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-const DEFAULT_URL = 'https://launchproof-mtp.vercel.app';
+const DEFAULT_URL = 'https://shanyuzhe.github.io/launchproof-mtp-2026/';
 const DEFAULT_PENDO_KEY = 'e8d019ac-2123-45c3-80b7-a171a94a8fb0';
 
 const requiredPublicStrings = [

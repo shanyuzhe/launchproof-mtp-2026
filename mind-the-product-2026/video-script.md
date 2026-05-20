@@ -8,13 +8,14 @@ AI helps builders create software faster. LaunchProof helps them prove the produ
 
 ## Shot List
 
-1. Open LaunchProof on the public Vercel URL.
+1. Open LaunchProof on the public GitHub Pages URL.
 2. Show the left intake panel: product name, user, problem, solution, metric, demo URL.
-3. Click `Generate Launch Packet`.
-4. Click `Run Judge Demo`.
-5. Move through `Brief`, `Flows`, `Risks`, `Evidence`, and `Pitch`.
-6. Click `Copy packet`.
-7. Show the Novus/Pendo dashboard screenshot.
+3. Make one visible field edit so judges see the packet reacts to real input.
+4. Click `Generate Launch Packet`.
+5. Click `Run Judge Demo`.
+6. Move through `Brief`, `Flows`, `Risks`, `Evidence`, and `Pitch`.
+7. Click `Copy packet`.
+8. Show the Novus/Pendo dashboard screenshot, including event names that match the app event map.
 
 ## Timestamp Outline
 
@@ -48,7 +49,7 @@ LaunchProof helps teams move from "we built something with AI" to "we can explai
 
 ## Recording Checklist
 
-- Use the public Vercel URL, not localhost.
+- Use the verified public URL, not localhost.
 - Keep browser zoom at 100 percent unless text is hard to read.
 - Start with the seeded LaunchProof example so the first screen is already meaningful.
 - Make one visible edit before generating the packet.

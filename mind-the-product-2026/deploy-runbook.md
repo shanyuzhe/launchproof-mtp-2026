@@ -64,6 +64,28 @@ Do not paste the URL into Devpost until this command prints `[pass] LaunchProof 
 5. If the repo is connected but stale, use `Redeploy` from the latest deployment after the newest commit is on `main`.
 6. Re-open `https://launchproof-mtp.vercel.app` and confirm the latest-build strings above are present before recording the demo video.
 
+## Backup Path: GitHub Pages
+
+This repo also includes `.github/workflows/pages.yml`, which builds a static export and deploys it to GitHub Pages.
+
+Expected backup URL after Pages is enabled:
+
+`https://shanyuzhe.github.io/launchproof-mtp-2026/`
+
+If Vercel remains stuck:
+
+1. Open the GitHub repository settings.
+2. Go to `Pages`.
+3. Set `Build and deployment` source to `GitHub Actions`.
+4. Re-run the `Deploy LaunchProof to GitHub Pages` workflow from the `Actions` tab if it did not run automatically.
+5. Run the verifier against the Pages URL:
+
+```bash
+npm run verify:launchproof -- --url https://shanyuzhe.github.io/launchproof-mtp-2026/ --dashboard-screenshot path/to/novus-dashboard.png --demo-video-url https://...
+```
+
+Use the Pages URL in Devpost only after the verifier prints `[pass] LaunchProof deploy verification passed.`.
+
 ## If The Key Is Stuck In The Old Novus PR
 
 The closed `OI-wiki` PR created by Novus contains a Pendo install key in its generated install snippet. That key is already wired as the default public install key. Prefer rotating/resetting the key later if Novus support gives that option.

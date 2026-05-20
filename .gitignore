@@ -1,6 +1,7 @@
 node_modules/
 dist/
 .next/
+out/
 .playwright-mcp/
 launchproof-devpost-gallery.png
 .env

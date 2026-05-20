@@ -37,17 +37,17 @@ LaunchProof is built for that gap. It gives AI builders a structured product rev
 
 Judges can test the app without login.
 
-1. Open the live app.
+1. Open the live app: `https://shanyuzhe.github.io/launchproof-mtp-2026/`.
 2. Review the preloaded LaunchProof sample packet.
 3. Change one or more intake fields, such as target user, product problem, success metric, or demo URL.
 4. Click `Generate Launch Packet`.
 5. Click `Run Judge Demo` to step through the 90-second proof path.
 6. Review the `Brief`, `Flows`, `Risks`, `Evidence`, and `Pitch` tabs.
 7. In `Evidence`, check the hackathon scorecard and the Novus/Pendo event map.
-8. Click `Copy packet` to copy the Devpost-ready launch packet.
+8. Click `Copy packet` to copy the Devpost-ready launch packet and see the `Copied` confirmation.
 9. Confirm the interaction events in the included Novus.ai/Pendo dashboard screenshot.
 
-Expected result: within a few minutes, a judge should see a complete launch readiness packet and understand how the product converts a rough AI-built prototype into a testable, measurable shipping story.
+Expected result: within a few minutes, a judge should see a complete launch readiness packet, a local event feed update, a visible `Novus/Pendo connected` state, and a clear explanation of how the product converts a rough AI-built prototype into a testable, measurable shipping story.
 
 ## Built With
 
@@ -59,12 +59,17 @@ Expected result: within a few minutes, a judge should see a complete launch read
 - lucide-react
 - GitHub
 
+## Public URLs
+
+- Primary submission URL: `https://shanyuzhe.github.io/launchproof-mtp-2026/`
+- Secondary Vercel URL, if it catches up to the latest commit: `https://launchproof-mtp.vercel.app`
+
 ## Local Development
 
 ```bash
 npm install
 npm run dev
-npm run verify:launchproof -- --url https://launchproof-mtp.vercel.app --dashboard-screenshot path/to/novus-dashboard.png --demo-video-url https://...
+npm run verify:launchproof -- --url https://shanyuzhe.github.io/launchproof-mtp-2026/ --dashboard-screenshot path/to/novus-dashboard.png --demo-video-url https://...
 ```
 
 ## Novus.ai

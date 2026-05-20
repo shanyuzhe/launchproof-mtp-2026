@@ -35,7 +35,7 @@ The result is a clearer launch decision and a stronger hackathon submission.
 
 ## Project Story
 
-LaunchProof is a launch readiness workspace for AI builders. It helps a builder move from "I have a prototype" to "I know what must work, what could fail, what I can measure, and how to pitch it."
+LaunchProof is a launch readiness workspace for solo AI builders and PMs preparing a launch or hackathon submission. It helps a builder move from "I have a prototype" to "I know what must work, what could fail, what I can measure, and how to pitch it."
 
 The product guides a user through one focused workflow:
 
@@ -58,7 +58,7 @@ LaunchProof should be judged as a product layer for the AI-builder era.
 
 ## How We Built It
 
-We used AI-assisted development to rapidly shape the product workflow, prototype the interface, and iterate on the submission story. The core product is designed around structured product reasoning rather than open-ended chat: every output maps to a launch artifact a real builder needs.
+We built LaunchProof during the hackathon submission window using an AI-assisted builder workflow to rapidly shape the product workflow, prototype the interface, and iterate on the submission story. The core product is designed around structured product reasoning rather than open-ended chat: every output maps to a launch artifact a real builder needs.
 
 The app is built with:
 
@@ -107,7 +107,7 @@ We also learned that the best hackathon demos are not just feature tours. They a
 
 Judges can test LaunchProof without creating an account.
 
-1. Open the public app: `https://launchproof-mtp.vercel.app`.
+1. Open the public app: `https://shanyuzhe.github.io/launchproof-mtp-2026/`.
 2. Use the preloaded LaunchProof example, or edit the intake fields to describe another AI-built product.
 3. Click `Generate Launch Packet`.
 4. Click `Run Judge Demo` to step through the 90-second proof path.
@@ -115,10 +115,10 @@ Judges can test LaunchProof without creating an account.
 6. In `Flows`, confirm that the app turns the idea into critical user paths and acceptance checks.
 7. In `Risks`, review the launch risks and mitigations.
 8. In `Evidence`, review the hackathon scorecard and the Novus/Pendo event map.
-9. Click `Copy packet` to copy the pitch-ready launch packet.
-10. Compare the tracked actions with the Novus.ai/Pendo dashboard screenshot included in the submission.
+9. Click `Copy packet` to copy the pitch-ready launch packet and confirm the `Copied` state appears.
+10. Compare the local event feed and tracked actions with the Novus.ai/Pendo dashboard screenshot included in the submission.
 
-No login is required. The app stores draft changes in browser local storage. If the public deployment looks stale, refresh once and verify that the page includes `Launch decision`, `Hackathon scorecard`, and `Testing instructions`.
+No login is required. The app stores draft changes in browser local storage. A successful test should show a local event feed update, a visible `Novus/Pendo connected` state, and the copied launch packet. If the public deployment looks stale, refresh once and verify that the page includes `Launch decision`, `Hackathon scorecard`, and `Testing instructions`.
 
 ## Video Outline
 
@@ -143,5 +143,6 @@ LaunchProof uses AI-assisted development and structured product reasoning, but i
 
 ## Try It Out
 
-- App: https://launchproof-mtp.vercel.app
+- App: https://shanyuzhe.github.io/launchproof-mtp-2026/
+- Secondary deployment if it catches up to the latest commit: https://launchproof-mtp.vercel.app
 - Source: https://github.com/shanyuzhe/launchproof-mtp-2026

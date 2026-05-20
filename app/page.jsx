@@ -30,7 +30,7 @@ const sampleProject = {
     'AI tools can produce a working demo quickly, but teams still struggle to prove it is valuable, coherent, measurable, and ready to ship.',
   solution:
     'A launch-readiness workspace that turns an idea into a product brief, critical flows, launch risks, Novus event evidence, and a pitch packet.',
-  url: 'https://launchproof-mtp.vercel.app',
+  url: process.env.NEXT_PUBLIC_APP_URL || 'https://launchproof-mtp.vercel.app',
   stage: 'Public hackathon demo',
   metric: 'A builder exports a complete launch packet and can point to Novus/Pendo events as proof.',
 };

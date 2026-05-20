@@ -78,7 +78,8 @@ Purpose: final launch gate for Devpost. Public-facing submission assets stay in 
 
 ## Final Gate
 
-- App URL: `https://launchproof-mtp.vercel.app`
+- App URL: `https://shanyuzhe.github.io/launchproof-mtp-2026/`
+- Secondary app URL if Vercel catches up to the latest commit: `https://launchproof-mtp.vercel.app`
 - Source URL: `https://github.com/shanyuzhe/launchproof-mtp-2026`
 - Confirm public deployment contains the latest copy and UI.
 - Confirm Devpost links do not point to localhost, private previews, or stale deployments.
@@ -87,8 +88,8 @@ Purpose: final launch gate for Devpost. Public-facing submission assets stay in 
 
 ## User Action Needed
 
-- Confirm Vercel deploys the latest GitHub commit before final submission.
-- Run `npm run verify:launchproof -- --url https://launchproof-mtp.vercel.app --dashboard-screenshot path/to/novus-dashboard.png --demo-video-url https://...` and require a `[pass]` result.
+- Confirm the chosen public URL deploys the latest GitHub commit before final submission.
+- Run `npm run verify:launchproof -- --url https://shanyuzhe.github.io/launchproof-mtp-2026/ --dashboard-screenshot path/to/novus-dashboard.png --demo-video-url https://...` and require a `[pass]` result.
 - Capture a fresh Novus.ai/Pendo dashboard screenshot after the final deployed build receives events.
 - Record and upload the demo video to YouTube, Vimeo, or Youku.
 - Confirm whether we enter as solo or team.
