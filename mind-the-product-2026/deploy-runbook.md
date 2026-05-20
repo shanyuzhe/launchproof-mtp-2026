@@ -34,6 +34,14 @@ Do not paste the URL into Devpost until this command prints `[pass] LaunchProof 
 
 Use GitHub Pages as the Devpost app URL. The deployment uses the `gh-pages` branch, which contains the static export plus `.nojekyll`.
 
+For manual `gh-pages` branch deployment, build with the Pages-aware script:
+
+```bash
+npm run build:pages
+```
+
+Do not use plain `npm run build` for `gh-pages`; it emits root-relative `/_next/...` asset URLs that are wrong for the project page path.
+
 Current public URL:
 
 `https://shanyuzhe.github.io/launchproof-mtp-2026/`
