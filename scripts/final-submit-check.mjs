@@ -35,6 +35,12 @@ function main() {
     fail(`Demo video URL must be hosted on YouTube, Vimeo, or Youku: ${videoUrl}`);
   }
 
+  const placeholderReason = getPlaceholderDemoVideoReason(videoUrl);
+
+  if (placeholderReason) {
+    fail(`Demo video URL still looks like a placeholder: ${placeholderReason}`);
+  }
+
   assertLocalDemoVideo();
 
   if (!existsSync(resolve(process.cwd(), SCREENSHOT))) {
@@ -77,6 +83,38 @@ function isAllowedDemoVideoHost(value) {
     console.error(error);
     return false;
   }
+}
+
+function getPlaceholderDemoVideoReason(value) {
+  const normalized = value.toLowerCase();
+  const placeholderTokens = ['example', 'placeholder', 'todo', 'your-', 'video-id', '<', '>', '...'];
+  const token = placeholderTokens.find((candidate) => normalized.includes(candidate));
+
+  if (token) {
+    return `contains "${token}"`;
+  }
+
+  try {
+    const url = new URL(value);
+    const hostname = url.hostname.toLowerCase();
+    const pathParts = url.pathname.split('/').filter(Boolean);
+
+    if (hostname === 'youtu.be' && pathParts.length === 0) {
+      return 'missing youtu.be video id';
+    }
+
+    if (hostname.endsWith('youtube.com') && url.pathname === '/watch' && !url.searchParams.get('v')) {
+      return 'missing YouTube watch v parameter';
+    }
+
+    if ((hostname.includes('vimeo.com') || hostname.includes('youku.com')) && pathParts.length === 0) {
+      return `missing ${hostname} video path`;
+    }
+  } catch (error) {
+    return `could not parse URL: ${error.message}`;
+  }
+
+  return '';
 }
 
 function assertLocalDemoVideo() {

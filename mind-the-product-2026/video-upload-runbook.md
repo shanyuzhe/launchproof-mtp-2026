@@ -10,6 +10,7 @@ Duration: 88.0 seconds.
 
 - Platform: YouTube, Vimeo, or Youku.
 - The final checker rejects other video hosts because Devpost rules require YouTube, Vimeo, or Youku.
+- The final checker also rejects placeholder links such as `example`, `TODO`, `video-id`, or `https://...`.
 - Visibility: `Unlisted` is okay if the link is accessible without login.
 - Title: `LaunchProof Demo - Mind the Product World Product Day Hackathon`
 - Audience: Not made for kids.
@@ -34,5 +35,5 @@ Source: https://github.com/shanyuzhe/launchproof-mtp-2026
 4. Run the final verifier:
 
 ```bash
-npm run verify:launchproof -- --url https://shanyuzhe.github.io/launchproof-mtp-2026/ --dashboard-screenshot novus-pendo-dashboard.png --demo-video-url https://...
+node scripts/final-submit-check.mjs https://...
 ```

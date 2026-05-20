@@ -16,6 +16,8 @@ Use:
 
 Copy the uploaded video URL.
 
+The final checker rejects placeholder links such as `example`, `TODO`, `video-id`, or `https://...`; use the real uploaded watch/share URL.
+
 ## 2. Capture Novus/Pendo Screenshot
 
 Open:
