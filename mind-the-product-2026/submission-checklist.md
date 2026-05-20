@@ -30,7 +30,7 @@ Purpose: final launch gate for Devpost. Public-facing submission assets stay in 
 - Tagline: `AI helps you build faster. LaunchProof helps you prove it is ready to ship.`
 - Project Story pasted from `devpost-submission-draft.md`.
 - Inspiration, What it does, How we built it, Challenges, Accomplishments, What we learned, and What's next are filled.
-- Built With field uses: `Next.js, React, Vercel, Novus.ai, Pendo Web SDK, Browser Local Storage, lucide-react, GitHub`.
+- Built With field uses: `Next.js, React, GitHub Pages, Novus.ai, Pendo Web SDK, Browser Local Storage, lucide-react, GitHub`.
 - Testing Instructions pasted from `devpost-submission-draft.md`.
 - Responsible AI note included if Devpost provides a suitable field.
 - English-only public submission materials.
@@ -38,7 +38,10 @@ Purpose: final launch gate for Devpost. Public-facing submission assets stay in 
 ## Screenshots And Media
 
 - App screenshot shows the main workflow, not a blank landing page.
+- Upload `launchproof-main-workflow.png` as the first Devpost gallery image.
+- Upload `launchproof-evidence-scorecard.png` as an additional gallery image.
 - Novus.ai/Pendo dashboard screenshot is included and clearly shows LaunchProof events.
+- Save the Novus.ai/Pendo dashboard screenshot locally with a filename like `novus-pendo-dashboard.png`.
 - Demo video is under 3 minutes.
 - Demo video uses the public URL.
 - Demo video shows the product functioning, not only slides or narration.
@@ -57,6 +60,7 @@ Purpose: final launch gate for Devpost. Public-facing submission assets stay in 
 - `Copy packet` works.
 - Evidence tab includes hackathon scorecard and event map.
 - Novus/Pendo dashboard screenshot corresponds to the tracked events.
+- Browser network evidence confirms the deployed app loads `cdn.pendo.io` and sends `data.pendo.io/data/rec/...` requests with HTTP 200 responses.
 
 ## Judge-Facing Positioning
 

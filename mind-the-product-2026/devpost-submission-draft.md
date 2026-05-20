@@ -63,7 +63,7 @@ We built LaunchProof during the hackathon submission window using an AI-assisted
 The app is built with:
 
 - Next.js and React for the public web app
-- Vercel for deployment
+- GitHub Pages for the public deployment
 - Novus.ai / Pendo Web SDK for product behavior tracking
 - local browser storage for draft persistence
 - lucide-react for interface icons
@@ -73,7 +73,7 @@ The app is built with:
 
 Devpost field copy:
 
-Next.js, React, Vercel, Novus.ai, Pendo Web SDK, Browser Local Storage, lucide-react, GitHub
+Next.js, React, GitHub Pages, Novus.ai, Pendo Web SDK, Browser Local Storage, lucide-react, GitHub
 
 ## Challenges
 

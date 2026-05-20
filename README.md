@@ -53,7 +53,7 @@ Expected result: within a few minutes, a judge should see a complete launch read
 
 - Next.js
 - React
-- Vercel
+- GitHub Pages
 - Novus.ai / Pendo Web SDK
 - Browser local storage
 - lucide-react

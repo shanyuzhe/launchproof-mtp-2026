@@ -3,7 +3,9 @@ dist/
 .next/
 out/
 .playwright-mcp/
-launchproof-devpost-gallery.png
+launchproof-*.png
+novus-*.png
+pendo-*.png
 .env
 .env.*
 !.env.example

@@ -2,11 +2,13 @@
 
 import { existsSync, statSync } from 'node:fs';
 import { readFile } from 'node:fs/promises';
-import { dirname, resolve } from 'node:path';
+import { basename, dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const DEFAULT_URL = 'https://shanyuzhe.github.io/launchproof-mtp-2026/';
 const DEFAULT_PENDO_KEY = 'e8d019ac-2123-45c3-80b7-a171a94a8fb0';
+const FETCH_ATTEMPTS = 3;
+const FETCH_TIMEOUT_MS = 20000;
 
 const requiredPublicStrings = [
   'Launch decision',
@@ -120,7 +122,12 @@ function toCamelCase(value) {
 
 async function loadPublicPageBundle(url) {
   const pageUrl = new URL(url);
-  const response = await fetch(pageUrl, { redirect: 'follow' });
+  const response = await fetchWithRetry(pageUrl.href);
+
+  if (!response) {
+    failures.push(`Public URL could not be fetched after ${FETCH_ATTEMPTS} attempts: ${url}`);
+    return { visibleText: '', combinedSource: '' };
+  }
 
   if (!response.ok) {
     failures.push(`Public URL returned HTTP ${response.status}: ${url}`);
@@ -158,7 +165,12 @@ function collectNextScriptUrls(html, pageUrl) {
 }
 
 async function fetchText(url) {
-  const response = await fetch(url, { redirect: 'follow' });
+  const response = await fetchWithRetry(url);
+
+  if (!response) {
+    failures.push(`Could not fetch script asset after ${FETCH_ATTEMPTS} attempts: ${url}`);
+    return '';
+  }
 
   if (!response.ok) {
     failures.push(`Could not fetch script asset HTTP ${response.status}: ${url}`);
@@ -166,6 +178,38 @@ async function fetchText(url) {
   }
 
   return response.text();
+}
+
+async function fetchWithRetry(url) {
+  let lastError;
+
+  for (let attempt = 1; attempt <= FETCH_ATTEMPTS; attempt += 1) {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
+
+    try {
+      return await fetch(url, {
+        redirect: 'follow',
+        signal: controller.signal,
+      });
+    } catch (error) {
+      lastError = error;
+      console.warn(`[warn] Fetch attempt ${attempt}/${FETCH_ATTEMPTS} failed for ${url}: ${error.message}`);
+      if (attempt < FETCH_ATTEMPTS) {
+        await sleep(1000 * attempt);
+      }
+    } finally {
+      clearTimeout(timeout);
+    }
+  }
+
+  console.error(`[fail] Fetch failed for ${url}`);
+  console.error(lastError);
+  return null;
+}
+
+function sleep(ms) {
+  return new Promise((resolveSleep) => setTimeout(resolveSleep, ms));
 }
 
 function stripTags(html) {
@@ -252,7 +296,16 @@ async function readRequiredFile(path) {
 function checkExternalSubmissionEvidence() {
   if (!dashboardScreenshot) {
     failures.push('Missing --dashboard-screenshot path for the Novus/Pendo dashboard evidence.');
-  } else if (!isNonEmptyFile(resolve(repoRoot, dashboardScreenshot))) {
+    return;
+  }
+
+  const screenshotName = basename(dashboardScreenshot).toLowerCase();
+
+  if (!screenshotName.includes('novus') && !screenshotName.includes('pendo')) {
+    failures.push(`Dashboard screenshot filename should clearly identify Novus/Pendo evidence: ${dashboardScreenshot}`);
+  }
+
+  if (!isNonEmptyFile(resolve(repoRoot, dashboardScreenshot))) {
     failures.push(`Novus/Pendo dashboard screenshot is missing or empty: ${dashboardScreenshot}`);
   }
 
