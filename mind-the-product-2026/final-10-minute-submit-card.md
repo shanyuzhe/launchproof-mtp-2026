@@ -77,6 +77,7 @@ Only submit when it prints:
 - Novus/Pendo screenshot is uploaded.
 - Project story is in English.
 - About copy names the user, problem, workflow, evidence, and honest limits.
+- About copy mentions sample products such as MeetingBridge so the project does not read as only a self-demo.
 - Testing instructions walk a judge through Brief, Flows, Risks, Evidence, Pitch, and Copy packet.
 - The submission visibly covers Product Thinking, Craft and Execution, Originality and Ambition, and Shippedness.
 - Submission is not still marked draft.

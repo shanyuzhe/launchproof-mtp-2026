@@ -292,6 +292,59 @@ textarea {
   font-weight: 900;
 }
 
+.sample-switcher {
+  display: grid;
+  gap: 11px;
+  border: 1px solid rgba(36, 92, 66, 0.16);
+  border-radius: 8px;
+  padding: 14px;
+  background: #f8fbf5;
+}
+
+.sample-switcher h2 {
+  margin-bottom: 0;
+  font-size: 0.98rem;
+}
+
+.sample-switcher p {
+  margin-bottom: 0;
+  color: #4b554d;
+  line-height: 1.42;
+}
+
+.sample-switcher > div:last-child {
+  display: grid;
+  gap: 8px;
+}
+
+.sample-switcher button {
+  display: grid;
+  gap: 3px;
+  width: 100%;
+  border: 1px solid rgba(24, 32, 22, 0.12);
+  border-radius: 7px;
+  padding: 10px 11px;
+  text-align: left;
+  color: #243b64;
+  background: #ffffff;
+}
+
+.sample-switcher button.active {
+  border-color: rgba(36, 92, 66, 0.38);
+  color: #245c42;
+  background: #e7f3ea;
+}
+
+.sample-switcher strong {
+  color: inherit;
+}
+
+.sample-switcher span {
+  color: #5a655c;
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
 .topbar {
   justify-content: space-between;
   gap: 16px;

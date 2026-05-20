@@ -36,6 +36,47 @@ const sampleProject = {
   metric: 'A builder exports a complete launch packet and can point to Novus/Pendo events as proof.',
 };
 
+const sampleProducts = [
+  {
+    id: 'launchproof',
+    label: 'LaunchProof',
+    description: 'Hackathon launch packet',
+    project: sampleProject,
+  },
+  {
+    id: 'meetingbridge',
+    label: 'MeetingBridge',
+    description: 'Remote team follow-up',
+    project: {
+      name: 'MeetingBridge',
+      user: 'remote product teams that leave calls with scattered decisions and unclear owners',
+      problem:
+        'AI meeting summaries are easy to generate, but teams still lose launch-critical decisions, owners, and follow-up risks after each call.',
+      solution:
+        'A post-meeting command center that turns a transcript into decisions, owner-ready tasks, risk flags, and a shareable follow-up brief.',
+      url: 'https://example.com/meetingbridge-demo',
+      stage: 'AI builder prototype',
+      metric: 'A product lead exports a follow-up brief with decisions, owners, unresolved risks, and the next meeting agenda.',
+    },
+  },
+  {
+    id: 'issuepilot',
+    label: 'IssuePilot',
+    description: 'GitHub triage assistant',
+    project: {
+      name: 'IssuePilot',
+      user: 'open-source maintainers who need to triage incoming GitHub issues quickly without losing context',
+      problem:
+        'Maintainers receive vague bug reports and feature requests faster than they can sort severity, duplicates, reproduction steps, and next actions.',
+      solution:
+        'An AI-assisted triage board that clusters issues, drafts clarifying questions, tags priority, and exports maintainer-ready action queues.',
+      url: 'https://example.com/issuepilot-demo',
+      stage: 'Public alpha',
+      metric: 'A maintainer reviews ten new issues and exports a prioritized triage queue with owners and next actions.',
+    },
+  },
+];
+
 const tabs = [
   ['brief', ClipboardCheck, 'Brief'],
   ['flows', ListChecks, 'Flows'],
@@ -490,6 +531,18 @@ export default function App() {
     record('brief_generated', { section: 'brief' });
   };
 
+  const loadSampleProduct = (sample) => {
+    setProject(sample.project);
+    setJudgeDemoActive(false);
+    setJudgeStepIndex(0);
+    setActiveTab('brief');
+    record('sample_project_loaded', {
+      projectName: sample.project.name,
+      sampleId: sample.id,
+      section: 'brief',
+    });
+  };
+
   const switchTab = (key) => {
     const judgeIndex = judgeDemoPath.findIndex((step) => step.key === key);
 
@@ -518,7 +571,6 @@ export default function App() {
   };
 
   const startJudgeDemo = () => {
-    setProject(sampleProject);
     record('judge_demo_started', { section: judgeDemoPath[0].key });
     jumpToJudgeStep(0);
   };
@@ -604,6 +656,27 @@ export default function App() {
                   : 'Next Proof Point'
                 : 'Run Judge Demo'}
             </button>
+          </div>
+
+          <div className="sample-switcher">
+            <div className="row-title">
+              <h2>Sample products</h2>
+              <Sparkles size={17} />
+            </div>
+            <p>Load a realistic AI-built product to prove the workflow generalizes beyond this submission.</p>
+            <div>
+              {sampleProducts.map((sample) => (
+                <button
+                  key={sample.id}
+                  className={project.name === sample.project.name ? 'active' : ''}
+                  onClick={() => loadSampleProduct(sample)}
+                  title={sample.description}
+                >
+                  <strong>{sample.label}</strong>
+                  <span>{sample.description}</span>
+                </button>
+              ))}
+            </div>
           </div>
 
           <label>

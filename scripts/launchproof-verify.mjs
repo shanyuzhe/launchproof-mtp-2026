@@ -24,6 +24,8 @@ const requiredPublicStrings = [
   'Run Judge Demo',
   '90-second judge path',
   'Reset Demo',
+  'Sample products',
+  'MeetingBridge',
   'Hackathon scorecard',
   'Readiness rationale',
   'Launch proof loop',

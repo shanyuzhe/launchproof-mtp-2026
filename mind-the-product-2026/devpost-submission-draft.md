@@ -33,6 +33,8 @@ LaunchProof turns a rough product idea into a launch readiness packet that a jud
 
 The result is a concrete answer to the question every AI-built prototype faces: what must work, what evidence do we have, and what should we say when we ask someone to believe this is ready?
 
+The app also includes multiple sample products, including MeetingBridge and IssuePilot, so judges can see the workflow generalize beyond LaunchProof's own submission story.
+
 ## Project Story
 
 LaunchProof is a launch readiness workspace for solo AI builders, PMs, and small teams preparing a launch or hackathon submission. It helps a builder move from "I have a prototype" to "I know who it is for, what job it does, what could fail, what I can measure, and how to pitch it honestly."
@@ -85,6 +87,7 @@ A second challenge was making Novus.ai feel like part of the product rather than
 
 - Created a workflow that connects product thinking with AI-assisted shipping.
 - Designed outputs that directly support demo preparation and launch review.
+- Added multiple sample products to show the workflow works beyond the LaunchProof self-demo.
 - Added behavior tracking so "ready to ship" can be tied to real usage signals.
 - Mapped the product evidence directly to Product Thinking, Craft and Execution, Originality and Ambition, and Shippedness.
 - Added a readiness rationale and launch proof loop so the score is explainable instead of decorative.
@@ -109,7 +112,7 @@ We also learned that the best hackathon demos are not just feature tours. They a
 Judges can test LaunchProof without creating an account.
 
 1. Open the public app: `https://shanyuzhe.github.io/launchproof-mtp-2026/`.
-2. Use the preloaded LaunchProof example, or edit the intake fields to describe another AI-built product.
+2. Use the preloaded LaunchProof example, or click a sample product such as `MeetingBridge` to test a different AI-built product.
 3. Optionally change one field, such as the target user or success metric, so the generated packet reflects a real edit.
 4. Click `Generate Launch Packet`.
 5. Click `Run Judge Demo` to step through the 90-second proof path.

@@ -45,10 +45,14 @@ async function main() {
   await installCaptionOverlay(page);
 
   await caption(page, 'LaunchProof turns an AI-built prototype into a judge-ready launch packet.', 5000);
-  await caption(page, 'A judge starts with a real product, user, problem, metric, and public URL.', 4500);
+  await caption(page, 'First, load a realistic sample so the product is not only proving itself.', 4500);
+
+  await page.getByRole('button', { name: /MeetingBridge/ }).click();
+  await page.waitForTimeout(1500);
+  await caption(page, 'MeetingBridge is an AI-built remote-team follow-up product with a different user and workflow.', 5000);
 
   await page.getByRole('textbox', { name: 'Success metric' }).fill(
-    'A judge can generate a launch packet, inspect evidence, and copy a submission-ready pitch from the public URL.',
+    'A product lead exports a follow-up brief with decisions, owners, unresolved risks, and the next meeting agenda.',
   );
   await caption(page, 'We make one visible edit, then regenerate the packet from real input.', 4500);
   await page.getByRole('button', { name: 'Generate Launch Packet' }).click();

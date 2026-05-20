@@ -56,6 +56,7 @@ Purpose: final launch gate for Devpost. Public-facing submission assets stay in 
 - Source repository URL is public.
 - Testing instructions mention no credentials are required.
 - Seeded example works immediately.
+- Sample products such as `MeetingBridge` load and visibly change the generated packet.
 - One edited intake field visibly changes the generated packet.
 - `Generate Launch Packet` works after changing an intake field.
 - `Run Judge Demo` walks through the 90-second proof path.
