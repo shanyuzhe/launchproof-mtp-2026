@@ -1,11 +1,13 @@
 #!/usr/bin/env node
 
 import { spawn } from 'node:child_process';
-import { existsSync } from 'node:fs';
+import { existsSync, readFileSync, statSync } from 'node:fs';
 import { resolve } from 'node:path';
 
 const APP_URL = 'https://shanyuzhe.github.io/launchproof-mtp-2026/';
 const SCREENSHOT = 'novus-pendo-dashboard.png';
+const DEMO_VIDEO = 'launchproof-demo-video.webm';
+const MAX_DEMO_SECONDS = 180;
 const ALLOWED_VIDEO_HOSTS = [
   'youtube.com',
   'www.youtube.com',
@@ -32,6 +34,8 @@ function main() {
   if (!isAllowedDemoVideoHost(videoUrl)) {
     fail(`Demo video URL must be hosted on YouTube, Vimeo, or Youku: ${videoUrl}`);
   }
+
+  assertLocalDemoVideo();
 
   if (!existsSync(resolve(process.cwd(), SCREENSHOT))) {
     fail(`Missing required Novus/Pendo screenshot: ${SCREENSHOT}`);
@@ -73,4 +77,110 @@ function isAllowedDemoVideoHost(value) {
     console.error(error);
     return false;
   }
+}
+
+function assertLocalDemoVideo() {
+  const videoPath = resolve(process.cwd(), DEMO_VIDEO);
+
+  if (!existsSync(videoPath)) {
+    fail(`Missing local demo video file: ${DEMO_VIDEO}`);
+  }
+
+  const stat = statSync(videoPath);
+
+  if (!stat.isFile() || stat.size === 0) {
+    fail(`Local demo video is empty or not a file: ${DEMO_VIDEO}`);
+  }
+
+  const durationSeconds = readWebmDurationSeconds(videoPath);
+
+  if (!Number.isFinite(durationSeconds)) {
+    fail(`Could not read WebM duration from: ${DEMO_VIDEO}`);
+  }
+
+  if (durationSeconds >= MAX_DEMO_SECONDS) {
+    fail(`Local demo video must be under 3 minutes; current duration is ${durationSeconds.toFixed(1)} seconds.`);
+  }
+
+  console.log(`[check] Local demo video duration: ${durationSeconds.toFixed(1)} seconds`);
+}
+
+function readWebmDurationSeconds(videoPath) {
+  const bytes = readFileSync(videoPath);
+  const durationId = Buffer.from([0x44, 0x89]);
+  const scaleId = Buffer.from([0x2a, 0xd7, 0xb1]);
+  const timecodeScale = readTimecodeScale(bytes, scaleId);
+  const durationRaw = readDurationRaw(bytes, durationId);
+
+  return (durationRaw * timecodeScale) / 1e9;
+}
+
+function readTimecodeScale(bytes, scaleId) {
+  const offset = bytes.indexOf(scaleId);
+
+  if (offset < 0) {
+    return 1000000;
+  }
+
+  const size = readVint(bytes, offset + scaleId.length);
+
+  if (size.value <= 0 || size.value > 8) {
+    return 1000000;
+  }
+
+  return readUnsigned(bytes, offset + scaleId.length + size.length, size.value);
+}
+
+function readDurationRaw(bytes, durationId) {
+  const offset = bytes.indexOf(durationId);
+
+  if (offset < 0) {
+    fail('No WebM Duration element found in the local demo video.');
+  }
+
+  const size = readVint(bytes, offset + durationId.length);
+  const dataOffset = offset + durationId.length + size.length;
+
+  if (size.value === 4) {
+    return bytes.readFloatBE(dataOffset);
+  }
+
+  if (size.value === 8) {
+    return bytes.readDoubleBE(dataOffset);
+  }
+
+  fail(`Unsupported WebM Duration size: ${size.value}`);
+}
+
+function readVint(bytes, offset) {
+  const first = bytes[offset];
+  let mask = 0x80;
+  let length = 1;
+
+  while (length <= 8 && !(first & mask)) {
+    mask >>= 1;
+    length += 1;
+  }
+
+  if (length > 8) {
+    fail(`Invalid EBML variable integer at byte ${offset}`);
+  }
+
+  let value = first & (mask - 1);
+
+  for (let index = 1; index < length; index += 1) {
+    value = value * 256 + bytes[offset + index];
+  }
+
+  return { length, value };
+}
+
+function readUnsigned(bytes, offset, length) {
+  let value = 0;
+
+  for (let index = 0; index < length; index += 1) {
+    value = value * 256 + bytes[offset + index];
+  }
+
+  return value;
 }

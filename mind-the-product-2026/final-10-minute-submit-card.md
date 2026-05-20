@@ -62,6 +62,8 @@ Short version:
 node scripts/final-submit-check.mjs <video-url>
 ```
 
+The short checker also verifies the local `launchproof-demo-video.webm` exists and is under 3 minutes before it runs the full public deploy gate.
+
 Only submit when it prints:
 
 `[pass] LaunchProof deploy verification passed.`
