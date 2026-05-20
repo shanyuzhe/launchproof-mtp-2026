@@ -34,6 +34,8 @@ LaunchProof is built for that gap. It gives AI builders a structured product rev
 
 **Hackathon fit:** Mind the Product judges are scoring Product Thinking, Craft and Execution, Originality and Ambition, and Shippedness. LaunchProof is designed around those criteria: a clear user problem, a polished end-to-end workflow, an original product layer for AI builders, and measurable behavior through Novus.ai/Pendo.
 
+**World Product Day fit:** The 2026 theme is resilience. LaunchProof helps builders do the quiet product work that keeps launches resilient under pressure: clarify the user, inspect the risks, prove the workflow, and turn behavior into evidence before shipping.
+
 ## Testing Instructions
 
 Judges can test the app without login.

@@ -18,6 +18,8 @@ LaunchProof was built for that gap.
 
 The project started from a simple observation: in the AI-builder era, the bottleneck is no longer "can I make something?" It is "can I explain, test, measure, and responsibly ship the thing I made?" LaunchProof gives builders that missing product layer.
 
+It is also designed for the World Product Day 2026 theme of resilience. Product teams are being asked to do more with less, and AI makes it easier to create more prototypes than a team can responsibly evaluate. LaunchProof supports the quiet product work that still matters under pressure: clarifying the user, naming the risk, defining first value, checking the workflow, and proving behavior before calling something shipped.
+
 ## What It Does
 
 LaunchProof turns a rough product idea into a launch readiness packet that a judge, teammate, or founder can actually use. A builder enters their product concept, target user, problem, success metric, and demo URL. LaunchProof generates:
@@ -57,7 +59,7 @@ LaunchProof should be judged as a product layer for the AI-builder era, where ma
 - Product Thinking: the target user is specific: AI builders and PMs who can create prototypes faster than they can validate the launch story. The job is clear: turn a messy build into a concise readiness packet.
 - Craft and Execution: the app is one coherent workflow from intake to brief, flows, risks, evidence, and export. The UI is built for a judge or builder to scan under time pressure.
 - Originality and Ambition: LaunchProof treats analytics as product evidence. Novus/Pendo events are not just installed; they are mapped to the actions that show whether a builder used the launch workflow.
-- Shippedness: the public app is usable without login, includes a seeded example, persists drafts locally, exposes a local event feed, and tracks meaningful behavior through Novus.ai/Pendo.
+- Shippedness: the public app is usable without login, includes a seeded example and direct sample URL, persists drafts locally, exposes behavior coverage and a local event feed, and tracks meaningful behavior through Novus.ai/Pendo.
 
 ## How We Built It
 
