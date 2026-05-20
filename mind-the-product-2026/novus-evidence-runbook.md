@@ -18,8 +18,8 @@ In one browser session:
 2. Change one intake field, such as `Success metric`.
 3. Click `Generate Launch Packet`.
 4. Click `Run Judge Demo`.
-5. Click `Next Proof Point` until the judge path reaches `5/5`.
-6. Click tabs in this order: `Flows`, `Risks`, `Evidence`, `Pitch`.
+5. Click `Next Proof Point` until the judge path reaches `6/6`.
+6. Click tabs in this order: `Flows`, `Risks`, `Resilience`, `Evidence`, `Pitch`.
 7. Click `Copy packet`.
 8. Return to `Evidence` and confirm behavior coverage reaches `100%`.
 9. Leave the tab open for 30 seconds so Pendo can flush events.
@@ -41,6 +41,20 @@ Browser network evidence already observed on the deployed app:
 5. Save the file as:
 
 `novus-pendo-dashboard.png`
+
+Shortcut: if the screenshot lands in Downloads, Desktop, or Pictures, save or rename it with `novus`, `pendo`, or `dashboard` in the filename, then run:
+
+```bash
+npm run import:novus-screenshot
+```
+
+Or pass a specific file path:
+
+```bash
+npm run import:novus-screenshot -- C:/Users/22684/Downloads/novus-dashboard.png
+```
+
+The importer validates the image size and copies the newest likely Novus/Pendo dashboard image to the required filename.
 
 Use a real PNG/JPEG screenshot at normal browser size. The final checker rejects empty, invalid, or tiny image files.
 

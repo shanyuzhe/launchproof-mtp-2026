@@ -30,6 +30,18 @@ Save it here:
 
 `C:/Users/22684/Documents/vibe_coding/novus-pendo-dashboard.png`
 
+Shortcut: if the screenshot lands in Downloads, Desktop, or Pictures, save or rename it with `novus`, `pendo`, or `dashboard` in the filename, then run this from the repo root:
+
+```bash
+npm run import:novus-screenshot
+```
+
+Or pass a specific file path:
+
+```bash
+npm run import:novus-screenshot -- C:/Users/22684/Downloads/novus-dashboard.png
+```
+
 Use a real PNG/JPEG screenshot at normal browser size. The final checker rejects empty, invalid, or tiny image files.
 
 ## 3. Fill Devpost

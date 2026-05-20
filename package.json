@@ -8,6 +8,7 @@
     "dev": "next dev",
     "build": "next build",
     "build:static": "next build",
+    "import:novus-screenshot": "node scripts/import-novus-screenshot.mjs",
     "verify:launchproof": "node scripts/launchproof-verify.mjs",
     "verify:ui": "node scripts/verify-local-ui.mjs",
     "start": "next start"
