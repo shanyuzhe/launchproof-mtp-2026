@@ -43,6 +43,39 @@ const tabs = [
   ['pitch', BookOpen, 'Pitch'],
 ];
 
+const judgeDemoPath = [
+  {
+    key: 'brief',
+    label: '1. Frame the user',
+    proof: 'Show the user, pain, promise, and launch hypothesis in one screen.',
+    eventName: 'judge_demo_brief_viewed',
+  },
+  {
+    key: 'flows',
+    label: '2. Prove the workflow',
+    proof: 'Show the critical path a stranger can complete without setup.',
+    eventName: 'judge_demo_flows_viewed',
+  },
+  {
+    key: 'risks',
+    label: '3. Name launch risk',
+    proof: 'Show that each risk has a mitigation and measurable signal.',
+    eventName: 'judge_demo_risks_viewed',
+  },
+  {
+    key: 'evidence',
+    label: '4. Surface evidence',
+    proof: 'Show hackathon criteria, Novus/Pendo events, and the live local feed.',
+    eventName: 'judge_demo_evidence_viewed',
+  },
+  {
+    key: 'pitch',
+    label: '5. Export the story',
+    proof: 'Show the judge-facing story and copy-ready launch packet.',
+    eventName: 'judge_demo_pitch_viewed',
+  },
+];
+
 const trackEvent = (eventName, metadata = {}) => {
   const payload = {
     app: 'LaunchProof',
@@ -212,6 +245,11 @@ const makePacket = (project) => {
       'Capture the Novus/Pendo dashboard after events process.',
       'Use the exported packet as the Devpost project story draft.',
     ],
+    demoScript: judgeDemoPath.map((step, index) => ({
+      timebox: `${index * 18}-${(index + 1) * 18}s`,
+      beat: step.label.replace(/^\d+\.\s*/, ''),
+      proof: step.proof,
+    })),
   };
 };
 
@@ -237,6 +275,9 @@ const buildExport = (project, packet) =>
     '## Hackathon scorecard',
     ...packet.criteria.map((item) => `- ${item.label} (${item.weight}): ${item.proof}`),
     '',
+    '## 90-second judge demo script',
+    ...packet.demoScript.map((item) => `- ${item.timebox} ${item.beat}: ${item.proof}`),
+    '',
     '## Testing instructions',
     ...packet.testing.map((item) => `- ${item}`),
     '',
@@ -250,9 +291,11 @@ export default function App() {
   const [analyticsStatus, setAnalyticsStatus] = useState('Waiting for SDK');
   const [copied, setCopied] = useState(false);
   const [draftReady, setDraftReady] = useState(false);
+  const [judgeDemoActive, setJudgeDemoActive] = useState(false);
+  const [judgeStepIndex, setJudgeStepIndex] = useState(0);
   const [events, setEvents] = useState([
-    { name: 'sample_loaded', time: 'Seed' },
-    { name: 'project_created', time: 'Seed' },
+    { id: 'seed-sample-loaded', name: 'sample_loaded', time: 'Seed' },
+    { id: 'seed-project-created', name: 'project_created', time: 'Seed' },
   ]);
 
   const packet = useMemo(() => makePacket(project), [project]);
@@ -265,7 +308,7 @@ export default function App() {
         setProject({ ...sampleProject, ...JSON.parse(savedProject) });
       }
     } catch (error) {
-      console.warn('[fail] Could not load saved LaunchProof draft', error);
+      console.error('[fail] Could not load saved LaunchProof draft', error);
     } finally {
       setDraftReady(true);
     }
@@ -279,7 +322,7 @@ export default function App() {
     try {
       window.localStorage.setItem(STORAGE_KEY, JSON.stringify(project));
     } catch (error) {
-      console.warn('[fail] Could not save LaunchProof draft', error);
+      console.error('[fail] Could not save LaunchProof draft', error);
     }
   }, [draftReady, project]);
 
@@ -296,7 +339,9 @@ export default function App() {
 
   const record = (eventName, metadata = {}) => {
     const now = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-    setEvents((current) => [{ name: eventName, time: now }, ...current].slice(0, 7));
+    const id = `${eventName}-${Date.now()}-${Math.random().toString(16).slice(2)}`;
+
+    setEvents((current) => [{ id, name: eventName, time: now }, ...current].slice(0, 7));
     trackEvent(eventName, {
       projectName: project.name || 'Untitled Product',
       activeTab,
@@ -310,13 +355,53 @@ export default function App() {
   };
 
   const generatePacket = () => {
+    setJudgeDemoActive(false);
     setActiveTab('brief');
     record('brief_generated', { section: 'brief' });
   };
 
   const switchTab = (key) => {
+    const judgeIndex = judgeDemoPath.findIndex((step) => step.key === key);
+
+    if (judgeIndex >= 0) {
+      setJudgeStepIndex(judgeIndex);
+    }
+
     setActiveTab(key);
     record(`${key}_reviewed`, { section: key });
+  };
+
+  const jumpToJudgeStep = (index) => {
+    const step = judgeDemoPath[index];
+
+    if (!step) {
+      throw new Error(`[fail] Missing judge demo step at index ${index}`);
+    }
+
+    setJudgeDemoActive(true);
+    setJudgeStepIndex(index);
+    setActiveTab(step.key);
+    record(step.eventName, {
+      section: step.key,
+      demoStep: step.label,
+    });
+  };
+
+  const startJudgeDemo = () => {
+    setProject(sampleProject);
+    record('judge_demo_started', { section: judgeDemoPath[0].key });
+    jumpToJudgeStep(0);
+  };
+
+  const advanceJudgeDemo = () => {
+    const nextIndex = Math.min(judgeStepIndex + 1, judgeDemoPath.length - 1);
+
+    if (nextIndex === judgeStepIndex) {
+      record('judge_demo_completed', { section: judgeDemoPath[judgeStepIndex].key });
+      return;
+    }
+
+    jumpToJudgeStep(nextIndex);
   };
 
   const copyPacket = async () => {
@@ -334,6 +419,8 @@ export default function App() {
 
   const resetDemo = () => {
     setProject(sampleProject);
+    setJudgeDemoActive(false);
+    setJudgeStepIndex(0);
     setActiveTab('brief');
     record('demo_reset', { section: 'brief' });
   };
@@ -358,6 +445,35 @@ export default function App() {
               <strong>{packet.score}</strong>
             </div>
             <p>{packet.decision}</p>
+          </div>
+
+          <div className="judge-demo-card">
+            <div className="row-title">
+              <h2>90-second judge path</h2>
+              <span>{judgeStepIndex + 1}/{judgeDemoPath.length}</span>
+            </div>
+            <p>{judgeDemoPath[judgeStepIndex].proof}</p>
+            <div className="demo-progress" aria-label="Judge demo progress">
+              {judgeDemoPath.map((step, index) => (
+                <button
+                  key={step.key}
+                  className={index === judgeStepIndex && judgeDemoActive ? 'active' : ''}
+                  onClick={() => jumpToJudgeStep(index)}
+                  aria-label={step.label}
+                  title={step.label}
+                >
+                  {index + 1}
+                </button>
+              ))}
+            </div>
+            <button className="judge-action" onClick={judgeDemoActive ? advanceJudgeDemo : startJudgeDemo}>
+              <ArrowRight size={18} />
+              {judgeDemoActive
+                ? judgeStepIndex === judgeDemoPath.length - 1
+                  ? 'Mark Demo Complete'
+                  : 'Next Proof Point'
+                : 'Run Judge Demo'}
+            </button>
           </div>
 
           <label>
@@ -457,6 +573,13 @@ export default function App() {
               <div>
                 <span>Public demo</span>
                 <strong>Ready to test</strong>
+              </div>
+            </article>
+            <article className={judgeDemoActive ? 'demo-live' : ''}>
+              <Rocket size={18} />
+              <div>
+                <span>Judge path</span>
+                <strong>{judgeDemoActive ? judgeDemoPath[judgeStepIndex].label : 'Ready in one click'}</strong>
               </div>
             </article>
           </div>
@@ -562,7 +685,7 @@ export default function App() {
                   <Gauge size={18} />
                 </div>
                 {events.map((event) => (
-                  <div key={`${event.name}-${event.time}`}>
+                  <div key={event.id}>
                     <ArrowRight size={15} />
                     <span>{event.name}</span>
                     <small>{event.time}</small>
@@ -592,6 +715,19 @@ export default function App() {
                   <CheckCircle2 size={18} />
                 </div>
                 <p>{packet.pitch}</p>
+              </article>
+              <article className="demo-script">
+                <div className="row-title">
+                  <h3>90-second demo script</h3>
+                  <MonitorCheck size={18} />
+                </div>
+                {packet.demoScript.map((item) => (
+                  <div key={item.timebox}>
+                    <code>{item.timebox}</code>
+                    <span>{item.beat}</span>
+                    <p>{item.proof}</p>
+                  </div>
+                ))}
               </article>
               <article className="next-actions">
                 <div className="row-title">

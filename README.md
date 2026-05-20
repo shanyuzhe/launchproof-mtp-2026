@@ -2,20 +2,69 @@
 
 LaunchProof is a launch readiness workspace for AI builders, created for the Mind the Product World Product Day Hackathon 2026.
 
-AI helps builders make software faster. LaunchProof helps them prove the product is ready to ship by turning a rough idea into:
+AI helps builders make software faster. LaunchProof helps them prove the product is ready to ship.
+
+The product turns a rough idea or demo URL into a judge-ready launch packet:
 
 - a concise launch brief
 - critical user flows
 - acceptance checks
 - launch risks and mitigations
 - Novus-ready behavior events
-- an exportable pitch packet
+- an exportable Devpost and pitch packet
+
+## Product Story
+
+AI coding tools have changed the bottleneck. A solo builder can now create a working prototype in hours, but the hard product questions still remain:
+
+- Who is this for?
+- What job does it solve?
+- Which flow must work?
+- What can break at launch?
+- What evidence proves users can get value?
+
+LaunchProof is built for that gap. It gives AI builders a structured product review before they submit, demo, or launch. Instead of generating more open-ended text, it creates the artifacts a real launch review needs: brief, flows, checks, risks, behavior evidence, and a pitch-ready export.
+
+## Judge-Facing Positioning
+
+**One-liner:** AI helps you build faster. LaunchProof helps you prove it is ready to ship.
+
+**Why it matters:** The next wave of products will not fail because teams could not produce code. They will fail because they shipped unclear products with untested flows and no evidence of user behavior. LaunchProof turns launch readiness into a repeatable workflow.
+
+**Hackathon fit:** Mind the Product judges are scoring Product Thinking, Craft and Execution, Originality and Ambition, and Shippedness. LaunchProof is designed around those criteria: a clear user problem, a polished end-to-end workflow, an original product layer for AI builders, and measurable behavior through Novus.ai/Pendo.
+
+## Testing Instructions
+
+Judges can test the app without login.
+
+1. Open the live app.
+2. Review the preloaded LaunchProof sample packet.
+3. Change one or more intake fields, such as target user, product problem, success metric, or demo URL.
+4. Click `Generate Launch Packet`.
+5. Click `Run Judge Demo` to step through the 90-second proof path.
+6. Review the `Brief`, `Flows`, `Risks`, `Evidence`, and `Pitch` tabs.
+7. In `Evidence`, check the hackathon scorecard and the Novus/Pendo event map.
+8. Click `Copy packet` to copy the Devpost-ready launch packet.
+9. Confirm the interaction events in the included Novus.ai/Pendo dashboard screenshot.
+
+Expected result: within a few minutes, a judge should see a complete launch readiness packet and understand how the product converts a rough AI-built prototype into a testable, measurable shipping story.
+
+## Built With
+
+- Next.js
+- React
+- Vercel
+- Novus.ai / Pendo Web SDK
+- Browser local storage
+- lucide-react
+- GitHub
 
 ## Local Development
 
 ```bash
 npm install
 npm run dev
+npm run verify:launchproof -- --url https://launchproof-mtp.vercel.app --dashboard-screenshot path/to/novus-dashboard.png --demo-video-url https://...
 ```
 
 ## Novus.ai

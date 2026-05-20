@@ -72,6 +72,7 @@ button {
 .flow-row,
 .row-title,
 .event-feed div,
+.demo-progress,
 .next-actions div {
   display: flex;
   align-items: center;
@@ -221,6 +222,75 @@ textarea {
   line-height: 1.45;
 }
 
+.judge-demo-card {
+  display: grid;
+  gap: 12px;
+  border: 1px solid rgba(49, 87, 173, 0.22);
+  border-radius: 8px;
+  padding: 14px;
+  background: #f4f7ff;
+}
+
+.judge-demo-card h2 {
+  margin-bottom: 0;
+  font-size: 0.98rem;
+}
+
+.judge-demo-card .row-title {
+  margin-bottom: 0;
+}
+
+.judge-demo-card .row-title span {
+  border-radius: 999px;
+  padding: 3px 8px;
+  color: #243b64;
+  background: #ffffff;
+  font-size: 0.75rem;
+  font-weight: 900;
+}
+
+.judge-demo-card p {
+  margin-bottom: 0;
+  color: #3f4a40;
+  line-height: 1.45;
+}
+
+.demo-progress {
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.demo-progress button {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border: 1px solid rgba(36, 59, 100, 0.18);
+  border-radius: 999px;
+  color: #243b64;
+  background: #ffffff;
+  font-size: 0.82rem;
+  font-weight: 900;
+}
+
+.demo-progress button.active {
+  color: #ffffff;
+  background: #3157ad;
+}
+
+.judge-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 42px;
+  border: 0;
+  border-radius: 7px;
+  color: #ffffff;
+  background: #3157ad;
+  font-weight: 900;
+}
+
 .topbar {
   justify-content: space-between;
   gap: 16px;
@@ -229,7 +299,7 @@ textarea {
 
 .decision-strip {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 10px;
   margin-bottom: 18px;
 }
@@ -254,6 +324,15 @@ textarea {
   display: block;
   color: #182016;
   line-height: 1.35;
+}
+
+.decision-strip .demo-live {
+  border-color: rgba(49, 87, 173, 0.34);
+  background: #f4f7ff;
+}
+
+.decision-strip .demo-live svg {
+  color: #3157ad;
 }
 
 .tabs {
@@ -299,6 +378,7 @@ textarea {
 .event-feed,
 .testing-card,
 .pitch-block,
+.demo-script,
 .next-actions {
   border: 1px solid rgba(24, 32, 22, 0.11);
   border-radius: 8px;
@@ -411,6 +491,7 @@ small {
 
 .event-board,
 .event-feed,
+.demo-script,
 .pitch-block,
 .next-actions {
   padding: 17px;
@@ -510,8 +591,38 @@ small {
 
 .pitch-layout {
   display: grid;
-  grid-template-columns: minmax(0, 1.3fr) minmax(260px, 0.7fr);
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 1fr) minmax(240px, 0.72fr);
   gap: 14px;
+}
+
+.demo-script {
+  display: grid;
+  gap: 11px;
+}
+
+.demo-script div:not(.row-title) {
+  display: grid;
+  grid-template-columns: 72px minmax(0, 1fr);
+  gap: 5px 10px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(24, 32, 22, 0.08);
+}
+
+.demo-script code {
+  align-self: start;
+  text-align: center;
+}
+
+.demo-script span {
+  color: #182016;
+  font-weight: 900;
+}
+
+.demo-script p {
+  grid-column: 2;
+  margin-bottom: 0;
+  color: #4b554d;
+  line-height: 1.42;
 }
 
 .next-actions {
