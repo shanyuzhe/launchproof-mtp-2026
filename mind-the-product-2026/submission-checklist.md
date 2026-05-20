@@ -89,6 +89,7 @@ Purpose: final launch gate for Devpost. Public-facing submission assets stay in 
 ## User Action Needed
 
 - Confirm the chosen public URL deploys the latest GitHub commit before final submission.
+- If GitHub Pages returns 404, enable Pages in repository settings and choose either `GitHub Actions` or branch `gh-pages` / `/root`.
 - Run `npm run verify:launchproof -- --url https://shanyuzhe.github.io/launchproof-mtp-2026/ --dashboard-screenshot path/to/novus-dashboard.png --demo-video-url https://...` and require a `[pass]` result.
 - Capture a fresh Novus.ai/Pendo dashboard screenshot after the final deployed build receives events.
 - Record and upload the demo video to YouTube, Vimeo, or Youku.

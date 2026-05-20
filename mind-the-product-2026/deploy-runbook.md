@@ -86,6 +86,15 @@ npm run verify:launchproof -- --url https://shanyuzhe.github.io/launchproof-mtp-
 
 Use the Pages URL in Devpost only after the verifier prints `[pass] LaunchProof deploy verification passed.`.
 
+If the workflow build succeeds but the deploy job fails with `Ensure GitHub Pages has been enabled`, this is a repository setting issue, not an app build issue. Enable Pages at:
+
+`https://github.com/shanyuzhe/launchproof-mtp-2026/settings/pages`
+
+Then choose either:
+
+- `GitHub Actions` as the source, then re-run the failed `Deploy LaunchProof to GitHub Pages` job.
+- `Deploy from a branch` with branch `gh-pages` and folder `/root`; the static export has also been pushed there as a fallback.
+
 ## If The Key Is Stuck In The Old Novus PR
 
 The closed `OI-wiki` PR created by Novus contains a Pendo install key in its generated install snippet. That key is already wired as the default public install key. Prefer rotating/resetting the key later if Novus support gives that option.
