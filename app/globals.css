@@ -156,6 +156,7 @@ textarea {
 }
 
 .primary-action,
+.secondary-action,
 .tabs button,
 .copy-button {
   border: 0;
@@ -163,6 +164,7 @@ textarea {
 }
 
 .primary-action,
+.secondary-action,
 .copy-button {
   display: inline-flex;
   align-items: center;
@@ -176,6 +178,12 @@ textarea {
   margin-top: 2px;
   color: #ffffff;
   background: #245c42;
+}
+
+.secondary-action {
+  border: 1px solid rgba(36, 59, 100, 0.18);
+  color: #243b64;
+  background: #eef3fb;
 }
 
 .copy-button {
@@ -288,6 +296,7 @@ textarea {
 .metric,
 .event-board,
 .event-feed,
+.testing-card,
 .pitch-block,
 .next-actions {
   border: 1px solid rgba(24, 32, 22, 0.11);
@@ -407,7 +416,8 @@ small {
 }
 
 .event-board,
-.event-feed {
+.event-feed,
+.testing-card {
   grid-column: span 2;
 }
 
@@ -430,6 +440,25 @@ small {
 .event-feed small {
   margin-top: 0;
   margin-left: auto;
+}
+
+.testing-card {
+  display: grid;
+  gap: 11px;
+  padding: 17px;
+}
+
+.testing-card div:not(.row-title) {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  color: #4b554d;
+  line-height: 1.45;
+}
+
+.testing-card svg {
+  color: #245c42;
+  flex: 0 0 auto;
 }
 
 .pitch-layout {

@@ -10,16 +10,17 @@
 
 ## Build
 
-- Working app.
+- Working app built locally.
 - Hosted live demo.
 - Public GitHub repository.
 - README with setup instructions.
-- Sample project preloaded.
-- Mobile and desktop layout checked.
-- Novus.ai installed.
-- Novus.ai receives real user events.
+- LaunchProof sample project preloaded.
+- Draft persistence added.
+- Desktop layout content checked through local HTTP render.
+- Novus.ai installed through the Pendo Web SDK.
+- Novus.ai/Pendo receives real user events on the currently deployed build.
 - Novus.ai dashboard screenshot captured.
-- Deploy environment includes `NEXT_PUBLIC_PENDO_API_KEY`.
+- Deploy environment includes `NEXT_PUBLIC_PENDO_API_KEY` or the built-in public install key.
 
 ## Story
 
@@ -28,6 +29,7 @@
 - One-sentence value proposition.
 - Screenshots.
 - Demo video under 3 minutes.
+- 90-second demo script.
 - Devpost description.
 - Responsible AI note.
 - Testing instructions.
@@ -45,7 +47,7 @@
 
 ## User Action Needed
 
-- Register at `https://novus.pendo.io/register`.
-- Send the install snippet/API key details once available.
-- Send any Resources tab links or templates.
+- Confirm Vercel deploys the latest GitHub commit before final submission.
+- Capture a fresh Novus.ai/Pendo dashboard screenshot after the final deployed build receives events.
+- Record and upload the demo video to YouTube, Vimeo, or Youku.
 - Confirm whether we enter as solo or team.

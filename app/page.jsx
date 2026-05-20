@@ -14,22 +14,25 @@ import {
   GitBranch,
   ListChecks,
   MonitorCheck,
+  RotateCcw,
   Rocket,
   ShieldAlert,
   Sparkles,
   Target,
 } from 'lucide-react';
 
+const STORAGE_KEY = 'launchproof_project_draft';
+
 const sampleProject = {
-  name: 'FollowUpFlow',
-  user: 'remote product teams',
+  name: 'LaunchProof',
+  user: 'AI builders and product teams shipping hackathon products',
   problem:
-    'Meeting decisions get scattered across notes, chat, and issue trackers, so follow-up work is easy to miss.',
+    'AI tools can produce a working demo quickly, but teams still struggle to prove it is valuable, coherent, measurable, and ready to ship.',
   solution:
-    'An AI meeting follow-up assistant that turns notes into owners, due dates, and crisp next actions.',
-  url: 'https://example.com/demo',
-  stage: 'Private beta',
-  metric: 'A user exports a complete launch packet in one session.',
+    'A launch-readiness workspace that turns an idea into a product brief, critical flows, launch risks, Novus event evidence, and a pitch packet.',
+  url: 'https://launchproof-mtp.vercel.app',
+  stage: 'Public hackathon demo',
+  metric: 'A builder exports a complete launch packet and can point to Novus/Pendo events as proof.',
 };
 
 const tabs = [
@@ -168,6 +171,12 @@ const makePacket = (project) => {
         metric: 'Novus/Pendo receives production behavior events.',
       },
     ],
+    testing: [
+      'Open the public LaunchProof URL.',
+      'Edit the product brief fields or use the default LaunchProof example.',
+      'Click Generate Launch Packet, then review Flows, Risks, Evidence, and Pitch.',
+      'Copy the packet and confirm the interaction appears in the local event feed and Novus/Pendo.',
+    ],
     eventMap: [
       ['brief_generated', 'Launch packet generated'],
       ['flows_reviewed', 'Critical flow reviewed'],
@@ -203,6 +212,9 @@ const buildExport = (project, packet) =>
     '## Evidence',
     ...packet.evidence.map((item) => `- ${item.label}: ${item.metric}`),
     '',
+    '## Testing instructions',
+    ...packet.testing.map((item) => `- ${item}`),
+    '',
     '## Pitch',
     packet.pitch,
   ].join('\n');
@@ -212,12 +224,39 @@ export default function App() {
   const [activeTab, setActiveTab] = useState('brief');
   const [analyticsStatus, setAnalyticsStatus] = useState('Waiting for SDK');
   const [copied, setCopied] = useState(false);
+  const [draftReady, setDraftReady] = useState(false);
   const [events, setEvents] = useState([
     { name: 'sample_loaded', time: 'Seed' },
     { name: 'project_created', time: 'Seed' },
   ]);
 
   const packet = useMemo(() => makePacket(project), [project]);
+
+  useEffect(() => {
+    try {
+      const savedProject = window.localStorage.getItem(STORAGE_KEY);
+
+      if (savedProject) {
+        setProject({ ...sampleProject, ...JSON.parse(savedProject) });
+      }
+    } catch (error) {
+      console.warn('[fail] Could not load saved LaunchProof draft', error);
+    } finally {
+      setDraftReady(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!draftReady) {
+      return;
+    }
+
+    try {
+      window.localStorage.setItem(STORAGE_KEY, JSON.stringify(project));
+    } catch (error) {
+      console.warn('[fail] Could not save LaunchProof draft', error);
+    }
+  }, [draftReady, project]);
 
   useEffect(() => {
     const updateStatus = () => {
@@ -256,10 +295,22 @@ export default function App() {
   };
 
   const copyPacket = async () => {
-    await navigator.clipboard.writeText(buildExport(project, packet));
-    setCopied(true);
-    record('export_clicked', { exportType: 'markdown_packet' });
-    window.setTimeout(() => setCopied(false), 1800);
+    try {
+      await navigator.clipboard.writeText(buildExport(project, packet));
+      setCopied(true);
+      record('export_clicked', { exportType: 'markdown_packet' });
+      window.setTimeout(() => setCopied(false), 1800);
+    } catch (error) {
+      console.error('[fail] Could not copy LaunchProof packet', error);
+      setCopied(false);
+      record('export_failed', { exportType: 'markdown_packet' });
+    }
+  };
+
+  const resetDemo = () => {
+    setProject(sampleProject);
+    setActiveTab('brief');
+    record('demo_reset', { section: 'brief' });
   };
 
   return (
@@ -341,6 +392,11 @@ export default function App() {
           <button className="primary-action" onClick={generatePacket}>
             <Sparkles size={18} />
             Generate Launch Packet
+          </button>
+
+          <button className="secondary-action" onClick={resetDemo}>
+            <RotateCcw size={17} />
+            Reset Demo
           </button>
         </aside>
 
@@ -468,6 +524,18 @@ export default function App() {
                     <ArrowRight size={15} />
                     <span>{event.name}</span>
                     <small>{event.time}</small>
+                  </div>
+                ))}
+              </article>
+              <article className="testing-card">
+                <div className="row-title">
+                  <h3>Testing instructions</h3>
+                  <MonitorCheck size={18} />
+                </div>
+                {packet.testing.map((item) => (
+                  <div key={item}>
+                    <CheckCircle2 size={16} />
+                    <span>{item}</span>
                   </div>
                 ))}
               </article>
