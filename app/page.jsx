@@ -171,6 +171,28 @@ const makePacket = (project) => {
         metric: 'Novus/Pendo receives production behavior events.',
       },
     ],
+    criteria: [
+      {
+        label: 'Product Thinking',
+        weight: '25%',
+        proof: `${name} forces the builder to name a user, pain, promise, and success metric before calling the product ready.`,
+      },
+      {
+        label: 'Craft and Execution',
+        weight: '25%',
+        proof: 'The workflow is a single public URL with editable inputs, structured outputs, copy export, and no account setup.',
+      },
+      {
+        label: 'Originality and Ambition',
+        weight: '25%',
+        proof: 'Instead of generating more ideas, LaunchProof makes AI builders prove one launch decision with risks and evidence.',
+      },
+      {
+        label: 'Shippedness',
+        weight: '25%',
+        proof: 'The app is deployed, testable by a stranger, and emits Novus/Pendo behavior events from real interactions.',
+      },
+    ],
     testing: [
       'Open the public LaunchProof URL.',
       'Edit the product brief fields or use the default LaunchProof example.',
@@ -211,6 +233,9 @@ const buildExport = (project, packet) =>
     '',
     '## Evidence',
     ...packet.evidence.map((item) => `- ${item.label}: ${item.metric}`),
+    '',
+    '## Hackathon scorecard',
+    ...packet.criteria.map((item) => `- ${item.label} (${item.weight}): ${item.proof}`),
     '',
     '## Testing instructions',
     ...packet.testing.map((item) => `- ${item}`),
@@ -502,6 +527,23 @@ export default function App() {
                   <span>{item.metric}</span>
                 </article>
               ))}
+              <article className="criteria-card">
+                <div className="row-title">
+                  <h3>Hackathon scorecard</h3>
+                  <BadgeCheck size={18} />
+                </div>
+                <div className="criteria-grid">
+                  {packet.criteria.map((item) => (
+                    <section key={item.label}>
+                      <div>
+                        <strong>{item.label}</strong>
+                        <span>{item.weight}</span>
+                      </div>
+                      <p>{item.proof}</p>
+                    </section>
+                  ))}
+                </div>
+              </article>
               <article className="event-board">
                 <div className="row-title">
                   <h3>Novus event map</h3>

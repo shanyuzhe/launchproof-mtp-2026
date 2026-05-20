@@ -23,6 +23,7 @@ LaunchProof turns a rough product idea into a launch readiness packet. A builder
 - acceptance checks
 - launch risks and mitigations
 - a Novus-measurable evidence board
+- a hackathon scorecard mapped to the judging criteria
 - testing instructions
 - an exportable Devpost-ready pitch packet
 
@@ -50,6 +51,7 @@ The main challenge was avoiding "AI text soup". The product needed to produce ar
 - Created a workflow that connects product thinking with AI-assisted shipping.
 - Designed outputs that directly support demo preparation and launch review.
 - Added behavior tracking so "ready to ship" can be tied to real usage signals.
+- Mapped the product evidence directly to Product Thinking, Craft and Execution, Originality and Ambition, and Shippedness.
 - Added draft persistence so builders can return to a packet without losing work.
 - Built the project so it can be useful beyond one hackathon.
 
@@ -71,9 +73,10 @@ AI can speed up implementation, but product clarity still comes from making deci
 3. Click Generate Launch Packet.
 4. Review Brief, Flows, Risks, Evidence, and Pitch.
 5. Show the local event feed and Novus event map.
-6. Copy the exportable packet.
-7. Cut to the Novus/Pendo dashboard screenshot.
-8. Close on the value: builders get from prototype to credible launch faster.
+6. Point to the hackathon scorecard inside Evidence.
+7. Copy the exportable packet.
+8. Cut to the Novus/Pendo dashboard screenshot.
+9. Close on the value: builders get from prototype to credible launch faster.
 
 ## Try It Out
 

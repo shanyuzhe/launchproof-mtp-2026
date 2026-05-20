@@ -15,7 +15,7 @@ Hi, this is LaunchProof. AI builders can now create working prototypes incredibl
 
 On the left, I enter the product, target user, problem, solution, success metric, and demo URL. The default example is LaunchProof itself, so a judge can immediately see the workflow without setup.
 
-When I generate a launch packet, LaunchProof creates a concise brief, critical user flows, acceptance checks, launch risks, evidence signals, and a pitch-ready export. This keeps the output structured around the same criteria used in this hackathon: product thinking, craft, originality, and shippedness.
+When I generate a launch packet, LaunchProof creates a concise brief, critical user flows, acceptance checks, launch risks, evidence signals, and a pitch-ready export. The Evidence tab also includes a hackathon scorecard mapped directly to the judging criteria: product thinking, craft, originality, and shippedness.
 
 The Evidence tab maps user actions to Novus/Pendo events, including packet generation, flow review, risk review, evidence review, and export. That means LaunchProof is not only a demo; it is measurable as a shipped product.
 

@@ -294,6 +294,7 @@ textarea {
 .flow-row,
 .risk-row,
 .metric,
+.criteria-card,
 .event-board,
 .event-feed,
 .testing-card,
@@ -421,6 +422,52 @@ small {
   grid-column: span 2;
 }
 
+.criteria-card {
+  grid-column: span 4;
+  padding: 17px;
+}
+
+.criteria-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.criteria-grid section {
+  min-height: 138px;
+  border-radius: 7px;
+  padding: 13px;
+  background: #f8fbf5;
+}
+
+.criteria-grid div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 9px;
+}
+
+.criteria-grid strong {
+  color: #182016;
+  line-height: 1.25;
+}
+
+.criteria-grid span {
+  border-radius: 999px;
+  padding: 3px 8px;
+  color: #245c42;
+  background: #e7f3ea;
+  font-size: 0.74rem;
+  font-weight: 900;
+}
+
+.criteria-grid p {
+  margin-bottom: 0;
+  color: #4b554d;
+  line-height: 1.45;
+}
+
 .event-board div:not(.row-title),
 .event-feed div:not(.row-title) {
   display: flex;
@@ -505,6 +552,15 @@ small {
   .event-board,
   .event-feed {
     grid-column: span 1;
+  }
+
+  .criteria-card,
+  .testing-card {
+    grid-column: span 1;
+  }
+
+  .criteria-grid {
+    grid-template-columns: 1fr;
   }
 
   .copy-button {
