@@ -1,6 +1,6 @@
 {
-  "appUrl": "https://shanyuzhe.github.io/launchproof-mtp-2026/?sample=meetingbridge&eventRefresh=refresh-1779307010014",
-  "checkedAt": "2026-05-20T19:57:29.145Z",
+  "appUrl": "https://shanyuzhe.github.io/launchproof-mtp-2026/?sample=meetingbridge&eventRefresh=refresh-1779308755231",
+  "checkedAt": "2026-05-20T20:26:34.053Z",
   "passed": true,
   "pageEvidence": {
     "analyticsStatus": "Novus/Pendo SDK initialized; event sent to SDK queue",
@@ -17,7 +17,7 @@
       "flows_reviewed"
     ],
     "title": "LaunchProof",
-    "url": "https://shanyuzhe.github.io/launchproof-mtp-2026/?sample=meetingbridge&eventRefresh=refresh-1779307010014"
+    "url": "https://shanyuzhe.github.io/launchproof-mtp-2026/?sample=meetingbridge&eventRefresh=refresh-1779308755231"
   },
   "pendo": {
     "scriptLoaded": true,
@@ -91,6 +91,10 @@
       },
       {
         "status": 200,
+        "url": "https://data.pendo.io/data/ptm.gif/e8d019ac-2123-45c3-80b7-a171a94a8fb0"
+      },
+      {
+        "status": 200,
         "url": "https://data.pendo.io/data/recordingconf/e8d019ac-2123-45c3-80b7-a171a94a8fb0"
       },
       {
@@ -103,15 +107,11 @@
       },
       {
         "status": 200,
+        "url": "https://data.pendo.io/data/ptm.gif/e8d019ac-2123-45c3-80b7-a171a94a8fb0"
+      },
+      {
+        "status": 200,
         "url": "https://data.pendo.io/data/rec/e8d019ac-2123-45c3-80b7-a171a94a8fb0"
-      },
-      {
-        "status": 200,
-        "url": "https://data.pendo.io/data/ptm.gif/e8d019ac-2123-45c3-80b7-a171a94a8fb0"
-      },
-      {
-        "status": 200,
-        "url": "https://data.pendo.io/data/ptm.gif/e8d019ac-2123-45c3-80b7-a171a94a8fb0"
       },
       {
         "status": 200,
@@ -119,5 +119,5 @@
       }
     ]
   },
-  "runId": "refresh-1779307010014"
+  "runId": "refresh-1779308755231"
 }
