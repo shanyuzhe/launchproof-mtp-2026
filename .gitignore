@@ -4,6 +4,8 @@ dist/
 out/
 .playwright-mcp/
 launchproof-*.png
+launchproof-*.webm
+.demo-video/
 novus-*.png
 pendo-*.png
 .env
