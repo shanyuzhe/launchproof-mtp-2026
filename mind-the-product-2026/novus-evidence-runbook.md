@@ -8,16 +8,21 @@ Use the public app, not localhost:
 
 https://shanyuzhe.github.io/launchproof-mtp-2026/
 
+Direct sample URL:
+
+https://shanyuzhe.github.io/launchproof-mtp-2026/?sample=meetingbridge
+
 In one browser session:
 
-1. Open the public URL.
+1. Open the public URL or the direct MeetingBridge sample URL.
 2. Change one intake field, such as `Success metric`.
 3. Click `Generate Launch Packet`.
 4. Click `Run Judge Demo`.
 5. Click `Next Proof Point` until the judge path reaches `5/5`.
 6. Click tabs in this order: `Flows`, `Risks`, `Evidence`, `Pitch`.
 7. Click `Copy packet`.
-8. Leave the tab open for 30 seconds so Pendo can flush events.
+8. Return to `Evidence` and confirm behavior coverage reaches `100%`.
+9. Leave the tab open for 30 seconds so Pendo can flush events.
 
 Browser network evidence already observed on the deployed app:
 
@@ -44,10 +49,9 @@ If Novus still says signals may take 24 hours, screenshot the dashboard state an
 After `novus-pendo-dashboard.png` exists and the demo video is uploaded, run:
 
 ```bash
-npm run verify:launchproof -- --url https://shanyuzhe.github.io/launchproof-mtp-2026/ --dashboard-screenshot novus-pendo-dashboard.png --demo-video-url https://...
+node scripts/final-submit-check.mjs https://...
 ```
 
 The verifier should print:
 
 `[pass] LaunchProof deploy verification passed.`
-

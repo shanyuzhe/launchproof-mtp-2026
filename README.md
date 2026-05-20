@@ -11,6 +11,7 @@ The product turns a rough idea or demo URL into a judge-ready launch packet:
 - acceptance checks
 - launch risks and mitigations
 - Novus-ready behavior events
+- behavior coverage for the current proof path
 - an exportable Devpost and pitch packet
 
 ## Product Story
@@ -38,12 +39,12 @@ LaunchProof is built for that gap. It gives AI builders a structured product rev
 Judges can test the app without login.
 
 1. Open the live app: `https://shanyuzhe.github.io/launchproof-mtp-2026/`.
-2. Review the preloaded LaunchProof sample packet.
+2. Review the preloaded LaunchProof sample packet, or open the direct MeetingBridge sample: `https://shanyuzhe.github.io/launchproof-mtp-2026/?sample=meetingbridge`.
 3. Change one or more intake fields, such as target user, product problem, success metric, or demo URL.
 4. Click `Generate Launch Packet`.
 5. Click `Run Judge Demo` to step through the 90-second proof path.
 6. Review the `Brief`, `Flows`, `Risks`, `Evidence`, and `Pitch` tabs.
-7. In `Evidence`, check the hackathon scorecard and the Novus/Pendo event map.
+7. In `Evidence`, check the hackathon scorecard, behavior coverage, and the Novus/Pendo event map.
 8. Click `Copy packet` to copy the Devpost-ready launch packet and see the `Copied` confirmation.
 9. Confirm the interaction events in the included Novus.ai/Pendo dashboard screenshot.
 
@@ -62,6 +63,7 @@ Expected result: within a few minutes, a judge should see a complete launch read
 ## Public URLs
 
 - Primary submission URL: `https://shanyuzhe.github.io/launchproof-mtp-2026/`
+- Direct sample URL: `https://shanyuzhe.github.io/launchproof-mtp-2026/?sample=meetingbridge`
 - Do not use the stale Vercel preview in the Devpost submission unless it is separately re-verified.
 
 ## Local Development
@@ -69,7 +71,7 @@ Expected result: within a few minutes, a judge should see a complete launch read
 ```bash
 npm install
 npm run dev
-npm run verify:launchproof -- --url https://shanyuzhe.github.io/launchproof-mtp-2026/ --dashboard-screenshot path/to/novus-dashboard.png --demo-video-url https://...
+node scripts/final-submit-check.mjs https://...
 ```
 
 ## Novus.ai
@@ -89,6 +91,8 @@ Tracked event examples:
 - `risks_reviewed`
 - `evidence_reviewed`
 - `export_clicked`
+
+The Evidence tab also shows behavior coverage for the current session, so judges can see whether the proof path has actually happened before checking the external Novus/Pendo dashboard screenshot.
 
 The SDK loader lives in `app/pendo-install.jsx`, and the event calls live in `app/page.jsx`.
 
