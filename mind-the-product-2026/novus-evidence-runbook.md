@@ -42,6 +42,8 @@ Browser network evidence already observed on the deployed app:
 
 `novus-pendo-dashboard.png`
 
+Use a real PNG/JPEG screenshot at normal browser size. The final checker rejects empty, invalid, or tiny image files.
+
 If Novus still says signals may take 24 hours, screenshot the dashboard state anyway, then rerun the app event path above and check again later. Do not rename product screenshots as Novus evidence.
 
 ## Final Verification

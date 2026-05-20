@@ -45,6 +45,7 @@ Purpose: final launch gate for Devpost. Public-facing submission assets stay in 
 - Upload `launchproof-behavior-coverage.png` as an additional gallery image.
 - Novus.ai/Pendo dashboard screenshot is included and clearly shows LaunchProof events.
 - Save the Novus.ai/Pendo dashboard screenshot locally with a filename like `novus-pendo-dashboard.png`.
+- Novus.ai/Pendo dashboard screenshot is a valid PNG/JPEG at normal browser size, not a tiny crop or renamed non-image file.
 - Demo video is under 3 minutes.
 - Demo video uses the public URL.
 - Demo video shows the product functioning, not only slides or narration.

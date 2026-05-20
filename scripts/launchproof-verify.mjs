@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import { existsSync, statSync } from 'node:fs';
+import { existsSync, readFileSync, statSync } from 'node:fs';
 import { readFile } from 'node:fs/promises';
 import { basename, dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -327,8 +327,20 @@ function checkExternalSubmissionEvidence() {
     failures.push(`Dashboard screenshot filename should clearly identify Novus/Pendo evidence: ${dashboardScreenshot}`);
   }
 
-  if (!isNonEmptyFile(resolve(repoRoot, dashboardScreenshot))) {
+  const screenshotPath = resolve(repoRoot, dashboardScreenshot);
+
+  if (!isNonEmptyFile(screenshotPath)) {
     failures.push(`Novus/Pendo dashboard screenshot is missing or empty: ${dashboardScreenshot}`);
+  } else {
+    const dimensions = readImageDimensions(screenshotPath);
+
+    if (!dimensions) {
+      failures.push(`Novus/Pendo dashboard screenshot must be a valid PNG or JPEG image: ${dashboardScreenshot}`);
+    } else if (dimensions.width < 600 || dimensions.height < 350) {
+      failures.push(
+        `Novus/Pendo dashboard screenshot is too small to prove dashboard context: ${dimensions.width}x${dimensions.height}`,
+      );
+    }
   }
 
   if (!demoVideoUrl) {
@@ -397,4 +409,45 @@ function isNonEmptyFile(path) {
     console.error(error);
     return false;
   }
+}
+
+function readImageDimensions(imagePath) {
+  const bytes = readFileSync(imagePath);
+
+  if (bytes.length >= 24 && bytes.subarray(0, 8).equals(Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]))) {
+    return {
+      width: bytes.readUInt32BE(16),
+      height: bytes.readUInt32BE(20),
+    };
+  }
+
+  if (bytes.length >= 4 && bytes[0] === 0xff && bytes[1] === 0xd8) {
+    return readJpegDimensions(bytes);
+  }
+
+  return null;
+}
+
+function readJpegDimensions(bytes) {
+  let offset = 2;
+
+  while (offset < bytes.length) {
+    if (bytes[offset] !== 0xff) {
+      return null;
+    }
+
+    const marker = bytes[offset + 1];
+    const length = bytes.readUInt16BE(offset + 2);
+
+    if (marker >= 0xc0 && marker <= 0xc3) {
+      return {
+        height: bytes.readUInt16BE(offset + 5),
+        width: bytes.readUInt16BE(offset + 7),
+      };
+    }
+
+    offset += 2 + length;
+  }
+
+  return null;
 }

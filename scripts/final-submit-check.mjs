@@ -43,9 +43,7 @@ function main() {
 
   assertLocalDemoVideo();
 
-  if (!existsSync(resolve(process.cwd(), SCREENSHOT))) {
-    fail(`Missing required Novus/Pendo screenshot: ${SCREENSHOT}`);
-  }
+  assertScreenshotImage();
 
   const args = [
     'run',
@@ -141,6 +139,75 @@ function assertLocalDemoVideo() {
   }
 
   console.log(`[check] Local demo video duration: ${durationSeconds.toFixed(1)} seconds`);
+}
+
+function assertScreenshotImage() {
+  const screenshotPath = resolve(process.cwd(), SCREENSHOT);
+
+  if (!existsSync(screenshotPath)) {
+    fail(`Missing required Novus/Pendo screenshot: ${SCREENSHOT}`);
+  }
+
+  const stat = statSync(screenshotPath);
+
+  if (!stat.isFile() || stat.size === 0) {
+    fail(`Novus/Pendo screenshot is empty or not a file: ${SCREENSHOT}`);
+  }
+
+  const dimensions = readImageDimensions(screenshotPath);
+
+  if (!dimensions) {
+    fail(`Novus/Pendo screenshot must be a valid PNG or JPEG image: ${SCREENSHOT}`);
+  }
+
+  if (dimensions.width < 600 || dimensions.height < 350) {
+    fail(
+      `Novus/Pendo screenshot is too small to prove dashboard context: ${dimensions.width}x${dimensions.height}`,
+    );
+  }
+
+  console.log(`[check] Novus/Pendo screenshot dimensions: ${dimensions.width}x${dimensions.height}`);
+}
+
+function readImageDimensions(imagePath) {
+  const bytes = readFileSync(imagePath);
+
+  if (bytes.length >= 24 && bytes.subarray(0, 8).equals(Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]))) {
+    return {
+      width: bytes.readUInt32BE(16),
+      height: bytes.readUInt32BE(20),
+    };
+  }
+
+  if (bytes.length >= 4 && bytes[0] === 0xff && bytes[1] === 0xd8) {
+    return readJpegDimensions(bytes);
+  }
+
+  return null;
+}
+
+function readJpegDimensions(bytes) {
+  let offset = 2;
+
+  while (offset < bytes.length) {
+    if (bytes[offset] !== 0xff) {
+      return null;
+    }
+
+    const marker = bytes[offset + 1];
+    const length = bytes.readUInt16BE(offset + 2);
+
+    if (marker >= 0xc0 && marker <= 0xc3) {
+      return {
+        height: bytes.readUInt16BE(offset + 5),
+        width: bytes.readUInt16BE(offset + 7),
+      };
+    }
+
+    offset += 2 + length;
+  }
+
+  return null;
 }
 
 function readWebmDurationSeconds(videoPath) {

@@ -30,6 +30,8 @@ Save it here:
 
 `C:/Users/22684/Documents/vibe_coding/novus-pendo-dashboard.png`
 
+Use a real PNG/JPEG screenshot at normal browser size. The final checker rejects empty, invalid, or tiny image files.
+
 ## 3. Fill Devpost
 
 Open:
