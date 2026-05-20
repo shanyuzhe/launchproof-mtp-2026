@@ -23,6 +23,7 @@ import {
 
 const STORAGE_KEY = 'launchproof_project_draft';
 const PUBLIC_APP_URL = 'https://shanyuzhe.github.io/launchproof-mtp-2026/';
+const LIVE_APP_URL = process.env.NEXT_PUBLIC_APP_URL || PUBLIC_APP_URL;
 
 const sampleProject = {
   name: 'LaunchProof',
@@ -31,7 +32,7 @@ const sampleProject = {
     'AI tools can produce a working demo quickly, but teams still struggle to prove it is valuable, coherent, measurable, and ready to ship.',
   solution:
     'A launch-readiness workspace that turns an idea into a product brief, critical flows, launch risks, Novus event evidence, and a pitch packet.',
-  url: process.env.NEXT_PUBLIC_APP_URL || PUBLIC_APP_URL,
+  url: LIVE_APP_URL,
   stage: 'Public hackathon demo',
   metric: 'A builder exports a complete launch packet and can point to Novus/Pendo events as proof.',
 };
@@ -54,7 +55,7 @@ const sampleProducts = [
         'AI meeting summaries are easy to generate, but teams still lose launch-critical decisions, owners, and follow-up risks after each call.',
       solution:
         'A post-meeting command center that turns a transcript into decisions, owner-ready tasks, risk flags, and a shareable follow-up brief.',
-      url: 'https://example.com/meetingbridge-demo',
+      url: `${LIVE_APP_URL}?sample=meetingbridge`,
       stage: 'AI builder prototype',
       metric: 'A product lead exports a follow-up brief with decisions, owners, unresolved risks, and the next meeting agenda.',
     },
@@ -70,7 +71,7 @@ const sampleProducts = [
         'Maintainers receive vague bug reports and feature requests faster than they can sort severity, duplicates, reproduction steps, and next actions.',
       solution:
         'An AI-assisted triage board that clusters issues, drafts clarifying questions, tags priority, and exports maintainer-ready action queues.',
-      url: 'https://example.com/issuepilot-demo',
+      url: `${LIVE_APP_URL}?sample=issuepilot`,
       stage: 'Public alpha',
       metric: 'A maintainer reviews ten new issues and exports a prioritized triage queue with owners and next actions.',
     },
@@ -474,6 +475,13 @@ export default function App() {
   useEffect(() => {
     try {
       const savedProject = window.localStorage.getItem(STORAGE_KEY);
+      const requestedSampleId = new URLSearchParams(window.location.search).get('sample')?.toLowerCase();
+      const requestedSample = sampleProducts.find((sample) => sample.id === requestedSampleId);
+
+      if (requestedSample) {
+        setProject(requestedSample.project);
+        return;
+      }
 
       if (savedProject) {
         setProject({ ...sampleProject, ...JSON.parse(savedProject) });
