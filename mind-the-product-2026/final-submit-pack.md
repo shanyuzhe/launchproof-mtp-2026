@@ -7,6 +7,8 @@ Use this file as the final Devpost assembly checklist.
 - App: https://shanyuzhe.github.io/launchproof-mtp-2026/
 - Source: https://github.com/shanyuzhe/launchproof-mtp-2026
 - Demo video: TODO after upload
+- Devpost paste fields: `mind-the-product-2026/devpost-paste-fields.md`
+- Novus evidence steps: `mind-the-product-2026/novus-evidence-runbook.md`
 
 ## Upload Assets
 
