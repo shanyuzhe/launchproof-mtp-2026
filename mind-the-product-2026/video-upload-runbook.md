@@ -4,7 +4,7 @@ Local video file:
 
 `launchproof-demo-video.webm`
 
-Duration: 88.0 seconds.
+Duration: 94.4 seconds.
 
 ## Recommended Upload Settings
 
@@ -21,7 +21,7 @@ Duration: 88.0 seconds.
 
 Paste this:
 
-LaunchProof helps AI builders turn a rough prototype into a launch readiness packet. In this demo, we generate a product brief, critical flows, acceptance checks, risks, behavior coverage, evidence signals, and a Devpost-ready pitch export. The Evidence tab maps key product actions to Novus.ai/Pendo events so shippedness is measurable, not just narrated.
+LaunchProof helps AI builders turn a rough prototype into a launch readiness packet. In this demo, we generate a product brief, critical flows, acceptance checks, risks, a resilience stress test, behavior coverage, evidence signals, and a Devpost-ready pitch export. The Resilience tab pressure-tests the launch, and the Evidence tab maps key product actions to Novus.ai/Pendo events so shippedness is measurable, not just narrated.
 
 Public app: https://shanyuzhe.github.io/launchproof-mtp-2026/
 
