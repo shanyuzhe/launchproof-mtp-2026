@@ -1,0 +1,20 @@
+{
+  "name": "launchproof-mtp-2026",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Launch readiness workspace for AI builders, built for Mind the Product World Product Day Hackathon 2026.",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 0.0.0.0",
+    "build": "vite build",
+    "preview": "vite preview --host 0.0.0.0"
+  },
+  "dependencies": {
+    "@vitejs/plugin-react": "^5.1.2",
+    "vite": "^7.3.1",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "lucide-react": "^0.561.0"
+  },
+  "devDependencies": {}
+}
