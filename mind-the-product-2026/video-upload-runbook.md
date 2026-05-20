@@ -4,7 +4,7 @@ Local video file:
 
 `launchproof-demo-video.webm`
 
-Duration: 83.3 seconds.
+Duration: 80.6 seconds.
 
 ## Recommended Upload Settings
 

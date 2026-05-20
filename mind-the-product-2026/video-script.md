@@ -51,7 +51,7 @@ LaunchProof helps teams move from "we built something with AI" to "we can explai
 
 - Use the verified public URL, not localhost.
 - A generated local recording can be created with `node scripts/record-demo-video.mjs`.
-- The generated `launchproof-demo-video.webm` is captioned and currently 83.3 seconds.
+- The generated `launchproof-demo-video.webm` is captioned and currently 80.6 seconds.
 - Keep browser zoom at 100 percent unless text is hard to read.
 - Start with the seeded LaunchProof example so the first screen is already meaningful.
 - Make one visible edit before generating the packet.
