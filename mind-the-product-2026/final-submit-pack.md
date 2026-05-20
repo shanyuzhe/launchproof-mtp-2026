@@ -16,7 +16,7 @@ Use this file as the final Devpost assembly checklist.
 
 - First gallery image: `launchproof-main-workflow.png`
 - Second gallery image: `launchproof-evidence-scorecard.png`
-- Demo video file before upload: `launchproof-demo-video.webm` (74.9 seconds, captioned, under the 3-minute limit)
+- Demo video file before upload: `launchproof-demo-video.webm` (75.3 seconds, captioned, under the 3-minute limit)
 - Uploaded demo video URL must be on YouTube, Vimeo, or Youku.
 - Required Novus/Pendo screenshot: save as `novus-pendo-dashboard.png`
 
