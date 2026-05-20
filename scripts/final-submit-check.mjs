@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import { spawn } from 'node:child_process';
+import { spawn, spawnSync } from 'node:child_process';
 import { existsSync, readFileSync, statSync } from 'node:fs';
 import { resolve } from 'node:path';
 
@@ -42,6 +42,8 @@ function main() {
   }
 
   assertLocalDemoVideo();
+
+  importScreenshotIfMissing();
 
   assertScreenshotImage();
 
@@ -167,6 +169,25 @@ function assertScreenshotImage() {
   }
 
   console.log(`[check] Novus/Pendo screenshot dimensions: ${dimensions.width}x${dimensions.height}`);
+}
+
+function importScreenshotIfMissing() {
+  const screenshotPath = resolve(process.cwd(), SCREENSHOT);
+
+  if (existsSync(screenshotPath)) {
+    return;
+  }
+
+  console.log(`[check] ${SCREENSHOT} not found; searching common screenshot folders`);
+  const result = spawnSync(process.execPath, ['scripts/import-novus-screenshot.mjs'], {
+    cwd: process.cwd(),
+    stdio: 'inherit',
+    shell: false,
+  });
+
+  if (result.status !== 0) {
+    console.warn(`[warn] Could not auto-import ${SCREENSHOT}. Save the Novus/Pendo dashboard image, then rerun.`);
+  }
 }
 
 function readImageDimensions(imagePath) {

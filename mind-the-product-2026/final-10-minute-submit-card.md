@@ -81,7 +81,7 @@ Short version:
 node scripts/final-submit-check.mjs <video-url>
 ```
 
-The short checker also verifies the local `launchproof-demo-video.webm` exists and is under 3 minutes before it runs the full public deploy gate.
+The short checker also verifies the local `launchproof-demo-video.webm` exists and is under 3 minutes before it runs the full public deploy gate. If `novus-pendo-dashboard.png` is missing, it first tries to import the newest likely Novus/Pendo dashboard screenshot from common folders.
 
 Only submit when it prints:
 
